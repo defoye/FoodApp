@@ -6,7 +6,7 @@
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum Endpoint: String {
 	case theGuardianEditions = "https://content.guardianapis.com/editions"
@@ -69,6 +69,23 @@ class BaseDataManager {
 		}.resume()
 		print("----------------------------------REQUEST END------------------------------------")
 	}
+	
+	func downloadImage(_ url: URL, contentMode: UIView.ContentMode, _ completion: @escaping ((UIImage) -> Void)) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+			completion(image)
+        }.resume()
+	}
+	
+	func downloadImage(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit, _ completion: @escaping ((UIImage) -> Void)) {  // for swift 4.2 syntax just use ===> mode: UIView.ContentMode
+        guard let url = URL(string: link) else { return }
+        downloadImage(url, contentMode: mode, completion)
+    }
 	
 	func createRequest(_ urlString: String, _ parameters: [String: String]?, _ headers: [String: String]?) -> URLRequest {
 		var urlComponents = URLComponents(string: urlString)

@@ -48,7 +48,7 @@ class ViewController: UIViewController, Storyboarded {
 		
 		tableView.delegate = self
 		tableView.dataSource = self
-		
+		tableView.separatorStyle = .none
 		let nib = UINib.init(nibName: "Cell", bundle: .current)
 		tableView.register(nib, forCellReuseIdentifier: "Cell")
 //		tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
@@ -72,6 +72,18 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? Cell, let item = viewModel.item(for: indexPath.row) {
 			cell.configure(item)
 			
+			if let image = item.image {
+				cell.setImage(image)
+			} else {
+				viewModel.loadImage(item.imageURL, indexPath.row) { image in
+					DispatchQueue.main.async {
+						self.tableView.beginUpdates()
+						cell.setImage(image)
+						self.tableView.endUpdates()
+					}
+				}
+			}
+			
 			return cell
 		}
 		
@@ -94,43 +106,38 @@ class Cell: UITableViewCell {
 	@IBOutlet weak var articleImageViewWidth: NSLayoutConstraint!
 	func setup() {
 		super.awakeFromNib()
+		selectionStyle = .none
 	}
 	
-	func configure(_ item: NewsApi.Article) {
+	func configure(_ item: ViewModel.Item) {
 		setup()
 		
-		sourceLabel.text = item.source?.name
+		sourceLabel.text = item.source
+		sourceLabel.font = UIFont(name: "Avenir-Book", size: 24)
 		titleLabel.text = item.title
-		authorLabel.text = item.author
-		
-		downloadImage(from: item.urlToImage ?? "") { image in
-			DispatchQueue.main.async {
-				let ratio = image.size.width / image.size.height
-				self.articleImageView.layoutIfNeeded()
-				let newHeight = self.articleImageView.frame.width / ratio
-				self.articleImageViewHeight.constant = newHeight
-				self.contentView.layoutIfNeeded()
-			}
+		titleLabel.font = UIFont(name: "Avenir-Book", size: 16)
+
+		if let author = item.author, !author.isEmpty {
+			authorLabel.text = "by \(author)"
+		} else {
+			authorLabel.text = nil
 		}
+		authorLabel.font = UIFont(name: "Avenir-Book", size: 13)
+
 		
-		descriptionLabel.text = item.articleDescription
-		dateLabel.text = item.publishedAt
+		descriptionLabel.text = item.description
+		descriptionLabel.font = UIFont(name: "Avenir-Book", size: 16)
+
+		dateLabel.text = item.date
+		dateLabel.font = UIFont(name: "Avenir-Book", size: 16)
 	}
 	
-	func downloadImage(_ url: URL, contentMode: ContentMode, _ completion: @escaping ((UIImage) -> Void)) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-			completion(image)
-        }.resume()
+	func setImage(_ image: UIImage) {
+		articleImageView.image = image
+		contentView.layoutIfNeeded()
+
+		let ratio = image.size.width / image.size.height
+		let newHeight = self.articleImageView.frame.width / ratio
+		articleImageViewHeight.constant = newHeight
 	}
-	
-    func downloadImage(from link: String, contentMode mode: ContentMode = .scaleAspectFit, _ completion: @escaping ((UIImage) -> Void)) {  // for swift 4.2 syntax just use ===> mode: UIView.ContentMode
-        guard let url = URL(string: link) else { return }
-        downloadImage(url, contentMode: mode, completion)
-    }
 }
