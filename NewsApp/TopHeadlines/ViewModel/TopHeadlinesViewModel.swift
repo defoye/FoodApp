@@ -10,7 +10,7 @@ import Foundation
 
 class TopHeadlinesViewModel {
 	
-	let dataManager = DataManager()
+	let dataManager = NewsAppDataManager()
 	
 	var headlines: NewsApi.TopHeadlines?
 	var items: [Item]?
