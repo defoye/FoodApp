@@ -24,9 +24,24 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.separatorStyle = .none
-		let nib = UINib.init(nibName: "TopHeadlinesCell", bundle: .current)
-		tableView.register(nib, forCellReuseIdentifier: "TopHeadlinesCell")
+		let topHeadlinesCellNib = UINib.init(nibName: "TopHeadlinesCell", bundle: .current)
+		tableView.register(topHeadlinesCellNib, forCellReuseIdentifier: "TopHeadlinesCell")
+		let topHeadlinesShimmerCellNib = UINib.init(nibName: "TopHeadlinesShimmerCell", bundle: .current)
+		tableView.register(topHeadlinesShimmerCellNib, forCellReuseIdentifier: "TopHeadlinesShimmerCell")
+		tableView.rowHeight = UITableView.automaticDimension
+		viewModel.loadTopHeadlines {
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
 		
+		let reloadButtonItem = UIBarButtonItem(title: "Reload", style: .plain, target: self, action: #selector(reloadAction))
+		reloadButtonItem.tintColor = .black
+		navigationItem.rightBarButtonItem = reloadButtonItem
+	}
+
+	@objc
+	func reloadAction() {
 		viewModel.loadTopHeadlines {
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
@@ -34,28 +49,27 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 		}
 	}
 
-
 }
 
 extension TopHeadlinesViewController: UITableViewDelegate, UITableViewDataSource {
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return viewModel.numberOfRows(in: section)
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
 	}
-	
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		let numberOfRows = viewModel.numberOfRows(in: section)
+		return numberOfRows
+	}
+		
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if let cell = tableView.dequeueReusableCell(withIdentifier: "TopHeadlinesCell", for: indexPath) as? TopHeadlinesCell, let item = viewModel.item(for: indexPath.row) {
-			cell.configure(item)
+		if viewModel.isLoading, let cell = tableView.dequeueReusableCell(withIdentifier: "TopHeadlinesShimmerCell", for: indexPath) as? TopHeadlinesShimmerCell {
+			cell.configure()
 			
+			return cell
+		} else if let cell = tableView.dequeueReusableCell(withIdentifier: "TopHeadlinesCell", for: indexPath) as? TopHeadlinesCell {
+			let item = viewModel.item(for: indexPath.row)
+			cell.configure(item)
 			if let image = item.image {
 				cell.setImage(image)
-			} else {
-				viewModel.loadImage(item.imageURL, indexPath.row) { image in
-					DispatchQueue.main.async {
-						self.tableView.beginUpdates()
-						cell.setImage(image)
-						self.tableView.endUpdates()
-					}
-				}
 			}
 			
 			return cell
