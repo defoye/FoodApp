@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5360C854247D9C2C00378F75 /* TopHeadlinesShimmerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5360C853247D9C2C00378F75 /* TopHeadlinesShimmerCell.xib */; };
+		5360C856247DA0BF00378F75 /* TopHeadlinesShimmerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5360C855247DA0BF00378F75 /* TopHeadlinesShimmerCell.swift */; };
 		539EE9A9247CBD87002BED74 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539EE9A8247CBD87002BED74 /* Extensions.swift */; };
 		539EE9AB247CBDB2002BED74 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539EE9AA247CBDB2002BED74 /* Protocols.swift */; };
 		539EE9AD247D5CAC002BED74 /* NYTimesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539EE9AC247D5CAC002BED74 /* NYTimesModel.swift */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5360C853247D9C2C00378F75 /* TopHeadlinesShimmerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TopHeadlinesShimmerCell.xib; sourceTree = "<group>"; };
+		5360C855247DA0BF00378F75 /* TopHeadlinesShimmerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlinesShimmerCell.swift; sourceTree = "<group>"; };
 		539EE9A8247CBD87002BED74 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		539EE9AA247CBDB2002BED74 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		539EE9AC247D5CAC002BED74 /* NYTimesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NYTimesModel.swift; sourceTree = "<group>"; };
@@ -89,6 +93,8 @@
 			children = (
 				53C10502247C1F4500001DEB /* TopHeadlinesCell.xib */,
 				53B3F48C247CBB3B003939ED /* TopHeadlinesCell.swift */,
+				5360C853247D9C2C00378F75 /* TopHeadlinesShimmerCell.xib */,
+				5360C855247DA0BF00378F75 /* TopHeadlinesShimmerCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -261,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53C104E3247C0BF700001DEB /* LaunchScreen.storyboard in Resources */,
+				5360C854247D9C2C00378F75 /* TopHeadlinesShimmerCell.xib in Resources */,
 				53C10503247C1F4500001DEB /* TopHeadlinesCell.xib in Resources */,
 				53C104FF247C1C6700001DEB /* TopHeadlines.storyboard in Resources */,
 				53C104E0247C0BF700001DEB /* Assets.xcassets in Resources */,
@@ -288,6 +295,7 @@
 				539EE9A9247CBD87002BED74 /* Extensions.swift in Sources */,
 				53B3F48D247CBB3B003939ED /* TopHeadlinesCell.swift in Sources */,
 				53C104D7247C0BEE00001DEB /* AppDelegate.swift in Sources */,
+				5360C856247DA0BF00378F75 /* TopHeadlinesShimmerCell.swift in Sources */,
 				53C10501247C1E1600001DEB /* TopHeadlinesViewModel.swift in Sources */,
 				53C104D9247C0BEE00001DEB /* SceneDelegate.swift in Sources */,
 				539EE9AD247D5CAC002BED74 /* NYTimesModel.swift in Sources */,
