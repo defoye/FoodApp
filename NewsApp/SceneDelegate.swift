@@ -22,7 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window = UIWindow(windowScene: scene)
 		window?.makeKeyAndVisible()
 		
-		window?.rootViewController = UINavigationController(rootViewController: TopHeadlinesViewController.instantiate("TopHeadlines"))
+		let navigationController = UINavigationController()
+		navigationController.pushViewController(TopHeadlinesViewController.instantiate("TopHeadlines"), animated: false)
+		
+		window?.rootViewController = navigationController
 	}
 
 	func sceneDidDisconnect(_ scene: UIScene) {
