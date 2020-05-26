@@ -1,5 +1,5 @@
 //
-//  ViewModel.swift
+//  TopHeadlinesViewModel.swift
 //  NewsApp
 //
 //  Created by Ernest DeFoy on 5/25/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ViewModel {
+class TopHeadlinesViewModel {
 	
 	let dataManager = DataManager()
 	
@@ -56,7 +56,7 @@ class ViewModel {
 
 import UIKit
 
-extension ViewModel {
+extension TopHeadlinesViewModel {
 	struct Item {
 		let source: String?
 		let title: String?

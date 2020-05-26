@@ -1,5 +1,5 @@
 //
-//  DataManager.swift
+//  NewsAppDataManager.swift
 //  NewsApp
 //
 //  Created by Ernest DeFoy on 5/25/20.
@@ -113,7 +113,7 @@ class BaseDataManager {
 	}
 }
 
-class DataManager: BaseDataManager {
+class NewsAppDataManager: BaseDataManager {
 	
 	func newsApiTopHeadlines(_ completion: @escaping ((RequestStatus, NewsApi.TopHeadlines?) -> Void)) {
 		let urlString = Endpoint.newsAPITopHeadlines.rawValue
