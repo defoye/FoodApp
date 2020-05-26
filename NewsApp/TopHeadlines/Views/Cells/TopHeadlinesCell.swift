@@ -22,6 +22,7 @@ class TopHeadlinesCell: UITableViewCell {
 	func setup() {
 		super.awakeFromNib()
 		selectionStyle = .none
+		articleImageView.image = nil
 	}
 	
 	func configure(_ item: TopHeadlinesViewModel.Item) {
