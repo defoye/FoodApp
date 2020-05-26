@@ -10,19 +10,28 @@ import UIKit
 
 class TopHeadlinesCell: UITableViewCell {
 	
+	@IBOutlet weak var mainStackView: UIStackView!
 	@IBOutlet weak var sourceLabel: UILabel!
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var authorLabel: UILabel!
 	@IBOutlet weak var articleImageView: UIImageView!
 	@IBOutlet weak var descriptionLabel: UILabel!
 	@IBOutlet weak var dateLabel: UILabel!
-	
 	@IBOutlet weak var articleImageViewHeight: NSLayoutConstraint!
-
+	
 	func setup() {
 		super.awakeFromNib()
 		selectionStyle = .none
 		articleImageView.image = nil
+		articleImageView.contentMode = .scaleAspectFill
+		articleImageView.layer.cornerRadius = 5
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		let width = mainStackView.frame.width
+		articleImageViewHeight.constant = width * 0.67
 	}
 	
 	func configure(_ item: TopHeadlinesViewModel.Item) {
@@ -52,9 +61,8 @@ class TopHeadlinesCell: UITableViewCell {
 	func setImage(_ image: UIImage) {
 		articleImageView.image = image
 		contentView.layoutIfNeeded()
-
-		let ratio = image.size.width / image.size.height
-		let newHeight = self.articleImageView.frame.width / ratio
-		articleImageViewHeight.constant = newHeight
+		let articleWidth = self.articleImageView.frame.width
+		let articleHeight = articleWidth * 0.67
+		articleImageViewHeight.constant = articleHeight
 	}
 }
