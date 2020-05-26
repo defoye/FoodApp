@@ -26,7 +26,6 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 		tableView.separatorStyle = .none
 		let nib = UINib.init(nibName: "TopHeadlinesCell", bundle: .current)
 		tableView.register(nib, forCellReuseIdentifier: "TopHeadlinesCell")
-//		tableView.register(TopHeadlinesCell.self, forCellReuseIdentifier: "TopHeadlinesCell")
 		
 		viewModel.loadTopHeadlines {
 			DispatchQueue.main.async {
