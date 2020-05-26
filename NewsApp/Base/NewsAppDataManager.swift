@@ -11,13 +11,42 @@ import UIKit
 enum Endpoint: String {
 	case theGuardianEditions = "https://content.guardianapis.com/editions"
 	case newsAPITopHeadlines = "https://newsapi.org/v2/top-headlines"
-	
+	case nyTimesMostPopularEmailed = "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json"
+	case nyTimesMostPopularFacebook = "https://api.nytimes.com/svc/mostpopular/v2/shared/1/facebook.json"
+	case nyTimesMostPopularViewed = "https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json"
+
 	var key: String {
 		switch self {
 		case .theGuardianEditions:
 			return "2ddfc191-3af8-464f-971f-f1074c468cd7"
 		case .newsAPITopHeadlines:
 			return "9b3d07f6d7a64e79bac458c38808f129"
+		case .nyTimesMostPopularEmailed:
+			return "8GBUsQA5f3a7KHuefWlwQNcQ1c4cYBTp"
+		case .nyTimesMostPopularFacebook:
+			return "8GBUsQA5f3a7KHuefWlwQNcQ1c4cYBTp"
+		case .nyTimesMostPopularViewed:
+			return "8GBUsQA5f3a7KHuefWlwQNcQ1c4cYBTp"
+		}
+	}
+}
+
+enum EndpointType {
+	enum theGuardianAPI: String {
+		case editions = "https://content.guardianapis.com/editions"
+	}
+	enum newsAPI: String {
+		case topHeadlines = "https://newsapi.org/v2/top-headlines"
+	}
+	enum nyTimesAPI {
+		enum MostPopular: String {
+			case emailed = "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json"
+			case facebook = "https://api.nytimes.com/svc/mostpopular/v2/shared/1/facebook.json"
+			case nyTimesMostPopularViewed = "https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json"
+		}
+		
+		var key: String {
+			return "8GBUsQA5f3a7KHuefWlwQNcQ1c4cYBTp"
 		}
 	}
 }
@@ -115,9 +144,46 @@ class BaseDataManager {
 
 class NewsAppDataManager: BaseDataManager {
 	
+}
+
+// MARK:- NewsAPI
+
+extension NewsAppDataManager {
 	func newsApiTopHeadlines(_ completion: @escaping ((RequestStatus, NewsApi.TopHeadlines?) -> Void)) {
 		let urlString = Endpoint.newsAPITopHeadlines.rawValue
 		let params = ["country": "us", "apiKey": Endpoint.newsAPITopHeadlines.key]
+
+		let request = createRequest(urlString, params, nil)
+		
+		dataTask(request, completion)
+	}
+}
+
+// MARK:- NYTimes API
+
+extension NewsAppDataManager {
+	
+	func nyTimesMostPopularEmailed(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopular?) -> Void)) {
+		let urlString = Endpoint.nyTimesMostPopularEmailed.rawValue
+		let params = ["api-key": Endpoint.nyTimesMostPopularEmailed.key]
+
+		let request = createRequest(urlString, params, nil)
+		
+		dataTask(request, completion)
+	}
+	
+	func nyTimesMostPopularFacebook(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopular?) -> Void)) {
+		let urlString = Endpoint.nyTimesMostPopularFacebook.rawValue
+		let params = ["api-key": Endpoint.nyTimesMostPopularFacebook.key]
+
+		let request = createRequest(urlString, params, nil)
+		
+		dataTask(request, completion)
+	}
+
+	func nyTimesMostPopularViewed(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopular?) -> Void)) {
+		let urlString = Endpoint.nyTimesMostPopularViewed.rawValue
+		let params = ["api-key": Endpoint.nyTimesMostPopularViewed.key]
 
 		let request = createRequest(urlString, params, nil)
 		
