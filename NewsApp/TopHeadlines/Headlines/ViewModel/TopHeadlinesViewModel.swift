@@ -146,7 +146,9 @@ extension TopHeadlinesViewModel {
 		
 		init(_ article: NewsAPI.Article) {
 			self.source = article.source?.name
-			self.title = article.title
+			let delimiter = " - "
+			let token = article.title?.components(separatedBy: delimiter)
+			self.title = token?[0]
 			self.author = article.author
 			self.imageURL = article.urlToImage
 			self.description = article.articleDescription
