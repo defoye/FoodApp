@@ -92,7 +92,7 @@ class TopHeadlinesViewModel {
 		let dGroup = DispatchGroup()
 		
 		articles.forEach { article in
-			if let url = article.urlToImage {
+			if let url = article.urlToImage, let _ = article.title {
 				dGroup.enter()
 				dataManager.downloadImage(from: url) { image in
 					if let image = image {
