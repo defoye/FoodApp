@@ -13,8 +13,8 @@ class NewsAppDataManager: BaseDataManager { }
 // MARK:- NewsAPI
 
 extension NewsAppDataManager {
-	func newsApiTopHeadlines(page: Int, _ completion: @escaping ((RequestStatus, NewsApi.TopHeadlines?) -> Void)) {
-		let endpoint = Endpoint.NewsAPI.topHeadlines
+	func newsApiTopHeadlines(page: Int, _ completion: @escaping ((RequestStatus, NewsAPI.TopHeadlines?) -> Void)) {
+		let endpoint = NewsAPI.topHeadlines
 		let urlString = endpoint.url
 		let params = ["country": "us", "apiKey": endpoint.key, "page": String(page)]
 
@@ -28,9 +28,9 @@ extension NewsAppDataManager {
 
 extension NewsAppDataManager {
 	
-	func nyTimesMostPopularEmailed(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopular?) -> Void)) {
-		let urlString = Endpoint.NYTimesAPI.MostPopular.emailed.url
-		let key = Endpoint.NYTimesAPI.key
+	func nyTimesMostPopularEmailed(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopularModel?) -> Void)) {
+		let urlString = NYTimesAPI.MostPopular.emailed.url
+		let key = NYTimesAPI.key
 		let params = ["api-key": key]
 
 		let request = createRequest(urlString, params, nil)
@@ -38,9 +38,9 @@ extension NewsAppDataManager {
 		dataTask(request, completion)
 	}
 	
-	func nyTimesMostPopularFacebook(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopular?) -> Void)) {
-		let urlString = Endpoint.NYTimesAPI.MostPopular.facebook.url
-		let key = Endpoint.NYTimesAPI.key
+	func nyTimesMostPopularFacebook(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopularModel?) -> Void)) {
+		let urlString = NYTimesAPI.MostPopular.facebook.url
+		let key = NYTimesAPI.key
 		let params = ["api-key": key]
 
 		let request = createRequest(urlString, params, nil)
@@ -48,9 +48,9 @@ extension NewsAppDataManager {
 		dataTask(request, completion)
 	}
 
-	func nyTimesMostPopularViewed(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopular?) -> Void)) {
-		let urlString = Endpoint.NYTimesAPI.MostPopular.viewed.url
-		let key = Endpoint.NYTimesAPI.key
+	func nyTimesMostPopularViewed(_ completion: @escaping ((RequestStatus, NYTimesAPI.MostPopularModel?) -> Void)) {
+		let urlString = NYTimesAPI.MostPopular.viewed.url
+		let key = NYTimesAPI.key
 		let params = ["api-key": key]
 
 		let request = createRequest(urlString, params, nil)

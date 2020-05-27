@@ -12,7 +12,7 @@ class TopHeadlinesViewModel {
 	
 	let dataManager = NewsAppDataManager()
 	
-	var headlines: NewsApi.TopHeadlines?
+	var headlines: NewsAPI.TopHeadlines?
 	var items: [Item]?
 	var isLoading = false
 	var nextPage: Int = 1
@@ -66,7 +66,7 @@ class TopHeadlinesViewModel {
 		return items?[row]
 	}
 	
-	func createItems(_ model: NewsApi.TopHeadlines, _ completion: @escaping (() -> Void)) {
+	func createItems(_ model: NewsAPI.TopHeadlines, _ completion: @escaping (() -> Void)) {
 		guard let articles = model.articles else {
 			return
 		}
@@ -97,7 +97,7 @@ class TopHeadlinesViewModel {
 		}
 	}
 	
-	func createItems(_ model: NewsApi.TopHeadlines) {
+	func createItems(_ model: NewsAPI.TopHeadlines) {
 		guard let articles = model.articles else {
 			return
 		}
@@ -129,7 +129,7 @@ extension TopHeadlinesViewModel {
 		
 		var image: UIImage?
 		
-		init(_ article: NewsApi.Article) {
+		init(_ article: NewsAPI.Article) {
 			self.source = article.source?.name
 			self.title = article.title
 			self.author = article.author

@@ -1,5 +1,5 @@
 //
-//  NYTimesModel+MostPopular.swift
+//  NYTimesAPI+MostPopularModel.swift
 //  NewsApp
 //
 //  Created by Ernest DeFoy on 5/26/20.
@@ -8,11 +8,9 @@
 
 import Foundation
 
-struct NYTimesAPI { }
-
 extension NYTimesAPI {
 	// MARK: - MostPopular
-	struct MostPopular: Codable {
+	struct MostPopularModel: Codable {
 		let status, copyright: String?
 		let numResults: Int?
 		let results: [Result]?
