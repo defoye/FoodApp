@@ -18,12 +18,32 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 		self.viewModel = viewModel
 	}
 	
+	func configureRefreshControl() {
+		tableView.refreshControl = UIRefreshControl()
+	    tableView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+	}
+		
+	@objc func handleRefreshControl() {
+		nextPageCalled = false
+		viewModel.nextPage = 1
+		viewModel.items = nil
+		viewModel.loadTopHeadlines {
+			DispatchQueue.main.async {
+				self.tableView.refreshControl?.endRefreshing()
+			}
+			self.reloadTableView()
+		}
+		
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		view.backgroundColor = .orange
 		
 		title = "\u{1F618} Tsatsa's Top Headlines \u{1F618}"
+		
+		configureRefreshControl()
 		
 		edgesForExtendedLayout = []
 		tableView.showsVerticalScrollIndicator = false
@@ -40,22 +60,8 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 			self.reloadTableView()
 		}
 		
-		let reloadButtonItem = UIBarButtonItem(title: "Reload", style: .plain, target: self, action: #selector(reloadAction))
-		reloadButtonItem.tintColor = .black
-		navigationItem.rightBarButtonItem = reloadButtonItem
-		
 		if let navigationController = navigationController {
 			navigationController.navigationBar.isTranslucent = false
-		}
-	}
-
-	@objc
-	func reloadAction() {
-		nextPageCalled = false
-		viewModel.nextPage = 1
-		viewModel.items = nil
-		viewModel.loadTopHeadlines {
-			self.reloadTableView()
 		}
 	}
 	
