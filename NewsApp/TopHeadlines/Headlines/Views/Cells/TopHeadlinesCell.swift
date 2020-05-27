@@ -11,11 +11,11 @@ import UIKit
 class TopHeadlinesCell: UITableViewCell {
 	
 	@IBOutlet weak var mainStackView: UIStackView!
-	@IBOutlet weak var sourceLabel: UILabel!
+
 	@IBOutlet weak var titleLabel: UILabel!
+	@IBOutlet weak var sourceLabel: UILabel!
 	@IBOutlet weak var authorLabel: UILabel!
 	@IBOutlet weak var articleImageView: UIImageView!
-	@IBOutlet weak var descriptionLabel: UILabel!
 	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var articleImageViewHeight: NSLayoutConstraint!
 	
@@ -38,9 +38,9 @@ class TopHeadlinesCell: UITableViewCell {
 		setup()
 		
 		sourceLabel.text = item.source
-		sourceLabel.font = UIFont(name: "Avenir-Book", size: 24)
+		sourceLabel.font = UIFont(name: "Avenir-Book", size: 16)
 		titleLabel.text = item.title
-		titleLabel.font = UIFont(name: "Avenir-Book", size: 16)
+		titleLabel.font = UIFont(name: "Avenir-Book", size: 20)
 		titleLabel.numberOfLines = 0
 		if let author = item.author, !author.isEmpty {
 			authorLabel.text = "by \(author)"
@@ -48,11 +48,6 @@ class TopHeadlinesCell: UITableViewCell {
 			authorLabel.text = nil
 		}
 		authorLabel.font = UIFont(name: "Avenir-Book", size: 13)
-
-		
-		descriptionLabel.text = item.description
-		descriptionLabel.font = UIFont(name: "Avenir-Book", size: 16)
-		descriptionLabel.numberOfLines = 0
 
 		dateLabel.text = item.date
 		dateLabel.font = UIFont(name: "Avenir-Book", size: 16)
