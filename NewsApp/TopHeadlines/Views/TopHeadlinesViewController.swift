@@ -19,10 +19,11 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 		
 		view.backgroundColor = .orange
 		
-		title = "Top Headlines"
+		title = "\u{1F618} Tsatsa's Top Headlines \u{1F618}"
 		
 		edgesForExtendedLayout = []
-		
+		tableView.showsVerticalScrollIndicator = false
+		tableView.showsHorizontalScrollIndicator = false
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.separatorStyle = .none
@@ -94,6 +95,19 @@ extension TopHeadlinesViewController: UITableViewDelegate, UITableViewDataSource
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		let numberOfRows = viewModel.numberOfRows(in: section)
 		return numberOfRows
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard let item = viewModel.item(for: indexPath.row),
+			  let urlString = item.url,
+			  let url = URL(string: urlString),
+			  let cell = tableView.cellForRow(at: indexPath),
+			  cell is TopHeadlinesCell
+			else {
+				return
+		}
+		
+		UIApplication.shared.open(url)
 	}
 		
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

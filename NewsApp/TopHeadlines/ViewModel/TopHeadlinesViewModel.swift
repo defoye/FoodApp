@@ -125,6 +125,7 @@ extension TopHeadlinesViewModel {
 		let imageURL: String?
 		let description: String?
 		let date: String?
+		let url: String?
 		
 		var image: UIImage?
 		
@@ -141,6 +142,8 @@ extension TopHeadlinesViewModel {
 			} else {
 				date = nil
 			}
+			
+			self.url = article.url
 		}
 	}
 }
