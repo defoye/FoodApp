@@ -38,7 +38,7 @@ class TopHeadlinesCell: UITableViewCell {
 		setup()
 		
 		sourceLabel.text = item.source
-		sourceLabel.font = UIFont(name: "Avenir-Book", size: 16)
+		sourceLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
 		titleLabel.text = item.title
 		titleLabel.font = UIFont(name: "Avenir-Book", size: 20)
 		titleLabel.numberOfLines = 0
@@ -48,6 +48,8 @@ class TopHeadlinesCell: UITableViewCell {
 			authorLabel.text = nil
 		}
 		authorLabel.font = UIFont(name: "Avenir-Book", size: 13)
+		
+		authorLabel.isHidden = true
 
 		dateLabel.text = item.date
 		dateLabel.font = UIFont(name: "Avenir-Book", size: 16)

@@ -90,7 +90,7 @@ extension UIView {
 		animation.toValue = frame.size.width
 		animation.repeatCount = .infinity
 		gradientLayer.add(animation, forKey: "")
-		subviews.forEach { $0.viewCornerRadius = 5; $0.backgroundColor = #colorLiteral(red: 0.8886693595, green: 0.8886693595, blue: 0.8886693595, alpha: 1) }
+		subviews.forEach { $0.viewCornerRadius = 5; $0.backgroundColor = #colorLiteral(red: 0.9401247846, green: 0.9401247846, blue: 0.9401247846, alpha: 1) }
 		
 		return gradientLayer
 	}
