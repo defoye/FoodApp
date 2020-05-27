@@ -1,5 +1,5 @@
 //
-//  NYTimesModel.swift
+//  NYTimesModel+MostPopular.swift
 //  NewsApp
 //
 //  Created by Ernest DeFoy on 5/26/20.
@@ -8,9 +8,7 @@
 
 import Foundation
 
-struct NYTimesAPI {
-	
-}
+struct NYTimesAPI { }
 
 extension NYTimesAPI {
 	// MARK: - MostPopular
