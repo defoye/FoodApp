@@ -17,10 +17,24 @@ class TopHeadlinesViewModel {
 	var isLoading = false
 	var nextPage: Int = 1
 	
+	let categoryParam: String
+	
+	init(_ categoryParam: String) {
+		self.categoryParam = categoryParam
+	}
+	
+	var params: [String: String] {
+		return [
+			"page": String(nextPage),
+			"category": categoryParam
+		]
+	}
+	
 	func loadTopHeadlines(_ completion: @escaping (() -> Void)) {
 		isLoading = true
 		completion()
-		dataManager.newsApiTopHeadlines(page: nextPage) { [weak self] (status, response) in
+//		dataManager.newsApiTopHeadlines(page: nextPage) { [weak self] (status, response) in
+		dataManager.newsApiTopHeadlines(params: self.params) { [weak self] (status, response) in
 			guard let self = self else { return }
 			self.isLoading = false
 			switch status {
@@ -39,7 +53,8 @@ class TopHeadlinesViewModel {
 		isLoading = true
 		self.nextPage += 1
 
-		dataManager.newsApiTopHeadlines(page: nextPage) { [weak self] (status, response) in
+//		dataManager.newsApiTopHeadlines(page: nextPage) { [weak self] (status, response) in
+		dataManager.newsApiTopHeadlines(params: self.params) { [weak self] (status, response) in
 			guard let self = self else { return }
 			self.isLoading = false
 			switch status {

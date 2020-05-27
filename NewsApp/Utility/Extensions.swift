@@ -95,3 +95,18 @@ extension UIView {
 		return gradientLayer
 	}
 }
+
+extension Dictionary {
+	func merged(with dict: [Key: Value]) -> [Key: Value] {
+		var newDict: [Key: Value] = [:]
+		
+		dict.forEach { (key, value) in
+			newDict[key] = value
+		}
+		self.forEach { (key, value) in
+			newDict[key] = value
+		}
+		
+		return newDict
+	}
+}

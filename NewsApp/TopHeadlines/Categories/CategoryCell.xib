@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="89" id="80L-Nt-aqM" customClass="CategoryCell" customModule="NewsApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="318" height="89"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="80L-Nt-aqM" id="s4B-ZG-zZc">
+                <rect key="frame" x="0.0" y="0.0" width="318" height="89"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F34-oa-8af" userLabel="Tile View">
+                        <rect key="frame" x="20" y="10" width="278" height="79"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zPg-rt-WJy">
+                                <rect key="frame" x="10" y="10" width="258" height="59"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQN-JE-TMb" userLabel="Title Label">
+                                        <rect key="frame" x="0.0" y="19.5" width="42" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron_right" translatesAutoresizingMaskIntoConstraints="NO" id="gXK-qb-Woy" userLabel="Chevron Image View">
+                                        <rect key="frame" x="238" y="19.5" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="8zH-jW-Gh1"/>
+                                            <constraint firstAttribute="width" constant="20" id="F7x-ur-0G6"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="zPg-rt-WJy" secondAttribute="bottom" constant="10" id="9dw-W2-dfO"/>
+                            <constraint firstItem="zPg-rt-WJy" firstAttribute="top" secondItem="F34-oa-8af" secondAttribute="top" constant="10" id="Xmg-Au-Edz"/>
+                            <constraint firstItem="zPg-rt-WJy" firstAttribute="leading" secondItem="F34-oa-8af" secondAttribute="leading" constant="10" id="j7r-Fb-AMp"/>
+                            <constraint firstAttribute="trailing" secondItem="zPg-rt-WJy" secondAttribute="trailing" constant="10" id="zw3-IY-lsa"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="F34-oa-8af" secondAttribute="bottom" id="Sfs-cq-iES"/>
+                    <constraint firstItem="F34-oa-8af" firstAttribute="top" secondItem="s4B-ZG-zZc" secondAttribute="top" constant="10" id="THr-mM-e9R"/>
+                    <constraint firstAttribute="trailing" secondItem="F34-oa-8af" secondAttribute="trailing" constant="20" id="aGf-cF-eug"/>
+                    <constraint firstItem="F34-oa-8af" firstAttribute="leading" secondItem="s4B-ZG-zZc" secondAttribute="leading" constant="20" id="xzK-ee-Ywq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="chevronImageView" destination="gXK-qb-Woy" id="LFr-NS-vU5"/>
+                <outlet property="tileView" destination="F34-oa-8af" id="o1s-oN-Zp1"/>
+                <outlet property="titleLabel" destination="FQN-JE-TMb" id="kBk-mk-PpS"/>
+            </connections>
+            <point key="canvasLocation" x="68.115942028985515" y="122.87946428571428"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chevron_right" width="30" height="30"/>
+    </resources>
+</document>

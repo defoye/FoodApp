@@ -12,7 +12,11 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 
 	@IBOutlet weak var tableView: UITableView!
 	
-	let viewModel = TopHeadlinesViewModel()
+	var viewModel: TopHeadlinesViewModel!
+	
+	func initViewModel(_ viewModel: TopHeadlinesViewModel) {
+		self.viewModel = viewModel
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

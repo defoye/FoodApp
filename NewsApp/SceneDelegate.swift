@@ -23,7 +23,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window?.makeKeyAndVisible()
 		
 		let navigationController = UINavigationController()
-		navigationController.pushViewController(TopHeadlinesViewController.instantiate("TopHeadlines"), animated: false)
+//		navigationController.pushViewController(TopHeadlinesViewController.instantiate("TopHeadlines"), animated: false)
+		navigationController.pushViewController(TopHeadlinesCategoriesViewController.instantiate("TopHeadlinesCategories"), animated: false)
 		
 		window?.rootViewController = navigationController
 	}

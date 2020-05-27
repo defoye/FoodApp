@@ -13,6 +13,16 @@ class NewsAppDataManager: BaseDataManager { }
 // MARK:- NewsAPI
 
 extension NewsAppDataManager {
+	func newsApiTopHeadlines(params: [String: String], _ completion: @escaping ((RequestStatus, NewsAPI.TopHeadlines?) -> Void)) {
+		let endpoint = NewsAPI.topHeadlines
+		let urlString = endpoint.url
+		let combinedParams = ["country": "us", "apiKey": endpoint.key].merged(with: params)
+
+		let request = createRequest(urlString, combinedParams, nil)
+		
+		dataTask(request, completion)
+	}
+	
 	func newsApiTopHeadlines(page: Int, _ completion: @escaping ((RequestStatus, NewsAPI.TopHeadlines?) -> Void)) {
 		let endpoint = NewsAPI.topHeadlines
 		let urlString = endpoint.url
