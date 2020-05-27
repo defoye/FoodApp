@@ -13,13 +13,14 @@ class TopHeadlinesViewModel {
 	let dataManager = NewsAppDataManager()
 	
 	var headlines: NewsApi.TopHeadlines?
-	var items: [Item] = []
+	var items: [Item]?
 	var isLoading = false
+	var nextPage: Int = 1
 	
 	func loadTopHeadlines(_ completion: @escaping (() -> Void)) {
 		isLoading = true
 		completion()
-		dataManager.newsApiTopHeadlines { [weak self] (status, response) in
+		dataManager.newsApiTopHeadlines(page: nextPage) { [weak self] (status, response) in
 			guard let self = self else { return }
 			self.isLoading = false
 			switch status {
@@ -34,12 +35,35 @@ class TopHeadlinesViewModel {
 		}
 	}
 	
-	func numberOfRows(in section: Int) -> Int {
-		return isLoading ? 10 : items.count
+	func loadNextPage(_ completion: @escaping (() -> Void)) {
+		isLoading = true
+		self.nextPage += 1
+
+		dataManager.newsApiTopHeadlines(page: nextPage) { [weak self] (status, response) in
+			guard let self = self else { return }
+			self.isLoading = false
+			switch status {
+			case .success:
+				if let model = response {
+					self.headlines = model
+					self.createItems(model, completion)
+				}
+			case .error:
+				break
+			}
+		}
 	}
 	
-	func item(for row: Int) -> Item {
-		return items[row]
+	var hasMoreContent: Bool {
+		return headlines?.totalResults ?? 0 > items?.count ?? 0
+	}
+	
+	func numberOfRows(in section: Int) -> Int {
+		return isLoading ? 10 : items?.count ?? 0
+	}
+	
+	func item(for row: Int) -> Item? {
+		return items?[row]
 	}
 	
 	func createItems(_ model: NewsApi.TopHeadlines, _ completion: @escaping (() -> Void)) {
@@ -68,7 +92,7 @@ class TopHeadlinesViewModel {
 		
 		dGroup.notify(queue: .main) {
 			self.isLoading = false
-			self.items = items
+			self.items = (self.items ?? []) + items
 			completion()
 		}
 	}
@@ -85,7 +109,7 @@ class TopHeadlinesViewModel {
 	func loadImage(_ imageURL: String?, _ index: Int, _ completion: @escaping ((UIImage?) -> Void)) {
 		guard let url = imageURL else { return }
 		dataManager.downloadImage(from: url, contentMode: .scaleAspectFit) { image in
-			self.items[index].image = image
+			self.items?[index].image = image
 			completion(image)
 		}
 	}

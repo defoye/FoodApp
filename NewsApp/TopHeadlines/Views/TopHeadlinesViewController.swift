@@ -21,6 +21,8 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 		
 		title = "Top Headlines"
 		
+		edgesForExtendedLayout = []
+		
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.separatorStyle = .none
@@ -30,28 +32,62 @@ class TopHeadlinesViewController: UIViewController, Storyboarded {
 		tableView.register(topHeadlinesShimmerCellNib, forCellReuseIdentifier: "TopHeadlinesShimmerCell")
 		tableView.rowHeight = UITableView.automaticDimension
 		viewModel.loadTopHeadlines {
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
+			self.reloadTableView()
 		}
 		
 		let reloadButtonItem = UIBarButtonItem(title: "Reload", style: .plain, target: self, action: #selector(reloadAction))
 		reloadButtonItem.tintColor = .black
 		navigationItem.rightBarButtonItem = reloadButtonItem
+		
+		if let navigationController = navigationController {
+			navigationController.navigationBar.isTranslucent = false
+		}
 	}
 
 	@objc
 	func reloadAction() {
+		nextPageCalled = false
+		viewModel.nextPage = 1
+		viewModel.items = nil
 		viewModel.loadTopHeadlines {
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
+			self.reloadTableView()
 		}
 	}
+	
+	var previousOffset: CGFloat = 0.0
+	var nextPageCalled: Bool = false
 
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		let contentHeight = scrollView.contentSize.height
+		let frameHeight = scrollView.frame.height
+		let currentY = scrollView.contentOffset.y
+		let newContentScrollThreshold = contentHeight - currentY <= frameHeight * 3
+		let isScrollingDown = currentY - previousOffset > 0
+		let shouldLoadMoreContent = newContentScrollThreshold
+									&& isScrollingDown
+									&& !nextPageCalled
+									&& viewModel.hasMoreContent
+		
+		if shouldLoadMoreContent {
+			nextPageCalled = true
+			viewModel.loadNextPage {
+				self.reloadTableView()
+				self.nextPageCalled = false
+			}
+		}
+		
+		previousOffset = currentY
+	}
 }
 
 extension TopHeadlinesViewController: UITableViewDelegate, UITableViewDataSource {
+	
+	func reloadTableView() {
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+		}
+	}
+	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return UITableView.automaticDimension
 	}
@@ -65,8 +101,8 @@ extension TopHeadlinesViewController: UITableViewDelegate, UITableViewDataSource
 			cell.configure()
 			
 			return cell
-		} else if let cell = tableView.dequeueReusableCell(withIdentifier: "TopHeadlinesCell", for: indexPath) as? TopHeadlinesCell {
-			let item = viewModel.item(for: indexPath.row)
+		} else if let cell = tableView.dequeueReusableCell(withIdentifier: "TopHeadlinesCell", for: indexPath) as? TopHeadlinesCell, let item = viewModel.item(for: indexPath.row) {
+			
 			cell.configure(item)
 			if let image = item.image {
 				cell.setImage(image)
@@ -77,6 +113,4 @@ extension TopHeadlinesViewController: UITableViewDelegate, UITableViewDataSource
 		
 		return UITableViewCell()
 	}
-	
-	
 }
