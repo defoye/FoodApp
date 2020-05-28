@@ -16,8 +16,9 @@ class TopHeadlinesCategoriesViewController: UIViewController, Storyboarded {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		title = "Tsatsa's News Categories"
+		tabBarItem = UITabBarItem(title: "News", image: UIImage(named: "newspaper"), selectedImage: nil)
+		navigationItem.title = "Tsatsa's News Categories"
+//		title = "News"
 		tableView.showsVerticalScrollIndicator = false
 		tableView.showsHorizontalScrollIndicator = false
 		tableView.separatorStyle = .none

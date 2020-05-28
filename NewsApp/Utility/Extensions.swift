@@ -67,6 +67,19 @@ extension String {
 
 extension UIView {
 	
+	func pin(to superView: UIView, topInset: CGFloat = 0, bottomInset: CGFloat = 0, leadingInset: CGFloat = 0, trailingInset: CGFloat = 0) {
+		if !superView.subviews.contains(self) {
+			superView.addSubview(self)
+		}
+		translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			topAnchor.constraint(equalTo: superView.topAnchor, constant: topInset),
+			bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: bottomInset),
+			leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: leadingInset),
+			trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: trailingInset)
+		])
+	}
+	
 	@IBInspectable var viewCornerRadius: CGFloat {
 		get {
 			return layer.cornerRadius

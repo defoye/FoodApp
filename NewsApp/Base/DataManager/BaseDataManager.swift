@@ -45,6 +45,7 @@ class BaseDataManager {
 			if let data = data {
 				do {
 					let decoded = try JSONDecoder().decode(T.self, from: data)
+					print(decoded)
 					completion(.success, decoded)
 				} catch let err {
 					print(err)
@@ -52,8 +53,8 @@ class BaseDataManager {
 			}
 			
 			completion(.error, nil)
+			print("----------------------------------REQUEST END------------------------------------")
 		}.resume()
-		print("----------------------------------REQUEST END------------------------------------")
 	}
 	
 	func downloadImage(_ url: URL, contentMode: UIView.ContentMode, _ completion: @escaping ((UIImage?) -> Void)) {

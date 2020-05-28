@@ -12,6 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
 
+	var mainCoordinator: MainCoordinator?
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		// Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -22,11 +23,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window = UIWindow(windowScene: scene)
 		window?.makeKeyAndVisible()
 		
-		let navigationController = UINavigationController()
-//		navigationController.pushViewController(TopHeadlinesViewController.instantiate("TopHeadlines"), animated: false)
-		navigationController.pushViewController(TopHeadlinesCategoriesViewController.instantiate("TopHeadlinesCategories"), animated: false)
+		let tabBarController = UITabBarController()
+						
+//		let topHeadlinesCategoriesViewController = TopHeadlinesCategoriesViewController.instantiate("TopHeadlinesCategories")
+//
+//		let topHeadlinesCategoriesNavigationController = UINavigationController(rootViewController: topHeadlinesCategoriesViewController)
+//
+//		let recipeSearchNavigationController = UINavigationController()
+//
+//		tabBarController.viewControllers = [topHeadlinesCategoriesNavigationController, recipeSearchNavigationController]
+//
+//
+//		let coordinator = RecipeSearchCoordinator(recipeSearchNavigationController)
+//		coordinator.start()
+//		recipeSearchCoordinator = coordinator
 		
-		window?.rootViewController = navigationController
+		let mainCoordinator = MainCoordinator(tabBarController)
+			
+		window?.rootViewController = tabBarController
+		
+		mainCoordinator.start()
+		
+		self.mainCoordinator = mainCoordinator
 	}
 
 	func sceneDidDisconnect(_ scene: UIScene) {

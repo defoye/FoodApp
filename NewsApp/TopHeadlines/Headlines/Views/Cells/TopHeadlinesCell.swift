@@ -56,6 +56,7 @@ class TopHeadlinesCell: UITableViewCell {
 	}
 	
 	func setImage(_ image: UIImage) {
+		// TODO:
 		articleImageView.image = image
 		contentView.layoutIfNeeded()
 		let articleWidth = self.articleImageView.frame.width

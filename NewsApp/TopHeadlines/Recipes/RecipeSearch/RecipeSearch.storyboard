@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Recipe Search View Controller-->
+        <scene sceneID="VUg-aM-XnU">
+            <objects>
+                <viewController storyboardIdentifier="RecipeSearchViewController" id="ppu-Je-a1p" customClass="RecipeSearchViewController" customModule="NewsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7EE-pL-9Pm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZjA-es-Q9i">
+                                <rect key="frame" x="0.0" y="44" width="414" height="758"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r2g-LP-cdx" userLabel="Search View">
+                                <rect key="frame" x="0.0" y="802" width="414" height="94"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1gu-sm-SAC" userLabel="Search Button View">
+                                <rect key="frame" x="0.0" y="802" width="414" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k74-PG-OXB" userLabel="Search Button">
+                                        <rect key="frame" x="20" y="10" width="374" height="40"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="k74-PG-OXB" firstAttribute="top" secondItem="1gu-sm-SAC" secondAttribute="top" constant="10" id="7Wv-1g-9OC"/>
+                                    <constraint firstAttribute="height" constant="60" id="BmK-3b-0LK"/>
+                                    <constraint firstAttribute="trailing" secondItem="k74-PG-OXB" secondAttribute="trailing" constant="20" id="Bwu-UG-pWn"/>
+                                    <constraint firstAttribute="bottom" secondItem="k74-PG-OXB" secondAttribute="bottom" constant="10" id="LMF-G0-CBM"/>
+                                    <constraint firstItem="k74-PG-OXB" firstAttribute="leading" secondItem="1gu-sm-SAC" secondAttribute="leading" constant="20" id="WWe-Lr-OBZ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="1gu-sm-SAC" firstAttribute="trailing" secondItem="r2g-LP-cdx" secondAttribute="trailing" id="Bfx-jn-omF"/>
+                            <constraint firstItem="r2g-LP-cdx" firstAttribute="leading" secondItem="CSA-WM-EEN" secondAttribute="leading" id="HHp-hh-Vfu"/>
+                            <constraint firstItem="ZjA-es-Q9i" firstAttribute="top" secondItem="CSA-WM-EEN" secondAttribute="top" id="I6x-hL-4A5"/>
+                            <constraint firstItem="ZjA-es-Q9i" firstAttribute="leading" secondItem="CSA-WM-EEN" secondAttribute="leading" id="Kye-C4-SXi"/>
+                            <constraint firstItem="1gu-sm-SAC" firstAttribute="top" secondItem="r2g-LP-cdx" secondAttribute="top" id="NBl-Ap-E1q"/>
+                            <constraint firstItem="r2g-LP-cdx" firstAttribute="top" secondItem="ZjA-es-Q9i" secondAttribute="bottom" id="Raw-h9-p6Q"/>
+                            <constraint firstItem="CSA-WM-EEN" firstAttribute="trailing" secondItem="r2g-LP-cdx" secondAttribute="trailing" id="fKa-U1-3oU"/>
+                            <constraint firstItem="ZjA-es-Q9i" firstAttribute="bottom" secondItem="r2g-LP-cdx" secondAttribute="top" id="fdc-Sw-nZF"/>
+                            <constraint firstItem="CSA-WM-EEN" firstAttribute="trailing" secondItem="ZjA-es-Q9i" secondAttribute="trailing" id="kmD-kj-BNr"/>
+                            <constraint firstItem="1gu-sm-SAC" firstAttribute="bottom" secondItem="CSA-WM-EEN" secondAttribute="bottom" id="nTK-YS-p9f"/>
+                            <constraint firstItem="1gu-sm-SAC" firstAttribute="leading" secondItem="r2g-LP-cdx" secondAttribute="leading" id="psh-xm-pDr"/>
+                            <constraint firstItem="r2g-LP-cdx" firstAttribute="bottom" secondItem="7EE-pL-9Pm" secondAttribute="bottom" id="w3r-nS-N1S"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="CSA-WM-EEN"/>
+                    </view>
+                    <connections>
+                        <outlet property="searchButton" destination="k74-PG-OXB" id="5N2-eu-g0e"/>
+                        <outlet property="searchButtonView" destination="1gu-sm-SAC" id="45y-Ty-PYO"/>
+                        <outlet property="tableView" destination="ZjA-es-Q9i" id="0IS-Rq-met"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9wP-oA-R0U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="128" y="76"/>
+        </scene>
+    </scenes>
+</document>

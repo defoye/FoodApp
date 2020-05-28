@@ -68,3 +68,15 @@ extension NewsAppDataManager {
 		dataTask(request, completion)
 	}
 }
+
+extension NewsAppDataManager {
+	
+	func recipeSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSearchModel?) -> Void)) {
+		let urlString = SpoonacularAPI.Recipes.search.url
+		let key = SpoonacularAPI.key
+		let combinedParams = ["apiKey": key].merged(with: params)
+		let request = createRequest(urlString, combinedParams, nil)
+		
+		dataTask(request, completion)
+	}
+}
