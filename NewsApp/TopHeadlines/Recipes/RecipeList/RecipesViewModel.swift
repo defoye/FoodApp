@@ -27,6 +27,7 @@ class RecipesViewModel {
 		dataManager.recipeSearch(params) { [weak self] (status, model) in
 			guard let self = self else { return }
 			self.isLoading = false
+			self.offset += self.fetchAmount
 			switch status {
 			case .success:
 				if let model = model {
@@ -38,20 +39,26 @@ class RecipesViewModel {
 		}
 	}
 	
+	var hasMoreContent: Bool {
+		return offset < totalResults
+	}
+	
 	func createParams(_ instructionsRequired: Bool, _ cuisine: SpoonacularAPI.Cuisine) -> [String: String] {
 		return passThroughParams.merged(with: [
 			"offset": String(offset),
-			"number": String(fetchAmount)
-//			"instructionsRequired": String(instructionsRequired),
-//			"cuisine": cuisine.param
+			"number": String(fetchAmount),
+			"instructionsRequired": String(instructionsRequired),
+			"cuisine": cuisine.param
 		])
 	}
+	
+	var totalResults: Int = 0
 		
 	func createItems(_ model: SpoonacularAPI.RecipeSearchModel, _ completion: @escaping (() -> Void)) {
 		guard let recipes = model.results else {
 			return
 		}
-		
+		totalResults = model.totalResults ?? 0
 		let dGroup = DispatchGroup()
 		
 		var items: [Item] = []
@@ -76,7 +83,7 @@ class RecipesViewModel {
 		
 		dGroup.notify(queue: .main) {
 			self.isLoading = false
-			self.items = items
+			self.items = (self.items ?? []) + items
 			completion()
 		}
 	}

@@ -96,10 +96,38 @@ class RecipesViewController: UIViewController {
 		collectionView.dataSource = self
 	}
 	
+	// TODO
 	func reloadCollectionView() {
 		DispatchQueue.main.async {
 			self.collectionView.reloadData()
 		}
+	}
+	
+	var previousOffset: CGFloat = 0
+	var nextPageCalled: Bool = false
+	
+	// TODO
+	func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		let contentHeight = scrollView.contentSize.height
+		let frameHeight = scrollView.frame.height
+		let currentY = scrollView.contentOffset.y
+		let newContentScrollThreshold = contentHeight - currentY <= frameHeight * 2
+		let isScrollingDown = currentY - previousOffset > 0
+		let shouldLoadMoreContent = newContentScrollThreshold
+									&& isScrollingDown
+									&& !nextPageCalled
+									&& viewModel.hasMoreContent
+		
+		if shouldLoadMoreContent {
+			nextPageCalled = true
+			let params = viewModel.createParams(false, .american)
+			viewModel.loadRecipes(params) {
+				self.reloadCollectionView()
+				self.nextPageCalled = false
+			}
+		}
+		
+		previousOffset = currentY
 	}
 	
 	var lastHeight: CGFloat = 0
