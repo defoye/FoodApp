@@ -45,6 +45,9 @@
 		53C38E9A247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C38E99247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift */; };
 		53C38E9D247EA27500BD42D4 /* RecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C38E9C247EA27500BD42D4 /* RecipesViewController.swift */; };
 		53C38E9F247EA27E00BD42D4 /* RecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C38E9E247EA27E00BD42D4 /* RecipesViewModel.swift */; };
+		53D1719424802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D1719324802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift */; };
+		53D1719624808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D1719524808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift */; };
+		53D17198248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D17197248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift */; };
 		53F47A90247EA74200554A2C /* RecipeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F47A8F247EA74200554A2C /* RecipeCell.xib */; };
 		53F47A92247EA74C00554A2C /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A91247EA74C00554A2C /* RecipeCell.swift */; };
 		53F47A94247F093400554A2C /* RecipesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A93247F093400554A2C /* RecipesLayout.swift */; };
@@ -105,6 +108,9 @@
 		53C38E99247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpoonacularAPI+RecipeSearchModel.swift"; sourceTree = "<group>"; };
 		53C38E9C247EA27500BD42D4 /* RecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewController.swift; sourceTree = "<group>"; };
 		53C38E9E247EA27E00BD42D4 /* RecipesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewModel.swift; sourceTree = "<group>"; };
+		53D1719324802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpoonacularAPI+RecipeSearchComplexModel.swift"; sourceTree = "<group>"; };
+		53D1719524808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpoonacularAPI+RecipeIngredientsSearchModel.swift"; sourceTree = "<group>"; };
+		53D17197248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpoonacularAPI+RecipeEquipmentSearchModel.swift"; sourceTree = "<group>"; };
 		53F47A8F247EA74200554A2C /* RecipeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeCell.xib; sourceTree = "<group>"; };
 		53F47A91247EA74C00554A2C /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		53F47A93247F093400554A2C /* RecipesLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesLayout.swift; sourceTree = "<group>"; };
@@ -321,6 +327,9 @@
 			children = (
 				53C38E97247E209000BD42D4 /* SpoonacularAPI.swift */,
 				53C38E99247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift */,
+				53D1719324802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift */,
+				53D1719524808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift */,
+				53D17197248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift */,
 			);
 			path = SpoonacularAPI;
 			sourceTree = "<group>";
@@ -479,7 +488,9 @@
 				5321A94E247F3A1A00F55FBB /* InstructionsRequiredCell.swift in Sources */,
 				539762FF247E06E200E4A9C0 /* TopHeadlinesCategoriesViewModel.swift in Sources */,
 				53C38E9F247EA27E00BD42D4 /* RecipesViewModel.swift in Sources */,
+				53D1719424802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift in Sources */,
 				53C104F9247C0EF800001DEB /* NewsAppDataManager.swift in Sources */,
+				53D17198248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift in Sources */,
 				53C38E9A247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift in Sources */,
 				539762F7247E046A00E4A9C0 /* TheGuardianAPI.swift in Sources */,
 				539EE9AB247CBDB2002BED74 /* Protocols.swift in Sources */,
@@ -497,6 +508,7 @@
 				5321A94C247F39DF00F55FBB /* CuisineCell.swift in Sources */,
 				53C38E98247E209000BD42D4 /* SpoonacularAPI.swift in Sources */,
 				539762EF247E030500E4A9C0 /* NYTimesAPI.swift in Sources */,
+				53D1719624808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift in Sources */,
 				53C104D9247C0BEE00001DEB /* SceneDelegate.swift in Sources */,
 				539EE9AD247D5CAC002BED74 /* NYTimesAPI+MostPopularModel.swift in Sources */,
 			);
