@@ -49,10 +49,11 @@ class BaseDataManager {
 					completion(.success, decoded)
 				} catch let err {
 					print(err)
+					completion(.error, nil)
 				}
+			} else {
+				completion(.error, nil)
 			}
-			
-			completion(.error, nil)
 			print("----------------------------------REQUEST END------------------------------------")
 		}.resume()
 	}

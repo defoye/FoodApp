@@ -11,11 +11,14 @@ import Foundation
 enum SpoonacularAPI {
 	enum Recipes {
 		case search
+		case extract
 		
 		var url: String {
 			switch self {
 			case .search:
 				return "https://api.spoonacular.com/recipes/search"
+			case .extract:
+				return "https://api.spoonacular.com/recipes/extract"
 			}
 		}
 	}

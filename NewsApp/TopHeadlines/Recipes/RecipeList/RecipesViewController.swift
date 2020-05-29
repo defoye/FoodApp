@@ -28,7 +28,7 @@ class RecipesViewController: UIViewController {
 	var collectionView = UICollectionView(frame: .zero, collectionViewLayout: RecipesLayout())
 
 	var viewModel: RecipesViewModel!
-	
+		
 	func initViewModel(_ viewModel: RecipesViewModel) {
 		self.viewModel = viewModel
 	}
@@ -113,11 +113,17 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let item = viewModel.item(for: indexPath.row), let sourceURL = item.sourceURL {
-			guard let url = URL(string: sourceURL) else {
+			guard let url = URL(string: sourceURL), let presenter = navigationController else {
 				return
 			}
 			
-			UIApplication.shared.open(url)
+			let vc = RecipeDetailViewController.instantiate("RecipeDetail")
+			let vm = RecipeDetailViewModel(sourceURL)
+			vc.initViewModel(vm)
+			
+			presenter.pushViewController(vc, animated: true)
+			
+//			UIApplication.shared.open(url)
 		}
 	}
 }
