@@ -14,7 +14,50 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="opC-jl-4Xq" id="EBn-M3-RX7">
                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3RQ-5u-hFh" userLabel="Tile View">
+                        <rect key="frame" x="20" y="10" width="374" height="24"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ARJ-xr-nuh">
+                                <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwY-Ky-z9z">
+                                        <rect key="frame" x="0.0" y="2" width="354" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Oc7-ip-CM4" userLabel="Info Image View">
+                                        <rect key="frame" x="354" y="2" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="4sO-Vi-31g"/>
+                                            <constraint firstAttribute="height" constant="20" id="oRx-xk-V7u"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="ARJ-xr-nuh" secondAttribute="bottom" id="0PP-75-ayK"/>
+                            <constraint firstItem="ARJ-xr-nuh" firstAttribute="leading" secondItem="3RQ-5u-hFh" secondAttribute="leading" id="7of-8Q-TC7"/>
+                            <constraint firstAttribute="trailing" secondItem="ARJ-xr-nuh" secondAttribute="trailing" id="RyQ-vW-JJG"/>
+                            <constraint firstItem="ARJ-xr-nuh" firstAttribute="top" secondItem="3RQ-5u-hFh" secondAttribute="top" id="fcS-oY-yLW"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="3RQ-5u-hFh" secondAttribute="trailing" constant="20" id="H9d-sL-3hl"/>
+                    <constraint firstAttribute="bottom" secondItem="3RQ-5u-hFh" secondAttribute="bottom" constant="10" id="TcI-Lk-IbC"/>
+                    <constraint firstItem="3RQ-5u-hFh" firstAttribute="top" secondItem="EBn-M3-RX7" secondAttribute="top" constant="10" id="ctN-nd-NOa"/>
+                    <constraint firstItem="3RQ-5u-hFh" firstAttribute="leading" secondItem="EBn-M3-RX7" secondAttribute="leading" constant="20" id="rN6-iv-8zb"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="infoImageView" destination="Oc7-ip-CM4" id="8ot-8n-rOV"/>
+                <outlet property="tileView" destination="3RQ-5u-hFh" id="hin-Q4-sue"/>
+                <outlet property="titleLabel" destination="dwY-Ky-z9z" id="lLa-Wd-Uan"/>
+            </connections>
             <point key="canvasLocation" x="139" y="92"/>
         </tableViewCell>
     </objects>

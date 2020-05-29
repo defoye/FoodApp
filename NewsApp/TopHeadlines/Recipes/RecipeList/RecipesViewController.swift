@@ -116,9 +116,9 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
 			guard let url = URL(string: sourceURL), let presenter = navigationController else {
 				return
 			}
-			
+
 			let vc = RecipeDetailViewController.instantiate("RecipeDetail")
-			let vm = RecipeDetailViewModel(sourceURL)
+			let vm = RecipeDetailViewModel(sourceURL, item)
 			vc.initViewModel(vm)
 			
 			presenter.pushViewController(vc, animated: true)

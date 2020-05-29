@@ -32,7 +32,7 @@ class MainCoordinator {
 	func start() {
 		recipeSearchCoordinator?.start()
 		
-//		tabBarController.selectedIndex = 1
+		tabBarController.selectedIndex = 1
 //		tabBarController.selectedIndex = 0
 	}
 }

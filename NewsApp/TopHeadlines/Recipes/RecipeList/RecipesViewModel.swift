@@ -14,7 +14,8 @@ class RecipesViewModel {
 	var offset: Int = 0
 	var fetchAmount: Int = 20
 	var isLoading: Bool = false
-	
+	var items: [Item]?
+
 	let passThroughParams: [String: String]
 	
 	init(_ passThroughData: [String: String]) {
@@ -45,9 +46,7 @@ class RecipesViewModel {
 //			"cuisine": cuisine.param
 		])
 	}
-	
-	var items: [Item]?
-	
+		
 	func createItems(_ model: SpoonacularAPI.RecipeSearchModel, _ completion: @escaping (() -> Void)) {
 		guard let recipes = model.results else {
 			return

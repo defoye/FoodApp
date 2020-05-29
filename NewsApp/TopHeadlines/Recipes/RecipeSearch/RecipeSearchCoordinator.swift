@@ -12,7 +12,7 @@ protocol RecipeSearchCoordinatorDelegate: class {
 	func coordinateToCuisinePicker()
 	func cuisineSelected(_ cuisine: SpoonacularAPI.Cuisine)
 	func coordinateToRecipesList(_ passThroughData: [String: String])
-	func coordinateToRecipeDetail(_ passThroughData: String)
+	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item)
 }
 
 class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
@@ -54,9 +54,9 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		presenter.pushViewController(recipesViewController, animated: true)
 	}
 	
-	func coordinateToRecipeDetail(_ passThroughData: String) {
+	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item) {
 		let vc = RecipeDetailViewController.instantiate("RecipeDetail")
-		let vm = RecipeDetailViewModel(passThroughData)
+		let vm = RecipeDetailViewModel(urlString, item)
 		vc.initViewModel(vm)
 		
 		presenter.pushViewController(vc, animated: true)

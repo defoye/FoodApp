@@ -13,9 +13,7 @@ class RecipeDetailViewController: UIViewController, Storyboarded {
 	@IBOutlet weak var tableView: UITableView!
 	
 	var viewModel: RecipeDetailViewModel!
-	
-	weak var headerDelegate: RecipeDetailHeaderCellDelegate?
-	
+		
 	func initViewModel(_ viewModel: RecipeDetailViewModel) {
 		self.viewModel = viewModel
 	}
@@ -34,12 +32,20 @@ class RecipeDetailViewController: UIViewController, Storyboarded {
 		let instructionCellNib = UINib.init(nibName: "RecipeDetailInstructionCell", bundle: .current)
 		tableView.register(instructionCellNib, forCellReuseIdentifier: "RecipeDetailInstructionCell")
 		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = 40
 		tableView.delegate = self
 		tableView.dataSource = self
+		tableView.separatorStyle = .none
+//		tableView.sectionHeaderHeight = UITableView.automaticDimension
+		tableView.estimatedSectionHeaderHeight = 25
+
+		let insets = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
+		tableView.contentInset = insets
 	}
 	
 	func reloadTableView() {
 		DispatchQueue.main.async {
+			self.tableView.separatorStyle = self.viewModel.isLoading ? .none : .singleLine
 			self.tableView.reloadData()
 		}
 	}
@@ -71,17 +77,73 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
 			}
 		case .ingredients:
 			if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailIngredientCell") as? RecipeDetailIngredientCell, let item = viewModel.ingredientItem(at: indexPath.row) {
-				cell.backgroundColor = .blue
 				cell.configure(item)
 				return cell
 			}
 		case .instructions:
 			if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailInstructionCell") as? RecipeDetailInstructionCell, let item = viewModel.instructionItem(at: indexPath.row) {
-				cell.backgroundColor = .red
 				cell.configure(item)
 				return cell
 			}
 		}
 		return UITableViewCell()
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let selectedCell = tableView.cellForRow(at: indexPath)
+		
+		if let ingredientCell = selectedCell as? RecipeDetailIngredientCell {
+			tableView.beginUpdates()
+			ingredientCell.toggleTitleLabelText()
+			tableView.endUpdates()
+		}
+	}
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		guard let section = RecipeDetailSection(rawValue: section) else {
+			fatalError()
+		}
+		
+		switch section {
+		case .header:
+			return 0
+		case .ingredients:
+			return viewModel.isLoading ? 0 : UITableView.automaticDimension
+		case .instructions:
+			return viewModel.isLoading ? 0 : UITableView.automaticDimension
+		}
+	}
+	
+	private func headerView(for title: String) -> UIView {
+		let headerView = UIView()
+		let tileView = UIView()
+		let label = UILabel()
+
+		headerView.backgroundColor = tableView.backgroundColor ?? .white
+		tileView.translatesAutoresizingMaskIntoConstraints = false
+		label.translatesAutoresizingMaskIntoConstraints = false
+		headerView.addSubview(tileView)
+		tileView.addSubview(label)
+		tileView.pin(to: headerView, topInset: 20, bottomInset: -10, leadingInset: 20, trailingInset: -20)
+		label.pin(to: tileView)
+		label.text = title
+		label.font = UIFont(name: "Avenir-Heavy", size: 24)
+		
+		return headerView
+	}
+	
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		guard let section = RecipeDetailSection(rawValue: section) else {
+			fatalError()
+		}
+		
+		switch section {
+		case .header:
+			return nil
+		case .ingredients:
+			return viewModel.isLoading ? nil : headerView(for: "Ingredients")
+		case .instructions:
+			return viewModel.isLoading ? nil : headerView(for: "Instructions")
+		}
 	}
 }

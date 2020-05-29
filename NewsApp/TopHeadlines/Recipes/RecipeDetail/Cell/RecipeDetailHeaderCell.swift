@@ -8,11 +8,7 @@
 
 import UIKit
 
-protocol RecipeDetailHeaderCellDelegate: class {
-	func setImage(_ image: UIImage)
-}
-
-class RecipeDetailHeaderCell: UITableViewCell, RecipeDetailHeaderCellDelegate {
+class RecipeDetailHeaderCell: UITableViewCell {
 	
 	@IBOutlet weak var tileView: UIView!
 	@IBOutlet weak var recipeImageView: UIImageView!
@@ -22,13 +18,12 @@ class RecipeDetailHeaderCell: UITableViewCell, RecipeDetailHeaderCellDelegate {
 	func configure(_ item: RecipeDetailViewModel.HeaderItem) {
 		super.awakeFromNib()
 		contentView.layoutIfNeeded()
-		tileView.backgroundColor = .orange
+		recipeTitleLabel.text = item.title
+		recipeTitleLabel.font = UIFont(name: "Avenir-Heavy", size: 32)
+		recipeTitleLabel.numberOfLines = 0
 		recipeImageView.contentMode = .scaleAspectFill
 		recipeImageView.backgroundColor = .separator
 		recipeImageViewHeightConstraint.constant = tileView.frame.width * 0.67
-	}
-	
-	func setImage(_ image: UIImage) {
-		recipeImageView.image = image
+		recipeImageView.image = item.image
 	}
 }
