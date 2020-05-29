@@ -37,6 +37,7 @@ class BaseDataManager {
 	
 	public func dataTask<T : Decodable>(_ request: URLRequest, _ completion: @escaping ((RequestStatus, T?) -> Void)) {
 		print("----------------------------------REQUEST START----------------------------------")
+		print("Request: \(request)")
 		URLSession.shared.dataTask(with: request) { (data, reponse, error) in
 			if let _ = error {
 				completion(.error, nil)

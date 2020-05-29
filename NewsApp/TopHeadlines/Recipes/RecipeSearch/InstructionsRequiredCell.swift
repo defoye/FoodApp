@@ -10,6 +10,7 @@ import UIKit
 
 protocol InstructionsRequiredCellDelegate: class {
 	func switchSelectionChanged(_ isOn: Bool)
+	func mostPopularSwitchSelectionChanged(_ isOn: Bool)
 }
 
 class InstructionsRequiredCell: UITableViewCell {
@@ -18,21 +19,35 @@ class InstructionsRequiredCell: UITableViewCell {
 	@IBOutlet weak var instructionsRequiredLabel: UILabel!
 	@IBOutlet weak var instructionsRequiredSwitch: UISwitch!
 	
-	weak var delegate: InstructionsRequiredCellDelegate?
+	private weak var delegate: InstructionsRequiredCellDelegate?
+	
+	func setup() {
+		super.awakeFromNib()
+		selectionStyle = .none
+		instructionsRequiredSwitch.addTarget(self, action: #selector(switchSelectionChanged), for: .valueChanged)
+		instructionsRequiredLabel.font = UIFont(name: "Avenir-Book", size: 16)
+		instructionsRequiredSwitch.isOn = false
+		tileView.backgroundColor = .clear
+
+	}
 	
 	func configure(delegate: InstructionsRequiredCellDelegate) {
-		super.awakeFromNib()
-		instructionsRequiredSwitch.addTarget(self, action: #selector(switchSelectionChanged), for: .valueChanged)
-		selectionStyle = .none
+		setup()
+		self.delegate = delegate
 		instructionsRequiredLabel.text = "Instructions required"
-		instructionsRequiredLabel.font = UIFont(name: "Avenir-Book", size: 16)
+	}
 	
-		instructionsRequiredSwitch.isOn = false
-		
-		tileView.backgroundColor = .clear
+	func configure(title: String, delegate: InstructionsRequiredCellDelegate) {
+		setup()
+		self.delegate = delegate
+		instructionsRequiredLabel.text = title
 	}
 	
 	@objc func switchSelectionChanged() {
-		delegate?.switchSelectionChanged(instructionsRequiredSwitch.isOn)
+		if instructionsRequiredLabel.text == "Instructions required" {
+			delegate?.switchSelectionChanged(instructionsRequiredSwitch.isOn)
+		} else {
+			delegate?.mostPopularSwitchSelectionChanged(instructionsRequiredSwitch.isOn)
+		}
 	}
 }

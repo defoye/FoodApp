@@ -17,13 +17,17 @@ class RecipeDetailIngredientCell: UITableViewCell {
 	var item: RecipeDetailViewModel.IngredientItem?
 	var isPrimaryState: Bool = true
 	
-	func configure(_ item: RecipeDetailViewModel.IngredientItem) {
+	func setup() {
 		super.awakeFromNib()
 		selectionStyle = .none
-		
 		infoImageView.image = UIImage(named: "info")
-		titleLabel.text = item.primaryTitleLabelText
 		titleLabel.numberOfLines = 0
+		titleLabel.font = UIFont(name: "Avenir-Book", size: 16)
+	}
+	
+	func configure(_ item: RecipeDetailViewModel.IngredientItem) {
+		setup()
+		titleLabel.text = item.primaryTitleLabelText
 		
 		self.item = item
 	}

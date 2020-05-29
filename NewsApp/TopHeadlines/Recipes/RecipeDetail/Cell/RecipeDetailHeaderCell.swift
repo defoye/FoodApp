@@ -17,6 +17,7 @@ class RecipeDetailHeaderCell: UITableViewCell {
 	
 	func configure(_ item: RecipeDetailViewModel.HeaderItem) {
 		super.awakeFromNib()
+		selectionStyle = .none
 		contentView.layoutIfNeeded()
 		recipeTitleLabel.text = item.title
 		recipeTitleLabel.font = UIFont(name: "Avenir-Heavy", size: 32)

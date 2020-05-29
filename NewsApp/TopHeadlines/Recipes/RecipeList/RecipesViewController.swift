@@ -33,10 +33,40 @@ class RecipesViewController: UIViewController {
 		self.viewModel = viewModel
 	}
 	
+	// TODO
+	private lazy var loadingView: UIView = {
+		let loadingView = UIView()
+		loadingView.translatesAutoresizingMaskIntoConstraints = false
+		loadingView.backgroundColor = .white
+		let label = UILabel()
+		label.text = "Loading recipes..."
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.font = UIFont(name: "Avenir-Book", size: 24)
+		label.textAlignment = .center
+		label.pin(to: loadingView)
+		return loadingView
+	}()
+	
+	func addLoadingView() {
+		collectionView.addSubview(loadingView)
+		loadingView.pin(to: collectionView)
+	}
+	
+	func removeLoadingView() {
+		loadingView.removeFromSuperview()
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 				
 		setupCollectionView()
+		addLoadingView()
+		NSLayoutConstraint.activate([
+			loadingView.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 1),
+			loadingView.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 1),
+			loadingView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+			loadingView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor)
+		])
 		
 		title = "Tsatsa's Recipe Search Results"
 		
@@ -47,6 +77,7 @@ class RecipesViewController: UIViewController {
 		
 		let params = viewModel.createParams(false, .american)
 		viewModel.loadRecipes(params) {
+			self.removeLoadingView()
 			self.reloadCollectionView()
 		}
 		

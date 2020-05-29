@@ -11,6 +11,7 @@ import UIKit
 enum RecipeSearchRow: Int, CaseIterable {
 	case cuisine
 	case instructionsRequired
+	case mostPopular
 }
 
 class RecipeSearchViewController: UIViewController, Storyboarded {
@@ -23,6 +24,7 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	
 	var cuisineSelected: SpoonacularAPI.Cuisine?
 	var instructionsRequired: Bool = false
+	var mostPopular: Bool = false
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -46,10 +48,13 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	}
 	
 	@objc func searchButtonAction() {
-		let passThroughData: [String: String] = [
+		var passThroughData: [String: String] = [
 			"cuisine": cuisineSelected?.param ?? "",
 			"instructionsRequired": String(instructionsRequired)
 		]
+		if mostPopular {
+			passThroughData["sort"] = "popularity"
+		}
 		coordinatorDelegate?.coordinateToRecipesList(passThroughData)
 	}
 	
@@ -62,7 +67,7 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 
 extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 2
+		return RecipeSearchRow.allCases.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,6 +86,11 @@ extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource
 				cell.configure(delegate: self)
 				return cell
 			}
+		case .mostPopular:
+			if let cell = tableView.dequeueReusableCell(withIdentifier: "InstructionsRequiredCell") as? InstructionsRequiredCell {
+				cell.configure(title: "Most Popular", delegate: self)
+				return cell
+			}
 		}
 		
 		fatalError()
@@ -96,11 +106,17 @@ extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource
 			coordinatorDelegate?.coordinateToCuisinePicker()
 		case .instructionsRequired:
 			break
+		case .mostPopular:
+			break
 		}
 	}
 }
 
 extension RecipeSearchViewController: InstructionsRequiredCellDelegate {
+	func mostPopularSwitchSelectionChanged(_ isOn: Bool) {
+		mostPopular = isOn
+	}
+	
 	func switchSelectionChanged(_ isOn: Bool) {
 		instructionsRequired = isOn
 	}
