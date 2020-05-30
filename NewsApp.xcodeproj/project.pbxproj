@@ -379,9 +379,9 @@
 		53C38E9B247EA26600BD42D4 /* Recipes */ = {
 			isa = PBXGroup;
 			children = (
-				53D1719B248097FD0099B8A4 /* RecipeDetail */,
-				53F47A98247F38A200554A2C /* RecipeList */,
 				53F47A97247F389B00554A2C /* RecipeSearch */,
+				53F47A98247F38A200554A2C /* RecipeList */,
+				53D1719B248097FD0099B8A4 /* RecipeDetail */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
