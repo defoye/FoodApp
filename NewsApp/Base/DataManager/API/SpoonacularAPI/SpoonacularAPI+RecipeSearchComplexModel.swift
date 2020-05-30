@@ -96,6 +96,7 @@ extension SpoonacularAPI {
 	}
 
 	enum DishType: String, Codable, CaseIterable {
+		case none = "None"
 		case antipasti = "antipasti"
 		case antipasto = "antipasto"
 		case appetizer = "appetizer"
