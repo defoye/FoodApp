@@ -12,6 +12,7 @@ enum RecipeDetailSection: Int, CaseIterable {
 	case header
 	case ingredients
 	case instructions
+	case similarRecipes
 }
 
 class RecipeDetailViewModel {
@@ -21,12 +22,20 @@ class RecipeDetailViewModel {
 	var isLoading: Bool = false
 	
 	let urlParam: String
+	let idParam: Int?
 	
 	var items: [RecipeDetailSection: Any]? = [:]
 	
 	init(_ urlParam: String, _ item: RecipesViewModel.Item) {
 		self.urlParam = urlParam
+		self.idParam = item.id
 		self.items?[.header] = HeaderItem(title: item.title ?? "Error", image: item.image)
+	}
+	
+	init(_ urlParam: String, _ item: SimilarRecipeItem) {
+		self.urlParam = urlParam
+		self.idParam = item.id
+		self.items?[.header] = HeaderItem(title: item.title, image: item.image)
 	}
 	
 	func numberOfRows(in section: RecipeDetailSection) -> Int {
@@ -39,6 +48,10 @@ class RecipeDetailViewModel {
 			}
 		case .instructions:
 			if let items = items?[.instructions] as? [InstructionItem] {
+				return items.count
+			}
+		case .similarRecipes:
+			if let items = items?[.similarRecipes] as? [SimilarRecipeItem] {
 				return items.count
 			}
 		}
@@ -58,7 +71,16 @@ class RecipeDetailViewModel {
 		(items?[.instructions] as? [InstructionItem])?[index]
 	}
 	
-	func loadRecipeDetails(_ completion: @escaping (() -> Void)) {
+	func similarRecipeItem(at index: Int) -> SimilarRecipeItem? {
+		(items?[.similarRecipes] as? [SimilarRecipeItem])?[index]
+	}
+	
+	func fetchData(_ completion: @escaping (() -> Void)) {		
+		loadRecipeDetails(completion)
+		loadSimilarRecipes(completion)
+	}
+	
+	private func loadRecipeDetails(_ completion: @escaping (() -> Void)) {
 		isLoading = true
 		dataManager.extractRecipeSearch(["url": urlParam]) { (status, model) in
 			self.isLoading = false
@@ -70,6 +92,54 @@ class RecipeDetailViewModel {
 			case .error:
 				fatalError()
 			}
+		}
+	}
+	
+	private func loadSimilarRecipes(_ completion: @escaping (() -> Void)) {
+		guard let id = idParam else {
+			return
+		}
+		isLoading = true
+		dataManager.recipeSimilarSearch(["id": String(id)]) { [weak self] (status, model) in
+			guard let self = self else { return }
+			self.isLoading = false
+			switch status {
+			case .success:
+				if let model = model {
+					self.createSimilarRecipeItems(model, completion)
+				}
+			case .error:
+				break
+			}
+		}
+	}
+	
+	func createSimilarRecipeItems(_ model: SpoonacularAPI.RecipeSimilarModel, _ completion: @escaping (() -> Void)) {
+		
+		var similarItems: [SimilarRecipeItem] = []
+		
+		let dGroup = DispatchGroup()
+		
+		isLoading = true
+		
+		model.forEach { (element) in
+			if let id = element.id, let imageType = element.imageType {
+				let size = "240x150"
+				let imageURL = "https://spoonacular.com/recipeImages/\(id)-\(size).\(imageType)"
+				dGroup.enter()
+				dataManager.downloadImage(from: imageURL) { (image) in
+					if let image = image {
+						similarItems.append(SimilarRecipeItem(element, image: image))
+					}
+					dGroup.leave()
+				}
+			}
+		}
+		
+		dGroup.notify(queue: .main) {
+			self.isLoading = false
+			self.items?[.similarRecipes] = similarItems
+			completion()
 		}
 	}
 	
@@ -158,42 +228,27 @@ extension RecipeDetailViewModel {
 			usUnit = obj.measures?.us?.unit
 		}
 	}
-}
-
-extension Double {
 	
-	struct Rational {
-		let numerator : Int
-		let denominator: Int
-
-		init(numerator: Int, denominator: Int) {
-			self.numerator = numerator
-			self.denominator = denominator
-		}
-
-		init(approximating x0: Double, withPrecision eps: Double = 1.0E-6) {
-			var x = x0
-			var a = x.rounded(.down)
-			var (h1, k1, h, k) = (1, 0, Int(a), 1)
-
-			while x - a > eps * Double(k) * Double(k) {
-				x = 1.0/(x - a)
-				a = x.rounded(.down)
-				(h1, k1, h, k) = (h, k, h1 + Int(a) * h, k1 + Int(a) * k)
+	struct SimilarRecipeItem {
+		
+		let title: String
+		let timeTitle: String
+		
+		let image: UIImage
+		
+		let id: Int?
+		let sourceURL: String?
+		
+		init(_ obj: SpoonacularAPI.RecipeSimilarModelElement, image: UIImage) {
+			title = obj.title ?? "Error"
+			if let minutes = obj.readyInMinutes {
+				timeTitle = minutes.minutesIntToTimeString()
+			} else {
+				timeTitle = "Error"
 			}
-			self.init(numerator: h, denominator: k)
+			self.image = image
+			id = obj.id
+			sourceURL = obj.sourceURL
 		}
-	}
-	
-	func roundedFractionString() -> String {
-		let rational = Rational(approximating: self)
-		
-		if rational.numerator == rational.denominator {
-			return String(Int(self))
-		} else if rational.denominator == 1 {
-			return String(rational.numerator)
-		}
-		
-		return "\(rational.numerator)/\(rational.denominator)"
 	}
 }

@@ -21,7 +21,7 @@ class RecipeDetailViewController: UIViewController, Storyboarded {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		viewModel.loadRecipeDetails {
+		viewModel.fetchData {
 			self.reloadTableView()
 		}
 		
@@ -31,6 +31,8 @@ class RecipeDetailViewController: UIViewController, Storyboarded {
 		tableView.register(ingredientCellNib, forCellReuseIdentifier: "RecipeDetailIngredientCell")
 		let instructionCellNib = UINib.init(nibName: "RecipeDetailInstructionCell", bundle: .current)
 		tableView.register(instructionCellNib, forCellReuseIdentifier: "RecipeDetailInstructionCell")
+		let similarRecipeCellNib = UINib.init(nibName: "RecipeSimilarCell", bundle: .current)
+		tableView.register(similarRecipeCellNib, forCellReuseIdentifier: "RecipeSimilarCell")
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 40
 		tableView.delegate = self
@@ -47,6 +49,8 @@ class RecipeDetailViewController: UIViewController, Storyboarded {
 		DispatchQueue.main.async {
 			self.tableView.separatorStyle = self.viewModel.isLoading ? .none : .singleLine
 			self.tableView.reloadData()
+//			self.tableView.beginUpdates()
+//			self.tableView.endUpdates()
 		}
 	}
 }
@@ -85,6 +89,11 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
 				cell.configure(item)
 				return cell
 			}
+		case .similarRecipes:
+			if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeSimilarCell") as? RecipeSimilarCell, let item = viewModel.similarRecipeItem(at: indexPath.row) {
+				cell.configure(item)
+				return cell
+			}
 		}
 		return UITableViewCell()
 	}
@@ -96,6 +105,19 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
 			tableView.beginUpdates()
 			ingredientCell.toggleTitleLabelText()
 			tableView.endUpdates()
+		} else if selectedCell is RecipeSimilarCell {
+			guard let item = viewModel.similarRecipeItem(at: indexPath.row), let sourceURL = item.sourceURL else {
+				return
+			}
+			guard let url = URL(string: sourceURL), let presenter = navigationController else {
+				return
+			}
+
+			let vc = RecipeDetailViewController.instantiate("RecipeDetail")
+			let vm = RecipeDetailViewModel(sourceURL, item)
+			vc.initViewModel(vm)
+			
+			presenter.pushViewController(vc, animated: true)
 		}
 	}
 	
@@ -110,6 +132,8 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
 		case .ingredients:
 			return viewModel.isLoading ? 0 : UITableView.automaticDimension
 		case .instructions:
+			return viewModel.isLoading ? 0 : UITableView.automaticDimension
+		case .similarRecipes:
 			return viewModel.isLoading ? 0 : UITableView.automaticDimension
 		}
 	}
@@ -144,6 +168,8 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
 			return viewModel.isLoading ? nil : headerView(for: "Ingredients")
 		case .instructions:
 			return viewModel.isLoading ? nil : headerView(for: "Instructions")
+		case .similarRecipes:
+			return viewModel.isLoading ? nil : headerView(for: "Similar Recipes")
 		}
 	}
 }

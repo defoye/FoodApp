@@ -199,35 +199,17 @@ extension RecipesViewModel {
 		let timeTitle: String
 		let sourceURL: String?
 		
+		let id: Int?
+		
 		let image: UIImage
 		
 		init(_ obj: SpoonacularAPI.RecipeComplexSearchResult, image: UIImage) {
+			self.id = obj.id
 			self.title = obj.title
 			if let minutes = obj.readyInMinutes {
-				let hours = Int(Double(minutes) / 60)
-				let days = Int((Double(minutes) / 60) / 24)
-				
-				if days > 0 {
-					if days == 1 {
-						timeTitle = "1 day"
-					} else {
-						timeTitle = "\(days) days"
-					}
-				} else if hours > 0 {
-					if hours == 1 {
-						timeTitle = "1 hour"
-					} else {
-						timeTitle = "\(hours) hours"
-					}
-				} else {
-					if minutes == 1 {
-						timeTitle = "1 minute"
-					} else {
-						timeTitle = "\(minutes) minutes"
-					}
-				}
+				timeTitle = minutes.minutesIntToTimeString()
 			} else {
-				timeTitle = ""
+				timeTitle = "Error"
 			}
 			self.sourceURL = obj.sourceURL
 			self.image = image
