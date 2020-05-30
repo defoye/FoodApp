@@ -15,6 +15,7 @@ enum SpoonacularAPI {
 		case information
 		case informationBulk
 		case complexSearch
+		case similar
 		
 		var url: String {
 			switch self {
@@ -28,6 +29,8 @@ enum SpoonacularAPI {
 				return "https://api.spoonacular.com/recipes/informationBulk"
 			case .complexSearch:
 				return "https://api.spoonacular.com/recipes/complexSearch"
+			case .similar:
+				return "https://api.spoonacular.com/recipes/"
 			}
 		}
 	}
