@@ -311,7 +311,6 @@
 		53B3F48B247CBB21003939ED /* TopHeadlines */ = {
 			isa = PBXGroup;
 			children = (
-				53C38E9B247EA26600BD42D4 /* Recipes */,
 				539762FA247E064A00E4A9C0 /* Categories */,
 				539762FB247E065300E4A9C0 /* Headlines */,
 			);
@@ -343,6 +342,7 @@
 				53C104D6247C0BEE00001DEB /* AppDelegate.swift */,
 				53C104D8247C0BEE00001DEB /* SceneDelegate.swift */,
 				539EE9A4247CBD56002BED74 /* Base */,
+				53C38E9B247EA26600BD42D4 /* Recipes */,
 				53B3F48B247CBB21003939ED /* TopHeadlines */,
 				539EE9A7247CBD77002BED74 /* Utility */,
 				53C104DF247C0BF700001DEB /* Assets.xcassets */,
