@@ -76,7 +76,7 @@ class RecipesViewController: UIViewController {
 		collectionView.pin(to: view)
 		
 		let params = viewModel.createParams(false, .american)
-		viewModel.loadRecipes(params) {
+		viewModel.loadComplexRecipes(params) {
 			self.removeLoadingView()
 			self.reloadCollectionView()
 		}
@@ -121,7 +121,7 @@ class RecipesViewController: UIViewController {
 		if shouldLoadMoreContent {
 			nextPageCalled = true
 			let params = viewModel.createParams(false, .american)
-			viewModel.loadRecipes(params) {
+			viewModel.loadComplexRecipes(params) {
 				self.reloadCollectionView()
 				self.nextPageCalled = false
 			}

@@ -19,6 +19,7 @@
 		536F7C53247DFFCA0064A1AB /* BaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536F7C52247DFFCA0064A1AB /* BaseDataManager.swift */; };
 		537A913B2481B78E00141F20 /* RecipeQueryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A913A2481B78E00141F20 /* RecipeQueryCell.swift */; };
 		537A913D2481B79A00141F20 /* RecipeQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537A913C2481B79A00141F20 /* RecipeQueryCell.xib */; };
+		537A913F2481C40400141F20 /* SpoonacularAPI+RecipeInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A913E2481C40400141F20 /* SpoonacularAPI+RecipeInformationModel.swift */; };
 		539762EF247E030500E4A9C0 /* NYTimesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539762EE247E030500E4A9C0 /* NYTimesAPI.swift */; };
 		539762F2247E038900E4A9C0 /* NewsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539762F1247E038900E4A9C0 /* NewsAPI.swift */; };
 		539762F4247E03B000E4A9C0 /* NewsAPI+TopHeadlines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539762F3247E03B000E4A9C0 /* NewsAPI+TopHeadlines.swift */; };
@@ -90,6 +91,7 @@
 		536F7C52247DFFCA0064A1AB /* BaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataManager.swift; sourceTree = "<group>"; };
 		537A913A2481B78E00141F20 /* RecipeQueryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeQueryCell.swift; sourceTree = "<group>"; };
 		537A913C2481B79A00141F20 /* RecipeQueryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeQueryCell.xib; sourceTree = "<group>"; };
+		537A913E2481C40400141F20 /* SpoonacularAPI+RecipeInformationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpoonacularAPI+RecipeInformationModel.swift"; sourceTree = "<group>"; };
 		539762EE247E030500E4A9C0 /* NYTimesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NYTimesAPI.swift; sourceTree = "<group>"; };
 		539762F1247E038900E4A9C0 /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
 		539762F3247E03B000E4A9C0 /* NewsAPI+TopHeadlines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsAPI+TopHeadlines.swift"; sourceTree = "<group>"; };
@@ -198,6 +200,13 @@
 				539EE9AC247D5CAC002BED74 /* NYTimesAPI+MostPopularModel.swift */,
 			);
 			path = NYTimes;
+			sourceTree = "<group>";
+		};
+		537A91402481F70400141F20 /* DishTypePicker */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DishTypePicker;
 			sourceTree = "<group>";
 		};
 		537C2F6C247CBCEE00D8B14F /* Views */ = {
@@ -355,6 +364,7 @@
 				53D1719524808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift */,
 				53D17197248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift */,
 				53D17199248093490099B8A4 /* SpoonacularAPI+ExtractRecipeModel.swift */,
+				537A913E2481C40400141F20 /* SpoonacularAPI+RecipeInformationModel.swift */,
 			);
 			path = SpoonacularAPI;
 			sourceTree = "<group>";
@@ -396,6 +406,7 @@
 		53F47A97247F389B00554A2C /* RecipeSearch */ = {
 			isa = PBXGroup;
 			children = (
+				537A91402481F70400141F20 /* DishTypePicker */,
 				531595F6247F3EAA0002C750 /* CuisinesPicker */,
 				53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */,
 				53F47A99247F38E300554A2C /* RecipeSearch.storyboard */,
@@ -551,6 +562,7 @@
 				53C104F9247C0EF800001DEB /* NewsAppDataManager.swift in Sources */,
 				53D17198248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift in Sources */,
 				53D1719A248093490099B8A4 /* SpoonacularAPI+ExtractRecipeModel.swift in Sources */,
+				537A913F2481C40400141F20 /* SpoonacularAPI+RecipeInformationModel.swift in Sources */,
 				53C38E9A247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift in Sources */,
 				539762F7247E046A00E4A9C0 /* TheGuardianAPI.swift in Sources */,
 				539EE9AB247CBDB2002BED74 /* Protocols.swift in Sources */,

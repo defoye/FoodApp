@@ -12,6 +12,9 @@ enum SpoonacularAPI {
 	enum Recipes {
 		case search
 		case extract
+		case information
+		case informationBulk
+		case complexSearch
 		
 		var url: String {
 			switch self {
@@ -19,6 +22,12 @@ enum SpoonacularAPI {
 				return "https://api.spoonacular.com/recipes/search"
 			case .extract:
 				return "https://api.spoonacular.com/recipes/extract"
+			case .information:
+				return "https://api.spoonacular.com/recipes/"
+			case .informationBulk:
+				return "https://api.spoonacular.com/recipes/informationBulk"
+			case .complexSearch:
+				return "https://api.spoonacular.com/recipes/complexSearch"
 			}
 		}
 	}
@@ -30,6 +39,7 @@ enum SpoonacularAPI {
 
 extension SpoonacularAPI {
 	enum Cuisine: String, CaseIterable {
+		case none = "None"
 		case african = "African"
 		case american = "American"
 		case british = "British"

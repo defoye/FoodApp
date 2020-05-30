@@ -9,6 +9,7 @@
 import UIKit
 
 enum RecipeSearchRow: Int, CaseIterable {
+	case query
 	case cuisine
 	case instructionsRequired
 	case mostPopular
@@ -21,6 +22,7 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	@IBOutlet weak var tableView: UITableView!
 	
 	weak var coordinatorDelegate: RecipeSearchCoordinatorDelegate?
+	weak var recipeQueryCellDelegate: RecipeQueryCellDelegate?
 	
 	var cuisineSelected: SpoonacularAPI.Cuisine?
 	var instructionsRequired: Bool = false
@@ -39,6 +41,8 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		navigationItem.title = "Tsatsa's Recipe Search"
 //		title = "Recipes"
 		
+		let queryCellNib = UINib.init(nibName: "RecipeQueryCell", bundle: .current)
+		tableView.register(queryCellNib, forCellReuseIdentifier: "RecipeQueryCell")
 		let cuisineCellNib = UINib.init(nibName: "CuisineCell", bundle: .current)
 		tableView.register(cuisineCellNib, forCellReuseIdentifier: "CuisineCell")
 		let instructionsRequiredCellNib = UINib.init(nibName: "InstructionsRequiredCell", bundle: .current)
@@ -49,11 +53,16 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	
 	@objc func searchButtonAction() {
 		var passThroughData: [String: String] = [
-			"cuisine": cuisineSelected?.param ?? "",
 			"instructionsRequired": String(instructionsRequired)
 		]
+		if let cuisine = cuisineSelected, cuisine != .none {
+			passThroughData["cuisine"] = cuisine.param
+		}
 		if mostPopular {
 			passThroughData["sort"] = "popularity"
+		}
+		if let searchText = recipeQueryCellDelegate?.textFieldValue {
+			passThroughData["query"] = searchText
 		}
 		coordinatorDelegate?.coordinateToRecipesList(passThroughData)
 	}
@@ -76,9 +85,15 @@ extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource
 		}
 		
 		switch row {
+		case .query:
+			if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeQueryCell") as? RecipeQueryCell {
+				cell.configure()
+				recipeQueryCellDelegate = cell
+				return cell
+			}
 		case .cuisine:
 			if let cell = tableView.dequeueReusableCell(withIdentifier: "CuisineCell") as? CuisineCell {
-				cell.configure("Cuisine", cuisineSelected?.title ?? "none")
+				cell.configure("Cuisine", cuisineSelected?.title ?? "None")
 				return cell
 			}
 		case .instructionsRequired:
@@ -102,6 +117,8 @@ extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource
 		}
 		
 		switch row {
+		case .query:
+			break
 		case .cuisine:
 			coordinatorDelegate?.coordinateToCuisinePicker()
 		case .instructionsRequired:
