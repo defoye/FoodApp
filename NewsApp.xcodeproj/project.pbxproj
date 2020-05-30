@@ -208,11 +208,33 @@
 			path = NYTimes;
 			sourceTree = "<group>";
 		};
-		537A91402481F70400141F20 /* DishTypePicker */ = {
+		537A914924822B3E00141F20 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */,
 			);
-			path = DishTypePicker;
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		537A914A24822B5600141F20 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */,
+				537A914B24822B8500141F20 /* Cell */,
+				531595F6247F3EAA0002C750 /* CuisinesPicker */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		537A914B24822B8500141F20 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5321A94D247F3A1A00F55FBB /* InstructionsRequiredCell.swift */,
+				5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */,
+				537A913A2481B78E00141F20 /* RecipeQueryCell.swift */,
+				537A913C2481B79A00141F20 /* RecipeQueryCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		537C2F6C247CBCEE00D8B14F /* Views */ = {
@@ -415,15 +437,9 @@
 		53F47A97247F389B00554A2C /* RecipeSearch */ = {
 			isa = PBXGroup;
 			children = (
-				537A91402481F70400141F20 /* DishTypePicker */,
-				531595F6247F3EAA0002C750 /* CuisinesPicker */,
-				53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */,
 				53F47A99247F38E300554A2C /* RecipeSearch.storyboard */,
-				5321A94D247F3A1A00F55FBB /* InstructionsRequiredCell.swift */,
-				5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */,
-				5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */,
-				537A913A2481B78E00141F20 /* RecipeQueryCell.swift */,
-				537A913C2481B79A00141F20 /* RecipeQueryCell.xib */,
+				537A914924822B3E00141F20 /* Coordinator */,
+				537A914A24822B5600141F20 /* Views */,
 			);
 			path = RecipeSearch;
 			sourceTree = "<group>";
