@@ -11,6 +11,7 @@ import UIKit
 enum RecipeSearchRow: Int, CaseIterable {
 	case query
 	case cuisine
+	case dishType
 	case instructionsRequired
 	case mostPopular
 }
@@ -25,6 +26,8 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	weak var recipeQueryCellDelegate: RecipeQueryCellDelegate?
 	
 	var cuisineSelected: SpoonacularAPI.Cuisine?
+	var dishTypeSelected: SpoonacularAPI.DishType?
+
 	var instructionsRequired: Bool = false
 	var mostPopular: Bool = false
 	
@@ -57,6 +60,9 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		]
 		if let cuisine = cuisineSelected, cuisine != .none {
 			passThroughData["cuisine"] = cuisine.param
+		}
+		if let type = dishTypeSelected {
+			passThroughData["type"] = type.rawValue
 		}
 		if mostPopular {
 			passThroughData["sort"] = "popularity"
@@ -96,6 +102,11 @@ extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource
 				cell.configure("Cuisine", cuisineSelected?.title ?? "None")
 				return cell
 			}
+		case .dishType:
+			if let cell = tableView.dequeueReusableCell(withIdentifier: "CuisineCell") as? CuisineCell {
+				cell.configure("Dish Type", dishTypeSelected?.title ?? "None")
+				return cell
+			}
 		case .instructionsRequired:
 			if let cell = tableView.dequeueReusableCell(withIdentifier: "InstructionsRequiredCell") as? InstructionsRequiredCell {
 				cell.configure(delegate: self)
@@ -120,7 +131,9 @@ extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource
 		case .query:
 			break
 		case .cuisine:
-			coordinatorDelegate?.coordinateToCuisinePicker()
+			coordinatorDelegate?.coordinateToCuisinePicker(.cuisine)
+		case .dishType:
+			coordinatorDelegate?.coordinateToCuisinePicker(.dish)
 		case .instructionsRequired:
 			break
 		case .mostPopular:

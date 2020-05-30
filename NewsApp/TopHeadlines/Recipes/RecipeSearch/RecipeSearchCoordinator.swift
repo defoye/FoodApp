@@ -9,8 +9,9 @@
 import UIKit
 
 protocol RecipeSearchCoordinatorDelegate: class {
-	func coordinateToCuisinePicker()
+	func coordinateToCuisinePicker(_ type: RecipePickerType)
 	func cuisineSelected(_ cuisine: SpoonacularAPI.Cuisine)
+	func dishTypeSelected(_ dishType: SpoonacularAPI.DishType)
 	func coordinateToRecipesList(_ passThroughData: [String: String])
 	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item)
 }
@@ -33,8 +34,9 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		presenter.pushViewController(viewController, animated: false)
 	}
 		
-	func coordinateToCuisinePicker() {
+	func coordinateToCuisinePicker(_ type: RecipePickerType) {
 		let cuisineViewController = CuisineViewController()
+		cuisineViewController.initViewModel(type: type)
 		let navigationController = UINavigationController(rootViewController: cuisineViewController)
 
 		cuisineViewController.delegate = self
@@ -43,6 +45,11 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 	
 	func cuisineSelected(_ cuisine: SpoonacularAPI.Cuisine) {
 		recipeSearchViewController?.cuisineSelected = cuisine
+		recipeSearchViewController?.reloadTableView()
+	}
+	
+	func dishTypeSelected(_ dishType: SpoonacularAPI.DishType) {
+		recipeSearchViewController?.dishTypeSelected = dishType
 		recipeSearchViewController?.reloadTableView()
 	}
 	

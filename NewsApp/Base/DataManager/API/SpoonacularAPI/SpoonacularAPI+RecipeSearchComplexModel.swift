@@ -95,7 +95,7 @@ extension SpoonacularAPI {
 		case primal = "primal"
 	}
 
-	enum DishType: String, Codable {
+	enum DishType: String, Codable, CaseIterable {
 		case antipasti = "antipasti"
 		case antipasto = "antipasto"
 		case appetizer = "appetizer"
@@ -119,6 +119,10 @@ extension SpoonacularAPI {
 		case snack = "snack"
 		case soup = "soup"
 		case starter = "starter"
+		
+		var title: String {
+			return self.rawValue.capitalized
+		}
 	}
 
 	enum Gaps: String, Codable {

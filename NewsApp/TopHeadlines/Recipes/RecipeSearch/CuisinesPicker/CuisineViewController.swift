@@ -8,12 +8,24 @@
 
 import UIKit
 
+enum RecipePickerType {
+	case cuisine
+	case dish
+}
+
 class CuisineViewController: UIViewController {
 	
 	let tableView = UITableView(frame: .zero, style: .plain)
 	weak var delegate: RecipeSearchCoordinatorDelegate?
-	let items: [SpoonacularAPI.Cuisine] = SpoonacularAPI.Cuisine.allCases
+	let cuisineItems: [SpoonacularAPI.Cuisine] = SpoonacularAPI.Cuisine.allCases
+	let dishItems: [SpoonacularAPI.DishType] = SpoonacularAPI.DishType.allCases
 	
+	var type: RecipePickerType?
+	
+	func initViewModel(type: RecipePickerType) {
+		self.type = type
+	}
+
 	override func viewDidLoad() {
 		setupTableView()
 
@@ -44,13 +56,31 @@ class CuisineViewController: UIViewController {
 
 extension CuisineViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let count = items.count
-		return count
+		guard let type = type else {
+			return 0
+		}
+		
+		switch type {
+		case .cuisine:
+			return cuisineItems.count
+		case .dish:
+			return dishItems.count
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if let cell = tableView.dequeueReusableCell(withIdentifier: "CuisineCell") as? CuisineCell {
-			cell.configure(items[indexPath.row].title, nil)
+			guard let type = type else {
+				fatalError()
+			}
+			let primaryTitle: String
+			switch type {
+			case .cuisine:
+				primaryTitle = cuisineItems[indexPath.row].title
+			case .dish:
+				primaryTitle = dishItems[indexPath.row].title
+			}
+			cell.configure(primaryTitle, nil)
 			return cell
 		}
 		
@@ -58,7 +88,16 @@ extension CuisineViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		delegate?.cuisineSelected(items[indexPath.row])
+		guard let type = type else {
+			return
+		}
+		switch type {
+		case .cuisine:
+			delegate?.cuisineSelected(cuisineItems[indexPath.row])
+		case .dish:
+			delegate?.dishTypeSelected(dishItems[indexPath.row])
+		}
+		
 		dismiss(animated: true, completion: nil)
 	}
 }
