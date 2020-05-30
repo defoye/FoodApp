@@ -190,3 +190,11 @@ extension Double {
 		return "\(rational.numerator)/\(rational.denominator)"
 	}
 }
+
+extension UICollectionView {
+	func reloadDataOnMain() {
+		DispatchQueue.main.async {
+			self.reloadData()
+		}
+	}
+}
