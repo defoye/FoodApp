@@ -109,4 +109,16 @@ extension NewsAppDataManager {
 		
 		dataTask(request, completion)
 	}
+	
+	func recipeSimilarSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSimilarModel?) -> Void)) {
+		guard let id = params["id"] else {
+			fatalError()
+		}
+		let urlString = SpoonacularAPI.Recipes.similar.url + "\(id)/similar"
+		let key = SpoonacularAPI.key
+		let combinedParams = ["apiKey": key].merged(with: params)
+		let request = createRequest(urlString, combinedParams, nil)
+		
+		dataTask(request, completion)
+	}
 }
