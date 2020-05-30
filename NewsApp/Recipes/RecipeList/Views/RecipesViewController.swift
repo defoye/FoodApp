@@ -8,25 +8,15 @@
 
 import UIKit
 
-extension RecipesViewController: RecipesLayoutDelegate {
-  func collectionView(
-      _ collectionView: UICollectionView,
-      heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-//	if let cell = collectionView.cellForItem(at: indexPath) as? RecipeCell {
-//		let height = cell.height()
-//		return height
-//	}
-	
-    return 200
-  }
-}
-
 class RecipesViewController: UIViewController {
+		
+	var collectionView: UICollectionView = {
+		let layout = UICollectionViewFlowLayout()
+		layout.minimumInteritemSpacing = 0
+		layout.minimumLineSpacing = 0
+		return UICollectionView(frame: .zero, collectionViewLayout: layout)
+	}()
 	
-//	var collectionView = UICollectionView(frame: .zero, collectionViewLayout: RecipesLayout())
-	
-	var collectionView = UICollectionView(frame: .zero, collectionViewLayout: RecipesLayout())
-
 	var viewModel: RecipesViewModel!
 		
 	func initViewModel(_ viewModel: RecipesViewModel) {
@@ -81,9 +71,6 @@ class RecipesViewController: UIViewController {
 			self.reloadCollectionView()
 		}
 		
-//		if let layout = collectionView.collectionViewLayout as? RecipesLayout {
-//		  layout.delegate = self
-//		}
 		navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 	}
 	
