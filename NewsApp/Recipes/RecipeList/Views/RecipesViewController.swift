@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipesViewController: UIViewController {
+class RecipesViewController: BaseViewController {
 		
 	var collectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
@@ -17,7 +17,10 @@ class RecipesViewController: UIViewController {
 		return UICollectionView(frame: .zero, collectionViewLayout: layout)
 	}()
 	
-	var viewModel: RecipesViewModel!
+	private var viewModel: RecipesViewModel!
+	/// Height of the last cell configured. Will be the max of two cell heights.
+	private var lastHeight: CGFloat = 0
+
 		
 	func initViewModel(_ viewModel: RecipesViewModel) {
 		self.viewModel = viewModel
@@ -68,7 +71,7 @@ class RecipesViewController: UIViewController {
 		let params = viewModel.createParams(instructionsRequired: false)
 		viewModel.loadComplexRecipes(params) {
 			self.removeLoadingView()
-			self.reloadCollectionView()
+			self.collectionView.reloadDataOnMain()
 		}
 		
 		navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -82,42 +85,20 @@ class RecipesViewController: UIViewController {
 		collectionView.delegate = self
 		collectionView.dataSource = self
 	}
-	
-	// TODO
-	func reloadCollectionView() {
-		DispatchQueue.main.async {
-			self.collectionView.reloadData()
-		}
-	}
-	
-	var previousOffset: CGFloat = 0
-	var nextPageCalled: Bool = false
-	
-	// TODO
-	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		let contentHeight = scrollView.contentSize.height
-		let frameHeight = scrollView.frame.height
-		let currentY = scrollView.contentOffset.y
-		let newContentScrollThreshold = contentHeight - currentY <= frameHeight * 2
-		let isScrollingDown = currentY - previousOffset > 0
-		let shouldLoadMoreContent = newContentScrollThreshold
-									&& isScrollingDown
-									&& !nextPageCalled
-									&& viewModel.hasMoreContent
 		
-		if shouldLoadMoreContent {
-			nextPageCalled = true
+	// TODO
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		super.scrollViewDidScroll(scrollView)
+		
+		if viewModel.hasMoreContent && super.inScrollFetchRange {
+			super.nextPageCalled = true
 			let params = viewModel.createParams(instructionsRequired: false)
 			viewModel.loadComplexRecipes(params) {
-				self.reloadCollectionView()
-				self.nextPageCalled = false
+				self.collectionView.reloadDataOnMain()
+				super.nextPageCalled = false
 			}
 		}
-		
-		previousOffset = currentY
 	}
-	
-	var lastHeight: CGFloat = 0
 }
 
 extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
