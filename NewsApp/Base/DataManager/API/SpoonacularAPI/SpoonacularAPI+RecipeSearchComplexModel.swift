@@ -100,6 +100,7 @@ extension SpoonacularAPI {
 		case antipasti = "antipasti"
 		case antipasto = "antipasto"
 		case appetizer = "appetizer"
+		case batter = "batter"
 		case beverage = "beverage"
 		case bread = "bread"
 		case breakfast = "breakfast"
