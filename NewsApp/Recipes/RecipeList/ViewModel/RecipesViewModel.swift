@@ -60,12 +60,11 @@ class RecipesViewModel {
 		return offset < totalResults
 	}
 	
-	func createParams(_ instructionsRequired: Bool, _ cuisine: SpoonacularAPI.Cuisine) -> [String: String] {
+	func createParams(instructionsRequired: Bool) -> [String: String] {
 		return passThroughParams.merged(with: [
 			"offset": String(offset),
 			"number": String(fetchAmount),
 			"instructionsRequired": String(instructionsRequired),
-			"cuisine": cuisine.param,
 			"addRecipeInformation": "true"
 		])
 	}
