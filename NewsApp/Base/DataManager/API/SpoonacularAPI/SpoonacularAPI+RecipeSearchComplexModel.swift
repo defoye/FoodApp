@@ -104,8 +104,10 @@ extension SpoonacularAPI {
 		case bread = "bread"
 		case breakfast = "breakfast"
 		case brunch = "brunch"
+		case condiment = "condiment"
 		case dessert = "dessert"
 		case dinner = "dinner"
+		case dip = "dip"
 		case drink = "drink"
 		case fingerfood = "fingerfood"
 		case horDOeuvre = "hor d'oeuvre"
@@ -119,6 +121,7 @@ extension SpoonacularAPI {
 		case sideDish = "side dish"
 		case snack = "snack"
 		case soup = "soup"
+		case spread = "spread"
 		case starter = "starter"
 		
 		var title: String {
