@@ -20,7 +20,9 @@ class RecipesViewController: BaseViewController {
 	private var viewModel: RecipesViewModel!
 	/// Height of the last cell configured. Will be the max of two cell heights.
 	private var lastHeight: CGFloat = 0
-
+    override var fetchDistanceMultiplier: CGFloat {
+		return 2
+	}
 		
 	func initViewModel(_ viewModel: RecipesViewModel) {
 		self.viewModel = viewModel

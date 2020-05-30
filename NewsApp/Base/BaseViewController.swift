@@ -13,7 +13,9 @@ class BaseViewController: UIViewController {
 	private var previousOffset: CGFloat = 0
 	var nextPageCalled: Bool = false
 	var inScrollFetchRange: Bool = false
-	var fetchDistanceMultiplier: CGFloat = 1
+	var fetchDistanceMultiplier: CGFloat {
+		return 1
+	}
 	
 	func scrollViewDidScroll(_ scrollView: UIScrollView) {
 		let contentHeight = scrollView.contentSize.height
