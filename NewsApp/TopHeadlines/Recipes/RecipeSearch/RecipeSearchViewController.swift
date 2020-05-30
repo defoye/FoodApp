@@ -13,7 +13,6 @@ enum RecipeSearchRow: Int, CaseIterable {
 	case cuisine
 	case dishType
 	case instructionsRequired
-	case mostPopular
 }
 
 class RecipeSearchViewController: UIViewController, Storyboarded {
@@ -29,7 +28,7 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	var dishTypeSelected: SpoonacularAPI.DishType?
 
 	var instructionsRequired: Bool = false
-	var mostPopular: Bool = false
+	var mostPopular: Bool = true
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -109,12 +108,7 @@ extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource
 			}
 		case .instructionsRequired:
 			if let cell = tableView.dequeueReusableCell(withIdentifier: "InstructionsRequiredCell") as? InstructionsRequiredCell {
-				cell.configure(delegate: self)
-				return cell
-			}
-		case .mostPopular:
-			if let cell = tableView.dequeueReusableCell(withIdentifier: "InstructionsRequiredCell") as? InstructionsRequiredCell {
-				cell.configure(title: "Most Popular", delegate: self)
+				cell.configure(delegate: self, switchIsOn: instructionsRequired)
 				return cell
 			}
 		}
@@ -135,8 +129,6 @@ extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource
 		case .dishType:
 			coordinatorDelegate?.coordinateToCuisinePicker(.dish)
 		case .instructionsRequired:
-			break
-		case .mostPopular:
 			break
 		}
 	}

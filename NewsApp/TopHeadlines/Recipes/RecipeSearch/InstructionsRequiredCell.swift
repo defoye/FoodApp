@@ -31,9 +31,10 @@ class InstructionsRequiredCell: UITableViewCell {
 
 	}
 	
-	func configure(delegate: InstructionsRequiredCellDelegate) {
+	func configure(delegate: InstructionsRequiredCellDelegate, switchIsOn: Bool) {
 		setup()
 		self.delegate = delegate
+		instructionsRequiredSwitch.isOn = switchIsOn
 		instructionsRequiredLabel.text = "Instructions required"
 	}
 	
