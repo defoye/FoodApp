@@ -28,7 +28,7 @@
 		53C104E0247C0BF700001DEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53C104DF247C0BF700001DEB /* Assets.xcassets */; };
 		53C104E3247C0BF700001DEB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53C104E1247C0BF700001DEB /* LaunchScreen.storyboard */; };
 		53C104EE247C0BF700001DEB /* FoodAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C104ED247C0BF700001DEB /* FoodAppTests.swift */; };
-		53C104F9247C0EF800001DEB /* RecipeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C104F8247C0EF800001DEB /* RecipeDataManager.swift */; };
+		53C104F9247C0EF800001DEB /* SpoonacularDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C104F8247C0EF800001DEB /* SpoonacularDataManager.swift */; };
 		53C38E98247E209000BD42D4 /* SpoonacularAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C38E97247E209000BD42D4 /* SpoonacularAPI.swift */; };
 		53C38E9A247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C38E99247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift */; };
 		53C38E9D247EA27500BD42D4 /* RecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C38E9C247EA27500BD42D4 /* RecipesViewController.swift */; };
@@ -51,6 +51,10 @@
 		53F47A92247EA74C00554A2C /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A91247EA74C00554A2C /* RecipeCell.swift */; };
 		53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */; };
 		53F47A9A247F38E300554A2C /* RecipeSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53F47A99247F38E300554A2C /* RecipeSearch.storyboard */; };
+		53F7A96D254A7EF8009DF2D1 /* EdamamDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F7A96C254A7EF8009DF2D1 /* EdamamDataManager.swift */; };
+		53F7A971254A7F3A009DF2D1 /* EdamamAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F7A970254A7F3A009DF2D1 /* EdamamAPI.swift */; };
+		53F7A975254A80DE009DF2D1 /* EdamamAPI+RecipeSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F7A974254A80DE009DF2D1 /* EdamamAPI+RecipeSearchModel.swift */; };
+		53F7A979254A824B009DF2D1 /* EdamamRecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F7A978254A824B009DF2D1 /* EdamamRecipesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +93,7 @@
 		53C104E9247C0BF700001DEB /* FoodAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53C104ED247C0BF700001DEB /* FoodAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAppTests.swift; sourceTree = "<group>"; };
 		53C104EF247C0BF700001DEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		53C104F8247C0EF800001DEB /* RecipeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDataManager.swift; sourceTree = "<group>"; };
+		53C104F8247C0EF800001DEB /* SpoonacularDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoonacularDataManager.swift; sourceTree = "<group>"; };
 		53C38E97247E209000BD42D4 /* SpoonacularAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoonacularAPI.swift; sourceTree = "<group>"; };
 		53C38E99247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpoonacularAPI+RecipeSearchModel.swift"; sourceTree = "<group>"; };
 		53C38E9C247EA27500BD42D4 /* RecipesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +116,10 @@
 		53F47A91247EA74C00554A2C /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchViewController.swift; sourceTree = "<group>"; };
 		53F47A99247F38E300554A2C /* RecipeSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RecipeSearch.storyboard; sourceTree = "<group>"; };
+		53F7A96C254A7EF8009DF2D1 /* EdamamDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamDataManager.swift; sourceTree = "<group>"; };
+		53F7A970254A7F3A009DF2D1 /* EdamamAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamAPI.swift; sourceTree = "<group>"; };
+		53F7A974254A80DE009DF2D1 /* EdamamAPI+RecipeSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EdamamAPI+RecipeSearchModel.swift"; sourceTree = "<group>"; };
+		53F7A978254A824B009DF2D1 /* EdamamRecipesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdamamRecipesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,19 +153,11 @@
 		536F7C4F247DFF920064A1AB /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
+				53F7A96B254A7EE8009DF2D1 /* EdamamAPI */,
 				536F7C52247DFFCA0064A1AB /* BaseDataManager.swift */,
-				53C104F8247C0EF800001DEB /* RecipeDataManager.swift */,
-				536F7C54247E016B0064A1AB /* API */,
-			);
-			path = DataManager;
-			sourceTree = "<group>";
-		};
-		536F7C54247E016B0064A1AB /* API */ = {
-			isa = PBXGroup;
-			children = (
 				53C38E96247E207100BD42D4 /* SpoonacularAPI */,
 			);
-			path = API;
+			path = DataManager;
 			sourceTree = "<group>";
 		};
 		537A914924822B3E00141F20 /* Coordinator */ = {
@@ -193,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				53C38E9E247EA27E00BD42D4 /* RecipesViewModel.swift */,
+				53F7A978254A824B009DF2D1 /* EdamamRecipesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -279,6 +280,7 @@
 		53C38E96247E207100BD42D4 /* SpoonacularAPI */ = {
 			isa = PBXGroup;
 			children = (
+				53C104F8247C0EF800001DEB /* SpoonacularDataManager.swift */,
 				53C38E97247E209000BD42D4 /* SpoonacularAPI.swift */,
 				53C38E99247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift */,
 				53D1719324802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift */,
@@ -344,6 +346,16 @@
 				537A914C24822BE200141F20 /* ViewModel */,
 			);
 			path = RecipeList;
+			sourceTree = "<group>";
+		};
+		53F7A96B254A7EE8009DF2D1 /* EdamamAPI */ = {
+			isa = PBXGroup;
+			children = (
+				53F7A96C254A7EF8009DF2D1 /* EdamamDataManager.swift */,
+				53F7A970254A7F3A009DF2D1 /* EdamamAPI.swift */,
+				53F7A974254A80DE009DF2D1 /* EdamamAPI+RecipeSearchModel.swift */,
+			);
+			path = EdamamAPI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -464,10 +476,14 @@
 				537A914224820A6000141F20 /* SpoonacularAPI+RecipeSimilarModel.swift in Sources */,
 				53D1719424802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift in Sources */,
 				53DF1F2C248230270034E4AC /* BaseViewController.swift in Sources */,
+				53F7A979254A824B009DF2D1 /* EdamamRecipesViewModel.swift in Sources */,
 				537A913B2481B78E00141F20 /* RecipeQueryCell.swift in Sources */,
-				53C104F9247C0EF800001DEB /* RecipeDataManager.swift in Sources */,
+				53F7A975254A80DE009DF2D1 /* EdamamAPI+RecipeSearchModel.swift in Sources */,
+				53C104F9247C0EF800001DEB /* SpoonacularDataManager.swift in Sources */,
 				53D17198248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift in Sources */,
+				53F7A971254A7F3A009DF2D1 /* EdamamAPI.swift in Sources */,
 				53D1719A248093490099B8A4 /* SpoonacularAPI+ExtractRecipeModel.swift in Sources */,
+				53F7A96D254A7EF8009DF2D1 /* EdamamDataManager.swift in Sources */,
 				537A913F2481C40400141F20 /* SpoonacularAPI+RecipeInformationModel.swift in Sources */,
 				53C38E9A247E9E2A00BD42D4 /* SpoonacularAPI+RecipeSearchModel.swift in Sources */,
 				539EE9AB247CBDB2002BED74 /* Protocols.swift in Sources */,

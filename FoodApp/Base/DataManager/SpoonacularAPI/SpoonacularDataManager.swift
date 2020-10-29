@@ -1,5 +1,5 @@
 //
-//  RecipeDataManager.swift
+//  SpoonacularDataManager.swift
 //  NewsApp
 //
 //  Created by Ernest DeFoy on 5/25/20.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class RecipeDataManager: BaseDataManager { }
+class SpoonacularDataManager: BaseDataManager { }
 
-extension RecipeDataManager {
+extension SpoonacularDataManager {
 	
 	func recipeSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSearchModel?) -> Void)) {
 		let urlString = SpoonacularAPI.Recipes.search.url

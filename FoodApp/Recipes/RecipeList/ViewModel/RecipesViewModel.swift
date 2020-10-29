@@ -10,7 +10,7 @@ import Foundation
 
 class RecipesViewModel {
 	
-	let dataManager = RecipeDataManager()
+	let dataManager = SpoonacularDataManager()
 	var offset: Int = 0
 	var fetchAmount: Int = 20
 	var isLoading: Bool = false

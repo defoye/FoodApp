@@ -17,7 +17,7 @@ enum RecipeDetailSection: Int, CaseIterable {
 
 class RecipeDetailViewModel {
 	
-	let dataManager = RecipeDataManager()
+	let dataManager = SpoonacularDataManager()
 	
 	var isLoading: Bool = false
 	
