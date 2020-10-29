@@ -10,7 +10,7 @@ import Foundation
 
 class RecipesViewModel {
 	
-	let dataManager = NewsAppDataManager()
+	let dataManager = RecipeDataManager()
 	var offset: Int = 0
 	var fetchAmount: Int = 20
 	var isLoading: Bool = false

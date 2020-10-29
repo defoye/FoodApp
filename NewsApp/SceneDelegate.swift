@@ -24,20 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window?.makeKeyAndVisible()
 		
 		let tabBarController = UITabBarController()
-						
-//		let topHeadlinesCategoriesViewController = TopHeadlinesCategoriesViewController.instantiate("TopHeadlinesCategories")
-//
-//		let topHeadlinesCategoriesNavigationController = UINavigationController(rootViewController: topHeadlinesCategoriesViewController)
-//
-//		let recipeSearchNavigationController = UINavigationController()
-//
-//		tabBarController.viewControllers = [topHeadlinesCategoriesNavigationController, recipeSearchNavigationController]
-//
-//
-//		let coordinator = RecipeSearchCoordinator(recipeSearchNavigationController)
-//		coordinator.start()
-//		recipeSearchCoordinator = coordinator
-		
 		let mainCoordinator = MainCoordinator(tabBarController)
 			
 		window?.rootViewController = tabBarController
