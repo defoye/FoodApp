@@ -67,18 +67,28 @@ extension String {
 
 extension UIView {
 	
-	func pin(to superView: UIView, topInset: CGFloat = 0, bottomInset: CGFloat = 0, leadingInset: CGFloat = 0, trailingInset: CGFloat = 0) {
+    func pin(to superView: UIView, insets: UIEdgeInsets? = nil) {
 		if !superView.subviews.contains(self) {
 			superView.addSubview(self)
 		}
 		translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			topAnchor.constraint(equalTo: superView.topAnchor, constant: topInset),
-			bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: bottomInset),
-			leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: leadingInset),
-			trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: trailingInset)
+            topAnchor.constraint(equalTo: superView.topAnchor, constant: insets?.top ?? 0),
+			bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: insets?.bottom ?? 0),
+			leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: insets?.left ?? 0),
+			trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: insets?.right ?? 0)
 		])
 	}
+    
+    func pin(to safeAreaLayoutGuide: UILayoutGuide, insets: UIEdgeInsets? = nil) {
+        translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: insets?.top ?? 0),
+            bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: insets?.bottom ?? 0),
+            leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: insets?.left ?? 0),
+            trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: insets?.right ?? 0)
+        ])
+    }
 	
 	@IBInspectable var viewCornerRadius: CGFloat {
 		get {
@@ -197,4 +207,37 @@ extension UICollectionView {
 			self.reloadData()
 		}
 	}
+}
+
+extension UITableView {
+    
+    func configuredCell<T: UITableViewCell>(_ type: T.Type, identifier: String, indexPath: IndexPath? = nil, configurator: ((T) -> Void)) -> T {
+        let cell: T
+        
+        if let indexPath = indexPath {
+            if let dequeuedCell = self.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? T {
+                cell = dequeuedCell
+            } else {
+                cell = T()
+            }
+        } else {
+            if let dequeuedCell = self.dequeueReusableCell(withIdentifier: identifier) as? T {
+                cell = dequeuedCell
+            } else {
+                cell = T()
+            }
+        }
+        
+        configurator(cell)
+        
+        return cell
+    }
+    
+    func configuredCell<T: UITableViewCell>(_ type: T.Type, configurator: ((T) -> Void)) -> T {
+        let cell = T()
+        
+        configurator(cell)
+        
+        return cell
+    }
 }

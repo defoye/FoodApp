@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -48,6 +48,11 @@
 		53D171AB2480A21F0099B8A4 /* RecipeDetailInstructionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D171AA2480A21F0099B8A4 /* RecipeDetailInstructionCell.xib */; };
 		53D171AD2480A22C0099B8A4 /* RecipeDetailInstructionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D171AC2480A22C0099B8A4 /* RecipeDetailInstructionCell.swift */; };
 		53DF1F2C248230270034E4AC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DF1F2B248230270034E4AC /* BaseViewController.swift */; };
+		53EA5538254B560400A33807 /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5537254B560400A33807 /* LogonViewController.swift */; };
+		53EA553E254B5C1100A33807 /* SignUpOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */; };
+		53EA5542254B5EB900A33807 /* SignUpLogoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */; };
+		53EA5546254B76DE00A33807 /* FoodAppImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5545254B76DE00A33807 /* FoodAppImageConstants.swift */; };
+		53EA5552254B87D800A33807 /* SignInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5551254B87D800A33807 /* SignInCell.swift */; };
 		53F47A90247EA74200554A2C /* RecipeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F47A8F247EA74200554A2C /* RecipeCell.xib */; };
 		53F47A92247EA74C00554A2C /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A91247EA74C00554A2C /* RecipeCell.swift */; };
 		53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */; };
@@ -114,6 +119,11 @@
 		53D171AA2480A21F0099B8A4 /* RecipeDetailInstructionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeDetailInstructionCell.xib; sourceTree = "<group>"; };
 		53D171AC2480A22C0099B8A4 /* RecipeDetailInstructionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailInstructionCell.swift; sourceTree = "<group>"; };
 		53DF1F2B248230270034E4AC /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		53EA5537254B560400A33807 /* LogonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogonViewController.swift; sourceTree = "<group>"; };
+		53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpOptionCell.swift; sourceTree = "<group>"; };
+		53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpLogoCell.swift; sourceTree = "<group>"; };
+		53EA5545254B76DE00A33807 /* FoodAppImageConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAppImageConstants.swift; sourceTree = "<group>"; };
+		53EA5551254B87D800A33807 /* SignInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCell.swift; sourceTree = "<group>"; };
 		53F47A8F247EA74200554A2C /* RecipeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeCell.xib; sourceTree = "<group>"; };
 		53F47A91247EA74C00554A2C /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchViewController.swift; sourceTree = "<group>"; };
@@ -161,7 +171,6 @@
 				F0D49B4EEB45DB4352F50EC9 /* Pods-FoodAppTests.debug.xcconfig */,
 				0B1D5AAE4E252C690B6E8B23 /* Pods-FoodAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -262,6 +271,7 @@
 			children = (
 				539EE9A8247CBD87002BED74 /* Extensions.swift */,
 				539EE9AA247CBDB2002BED74 /* Protocols.swift */,
+				53EA5545254B76DE00A33807 /* FoodAppImageConstants.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -289,6 +299,7 @@
 		53C104D5247C0BEE00001DEB /* FoodApp */ = {
 			isa = PBXGroup;
 			children = (
+				53EA5536254B55D800A33807 /* Auth */,
 				5340046D247F563400060A12 /* MainCoordinator.swift */,
 				53C104D6247C0BEE00001DEB /* AppDelegate.swift */,
 				53C104D8247C0BEE00001DEB /* SceneDelegate.swift */,
@@ -361,6 +372,17 @@
 				537A91452482142600141F20 /* RecipeSimilarCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		53EA5536254B55D800A33807 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				53EA5537254B560400A33807 /* LogonViewController.swift */,
+				53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */,
+				53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */,
+				53EA5551254B87D800A33807 /* SignInCell.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		53F47A97247F389B00554A2C /* RecipeSearch */ = {
@@ -562,10 +584,13 @@
 			files = (
 				53F47A92247EA74C00554A2C /* RecipeCell.swift in Sources */,
 				53D1719D2480980D0099B8A4 /* RecipeDetailViewModel.swift in Sources */,
+				53EA5542254B5EB900A33807 /* SignUpLogoCell.swift in Sources */,
+				53EA5552254B87D800A33807 /* SignInCell.swift in Sources */,
 				531595F5247F3C330002C750 /* CuisineViewController.swift in Sources */,
 				5321A94E247F3A1A00F55FBB /* InstructionsRequiredCell.swift in Sources */,
 				53C38E9F247EA27E00BD42D4 /* RecipesViewModel.swift in Sources */,
 				537A914224820A6000141F20 /* SpoonacularAPI+RecipeSimilarModel.swift in Sources */,
+				53EA5546254B76DE00A33807 /* FoodAppImageConstants.swift in Sources */,
 				53D1719424802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift in Sources */,
 				53DF1F2C248230270034E4AC /* BaseViewController.swift in Sources */,
 				537A913B2481B78E00141F20 /* RecipeQueryCell.swift in Sources */,
@@ -578,6 +603,7 @@
 				536F7C53247DFFCA0064A1AB /* BaseDataManager.swift in Sources */,
 				537A9144248213FB00141F20 /* RecipeSimilarCell.swift in Sources */,
 				539EE9A9247CBD87002BED74 /* Extensions.swift in Sources */,
+				53EA5538254B560400A33807 /* LogonViewController.swift in Sources */,
 				53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */,
 				53D1719F24809FF60099B8A4 /* RecipeDetailViewController.swift in Sources */,
 				53D171A52480A1F20099B8A4 /* RecipeDetailHeaderCell.swift in Sources */,
@@ -591,6 +617,7 @@
 				53C38E98247E209000BD42D4 /* SpoonacularAPI.swift in Sources */,
 				53D1719624808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift in Sources */,
 				53C104D9247C0BEE00001DEB /* SceneDelegate.swift in Sources */,
+				53EA553E254B5C1100A33807 /* SignUpOptionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

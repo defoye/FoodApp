@@ -24,15 +24,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window = UIWindow(windowScene: scene)
 		window?.makeKeyAndVisible()
         self.recipePresenter = UINavigationController()
-		
-		let mainCoordinator = MainCoordinator(recipePresenter)
-			
-		window?.rootViewController = recipePresenter
-		
-		mainCoordinator.start()
-		
-		self.mainCoordinator = mainCoordinator
+        
+        if authenticate() {
+            let mainCoordinator = MainCoordinator(recipePresenter)
+                
+            window?.rootViewController = recipePresenter
+            
+            mainCoordinator.start()
+            
+            self.mainCoordinator = mainCoordinator
+        }
 	}
+    
+    func authenticate() -> Bool {
+        
+        window?.rootViewController = LogonViewController()
+        
+        return false
+    }
 
 	func sceneDidDisconnect(_ scene: UIScene) {
 		// Called as the scene is being released by the system.

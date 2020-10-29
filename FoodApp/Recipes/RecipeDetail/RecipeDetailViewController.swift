@@ -148,7 +148,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
 		label.translatesAutoresizingMaskIntoConstraints = false
 		headerView.addSubview(tileView)
 		tileView.addSubview(label)
-		tileView.pin(to: headerView, topInset: 20, bottomInset: -10, leadingInset: 20, trailingInset: -20)
+        tileView.pin(to: headerView, insets: .init(top: 20, left: 20, bottom: -10, right: -20))
 		label.pin(to: tileView)
 		label.text = title
 		label.font = UIFont(name: "Avenir-Heavy", size: 24)
