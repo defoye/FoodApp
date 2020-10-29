@@ -13,6 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
 
 	var mainCoordinator: MainCoordinator?
+    var recipePresenter: UINavigationController?
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		// Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -22,11 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				
 		window = UIWindow(windowScene: scene)
 		window?.makeKeyAndVisible()
+        self.recipePresenter = UINavigationController()
 		
-		let tabBarController = UITabBarController()
-		let mainCoordinator = MainCoordinator(tabBarController)
+		let mainCoordinator = MainCoordinator(recipePresenter)
 			
-		window?.rootViewController = tabBarController
+		window?.rootViewController = recipePresenter
 		
 		mainCoordinator.start()
 		

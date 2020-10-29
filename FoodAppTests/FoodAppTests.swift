@@ -1,15 +1,15 @@
 //
-//  NewsAppTests.swift
-//  NewsAppTests
+//  FoodAppTests.swift
+//  FoodAppTests
 //
 //  Created by Ernest DeFoy on 5/25/20.
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
 import XCTest
-@testable import NewsApp
+@testable import FoodApp
 
-class NewsAppTests: XCTestCase {
+class FoodAppTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

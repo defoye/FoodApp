@@ -18,10 +18,10 @@ protocol RecipeSearchCoordinatorDelegate: class {
 
 class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 	
-	let presenter: UINavigationController
+	weak var presenter: UINavigationController?
 	var recipeSearchViewController: RecipeSearchViewController?
 	
-	init(_ presenter: UINavigationController) {
+	init(_ presenter: UINavigationController?) {
 		self.presenter = presenter
 	}
 	
@@ -31,7 +31,7 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		
 		recipeSearchViewController = viewController
 		
-		presenter.pushViewController(viewController, animated: false)
+		presenter?.pushViewController(viewController, animated: false)
 	}
 		
 	func coordinateToCuisinePicker(_ type: RecipePickerType) {
@@ -40,7 +40,7 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		let navigationController = UINavigationController(rootViewController: cuisineViewController)
 
 		cuisineViewController.delegate = self
-		presenter.present(navigationController, animated: true, completion: nil)
+		presenter?.present(navigationController, animated: true, completion: nil)
 	}
 	
 	func cuisineSelected(_ cuisine: SpoonacularAPI.Cuisine) {
@@ -58,7 +58,7 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		let viewModel = RecipesViewModel(passThroughData)
 		recipesViewController.initViewModel(viewModel)
 		
-		presenter.pushViewController(recipesViewController, animated: true)
+		presenter?.pushViewController(recipesViewController, animated: true)
 	}
 	
 	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item) {
@@ -66,6 +66,6 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		let vm = RecipeDetailViewModel(urlString, item)
 		vc.initViewModel(vm)
 		
-		presenter.pushViewController(vc, animated: true)
+		presenter?.pushViewController(vc, animated: true)
 	}
 }
