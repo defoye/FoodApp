@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>946810700327-qmg5bia6snbk2f30s0ai8vptc1p9osuk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.946810700327-qmg5bia6snbk2f30s0ai8vptc1p9osuk</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDH6IHmPMA1N1FnjUtmlHNmzwsH53sjv_A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>946810700327</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>flexibles.FoodApp</string>
+	<key>PROJECT_ID</key>
+	<string>foodapp-5f684</string>
+	<key>STORAGE_BUCKET</key>
+	<string>foodapp-5f684.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:946810700327:ios:7c12c02eab4deca3d34402</string>
+	<key>DATABASE_URL</key>
+	<string>https://foodapp-5f684.firebaseio.com</string>
+</dict>
+</plist>

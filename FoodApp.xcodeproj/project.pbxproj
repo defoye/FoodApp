@@ -51,6 +51,7 @@
 		53F47A92247EA74C00554A2C /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A91247EA74C00554A2C /* RecipeCell.swift */; };
 		53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */; };
 		53F47A9A247F38E300554A2C /* RecipeSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53F47A99247F38E300554A2C /* RecipeSearch.storyboard */; };
+		7BF679F9254B44B300E28CDD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BF679F8254B44B200E28CDD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		53F47A91247EA74C00554A2C /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchViewController.swift; sourceTree = "<group>"; };
 		53F47A99247F38E300554A2C /* RecipeSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RecipeSearch.storyboard; sourceTree = "<group>"; };
+		7BF679F8254B44B200E28CDD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +265,7 @@
 				53C104DF247C0BF700001DEB /* Assets.xcassets */,
 				53C104E1247C0BF700001DEB /* LaunchScreen.storyboard */,
 				53C104E4247C0BF700001DEB /* Info.plist */,
+				7BF679F8254B44B200E28CDD /* GoogleService-Info.plist */,
 			);
 			path = FoodApp;
 			sourceTree = "<group>";
@@ -427,6 +430,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BF679F9254B44B300E28CDD /* GoogleService-Info.plist in Resources */,
 				53F47A9A247F38E300554A2C /* RecipeSearch.storyboard in Resources */,
 				537A91462482142600141F20 /* RecipeSimilarCell.xib in Resources */,
 				53D171A12480A0100099B8A4 /* RecipeDetail.storyboard in Resources */,
