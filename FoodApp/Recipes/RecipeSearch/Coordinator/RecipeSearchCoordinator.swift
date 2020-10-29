@@ -30,7 +30,6 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		viewController.coordinatorDelegate = self
 		
 		recipeSearchViewController = viewController
-		
 		presenter?.pushViewController(viewController, animated: false)
 	}
 		
