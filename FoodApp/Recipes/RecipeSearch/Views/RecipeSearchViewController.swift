@@ -40,7 +40,7 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		searchButton.addTarget(self, action: #selector(searchButtonAction), for: .touchUpInside)
 				
 		tabBarItem = UITabBarItem(title: "Recipes", image: UIImage(named: "cooking_book"), selectedImage: nil)
-		navigationItem.title = "Tsatsa's Recipe Search"
+		navigationItem.title = "Recipe Search"
 //		title = "Recipes"
 		
 		let queryCellNib = UINib.init(nibName: "RecipeQueryCell", bundle: .current)
