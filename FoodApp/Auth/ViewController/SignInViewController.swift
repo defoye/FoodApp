@@ -15,9 +15,9 @@ class SignInViewController: UIViewController, UITableViewDelegate {
     
     enum Row: Hashable {
         case logonLabel(_ model: LabelCell.Model)
-        case username
-        case password
-        case logonButton
+        case username(_ model: TextFieldTableViewCell.Model)
+        case password(_ model: TextFieldTableViewCell.Model)
+        case logonButton(_ model: ButtonTableViewCell.Model)
     }
     
     private lazy var dataSource: UITableViewDiffableDataSource<Section, Row> = {
@@ -65,11 +65,34 @@ class SignInViewController: UIViewController, UITableViewDelegate {
     private func setupDataSource() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Row>()
         snapshot.appendSections([.main])
+        
+        let logonLabelModel = LabelCell.Model()
+        logonLabelModel.text = "Logon"
+        logonLabelModel.font = UIFont.systemFont(ofSize: 30)
+        
+        let usernameModel = TextFieldTableViewCell.Model()
+        usernameModel.labelText = "Username"
+        usernameModel.insets = .init(top: 20, left: 20, bottom: -20, right: -20)
+        usernameModel.textContentType = .username
+        usernameModel.keyboardType = .emailAddress
+        
+        let passwordModel = TextFieldTableViewCell.Model()
+        passwordModel.labelText = "Password"
+        passwordModel.insets = .init(top: 20, left: 20, bottom: -20, right: -20)
+        passwordModel.textContentType = .password
+        passwordModel.isSecureTextEntry = true
+        
+        let logonButtonModel = ButtonTableViewCell.Model()
+        logonButtonModel.title = "Log in"
+        logonButtonModel.backgroundColor = .blue
+        logonButtonModel.titleColor = .white
+        logonButtonModel.insets = .init(top: 20, left: 20, bottom: -20, right: -20)
+        
         snapshot.appendItems([
-            .logonLabel(LabelCell.Model()),
-            .username,
-            .password,
-            .logonButton
+            .logonLabel(logonLabelModel),
+            .username(usernameModel),
+            .password(passwordModel),
+            .logonButton(logonButtonModel)
         ])
         
         dataSource.apply(snapshot)
