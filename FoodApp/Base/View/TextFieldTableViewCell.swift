@@ -14,7 +14,9 @@ protocol TextFieldTableViewCellDelegate: class {
 
 class TextFieldTableViewCell: UITableViewCell, TextFieldTableViewCellDelegate {
     
-    class Model {
+    class Model: Hashable {
+        
+        let uuid = UUID()
         var insets: UIEdgeInsets = .init(top: 20, left: 20, bottom: -20, right: -20)
         var placeholder: String?
         var font: UIFont?
@@ -31,6 +33,14 @@ class TextFieldTableViewCell: UITableViewCell, TextFieldTableViewCellDelegate {
         var labelTextColor: UIColor?
         var labelFont: UIFont?
         var labelBottomInset: CGFloat?
+        
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(uuid)
+        }
+        
+        public static func == (lhs: Model, rhs: Model) -> Bool {
+            return lhs.uuid == rhs.uuid
+        }
     }
     
     private lazy var tileView: UIView = {
