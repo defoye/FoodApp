@@ -30,7 +30,7 @@ class LogonCoordinator {
 
 extension LogonCoordinator: LogonCoordinatorDelegate {
     func coordinateToSignIn() {
-        let viewController = SignInViewController()
+        let viewController = SignInViewController(coordinatorDelegate: self)
         
         presenter?.pushViewController(viewController, animated: true)
     }
