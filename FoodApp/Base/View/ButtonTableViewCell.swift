@@ -1,5 +1,5 @@
 //
-//  ButtonCell.swift
+//  ButtonTableViewCell.swift
 //  FoodApp
 //
 //  Created by Ernest DeFoy on 10/29/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ButtonCell: UITableViewCell {
+public class ButtonTableViewCell: UITableViewCell {
     
     public class Model {
         var insets: UIEdgeInsets = UIEdgeInsets()

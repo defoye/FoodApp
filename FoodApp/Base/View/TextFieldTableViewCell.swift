@@ -12,32 +12,6 @@ protocol TextFieldTableViewCellDelegate: class {
     var textFieldValue: String? { get }
 }
 
-class CustomTextField: UITextField {
-
-    var padding: UIEdgeInsets?
-    
-    init(padding: UIEdgeInsets? = nil) {
-        self.padding = padding
-        super.init(frame: .zero)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding ?? UIEdgeInsets())
-    }
-    
-    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding ?? UIEdgeInsets())
-    }
-    
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding ?? UIEdgeInsets())
-    }
-}
-
 class TextFieldTableViewCell: UITableViewCell, TextFieldTableViewCellDelegate {
     
     class Model {
@@ -136,7 +110,7 @@ class TextFieldTableViewCell: UITableViewCell, TextFieldTableViewCellDelegate {
         verticalContainerStackView.addArrangedSubview(searchTextField)
         
         tileView.pin(to: contentView, insets: insets)
-        horizontalContainerStackView.pin(to: tileView, insets: .init(top: 10, left: 10, bottom: -10, right: -10))
+        horizontalContainerStackView.pin(to: tileView)
         
         verticalContainerStackView.spacing = labelBottomInset ?? 10
     }
