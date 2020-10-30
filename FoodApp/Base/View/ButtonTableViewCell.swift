@@ -14,7 +14,9 @@ protocol ButtonTableViewCellDelegate: class {
 
 public class ButtonTableViewCell: UITableViewCell {
     
-    public class Model {
+    public class Model: Hashable {
+        
+        let uuid = UUID()
         var id: String?
         var insets: UIEdgeInsets = UIEdgeInsets()
         var buttonHeight: CGFloat?
@@ -23,6 +25,14 @@ public class ButtonTableViewCell: UITableViewCell {
         var tappedTitleColor: UIColor?
         var backgroundColor: UIColor?
         var cornerRadius: CGFloat?
+        
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(uuid)
+        }
+        
+        public static func == (lhs: ButtonTableViewCell.Model, rhs: ButtonTableViewCell.Model) -> Bool {
+            return lhs.uuid == rhs.uuid
+        }
     }
     
     lazy var button: UIButton = {
