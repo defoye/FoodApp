@@ -106,8 +106,11 @@ class LogonViewController: UIViewController, UITableViewDelegate {
                 cell.configure(image: model.imageConstant?.image, description: model.description)
             }
         case .signIn:
-            return tableView.configuredCell(SignInCell.self) { cell in
-                cell.configure()
+            return tableView.configuredCell(LabelCell.self) { cell in
+                var model = LabelCell.Model()
+                model.text = "Already have an account? Tap here to sign in."
+                model.textInsets = .init(top: 20, left: 20, bottom: -20, right: -20)
+                cell.configure(model)
             }
         }
     }
