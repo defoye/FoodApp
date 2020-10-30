@@ -15,6 +15,9 @@
 		5321A950247F3A2800F55FBB /* InstructionsRequiredCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */; };
 		5340046C247F44F900060A12 /* RecipeSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */; };
 		5340046E247F563400060A12 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046D247F563400060A12 /* MainCoordinator.swift */; };
+		536636A8254C56A300646060 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A6254C56A200646060 /* LabelCell.swift */; };
+		536636A9254C56A300646060 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A7254C56A300646060 /* ButtonCell.swift */; };
+		536636AF254C575100646060 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636AE254C575100646060 /* TextFieldTableViewCell.swift */; };
 		536F7C53247DFFCA0064A1AB /* BaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536F7C52247DFFCA0064A1AB /* BaseDataManager.swift */; };
 		537A913B2481B78E00141F20 /* RecipeQueryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A913A2481B78E00141F20 /* RecipeQueryCell.swift */; };
 		537A913D2481B79A00141F20 /* RecipeQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537A913C2481B79A00141F20 /* RecipeQueryCell.xib */; };
@@ -52,7 +55,6 @@
 		53EA553E254B5C1100A33807 /* SignUpOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */; };
 		53EA5542254B5EB900A33807 /* SignUpLogoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */; };
 		53EA5546254B76DE00A33807 /* FoodAppImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5545254B76DE00A33807 /* FoodAppImageConstants.swift */; };
-		53EA5552254B87D800A33807 /* SignInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5551254B87D800A33807 /* SignInCell.swift */; };
 		53EA5556254B8DFB00A33807 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5555254B8DFB00A33807 /* SignInViewController.swift */; };
 		53EA555A254B8E0600A33807 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5559254B8E0600A33807 /* SignUpViewController.swift */; };
 		53EA555E254B8E3100A33807 /* LogonCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA555D254B8E3100A33807 /* LogonCoordinator.swift */; };
@@ -85,6 +87,9 @@
 		5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionsRequiredCell.xib; sourceTree = "<group>"; };
 		5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchCoordinator.swift; sourceTree = "<group>"; };
 		5340046D247F563400060A12 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		536636A6254C56A200646060 /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
+		536636A7254C56A300646060 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
+		536636AE254C575100646060 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		536F7C52247DFFCA0064A1AB /* BaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataManager.swift; sourceTree = "<group>"; };
 		537A913A2481B78E00141F20 /* RecipeQueryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeQueryCell.swift; sourceTree = "<group>"; };
 		537A913C2481B79A00141F20 /* RecipeQueryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeQueryCell.xib; sourceTree = "<group>"; };
@@ -126,7 +131,6 @@
 		53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpOptionCell.swift; sourceTree = "<group>"; };
 		53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpLogoCell.swift; sourceTree = "<group>"; };
 		53EA5545254B76DE00A33807 /* FoodAppImageConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAppImageConstants.swift; sourceTree = "<group>"; };
-		53EA5551254B87D800A33807 /* SignInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCell.swift; sourceTree = "<group>"; };
 		53EA5555254B8DFB00A33807 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		53EA5559254B8E0600A33807 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		53EA555D254B8E3100A33807 /* LogonCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogonCoordinator.swift; sourceTree = "<group>"; };
@@ -266,6 +270,9 @@
 		539EE9A4247CBD56002BED74 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				536636AE254C575100646060 /* TextFieldTableViewCell.swift */,
+				536636A7254C56A300646060 /* ButtonCell.swift */,
+				536636A6254C56A200646060 /* LabelCell.swift */,
 				53DF1F2B248230270034E4AC /* BaseViewController.swift */,
 				536F7C4F247DFF920064A1AB /* DataManager */,
 			);
@@ -387,7 +394,6 @@
 				53EA5562254B900D00A33807 /* ViewController */,
 				53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */,
 				53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */,
-				53EA5551254B87D800A33807 /* SignInCell.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -610,12 +616,13 @@
 				53F47A92247EA74C00554A2C /* RecipeCell.swift in Sources */,
 				53D1719D2480980D0099B8A4 /* RecipeDetailViewModel.swift in Sources */,
 				53EA5542254B5EB900A33807 /* SignUpLogoCell.swift in Sources */,
-				53EA5552254B87D800A33807 /* SignInCell.swift in Sources */,
 				531595F5247F3C330002C750 /* CuisineViewController.swift in Sources */,
+				536636A8254C56A300646060 /* LabelCell.swift in Sources */,
 				5321A94E247F3A1A00F55FBB /* InstructionsRequiredCell.swift in Sources */,
 				53C38E9F247EA27E00BD42D4 /* RecipesViewModel.swift in Sources */,
 				537A914224820A6000141F20 /* SpoonacularAPI+RecipeSimilarModel.swift in Sources */,
 				53EA5546254B76DE00A33807 /* FoodAppImageConstants.swift in Sources */,
+				536636AF254C575100646060 /* TextFieldTableViewCell.swift in Sources */,
 				53D1719424802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift in Sources */,
 				53DF1F2C248230270034E4AC /* BaseViewController.swift in Sources */,
 				537A913B2481B78E00141F20 /* RecipeQueryCell.swift in Sources */,
@@ -630,6 +637,7 @@
 				539EE9A9247CBD87002BED74 /* Extensions.swift in Sources */,
 				53EA5538254B560400A33807 /* LogonViewController.swift in Sources */,
 				53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */,
+				536636A9254C56A300646060 /* ButtonCell.swift in Sources */,
 				53D1719F24809FF60099B8A4 /* RecipeDetailViewController.swift in Sources */,
 				53D171A52480A1F20099B8A4 /* RecipeDetailHeaderCell.swift in Sources */,
 				5340046E247F563400060A12 /* MainCoordinator.swift in Sources */,
@@ -799,8 +807,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4988B7799P;
 				INFOPLIST_FILE = FoodApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -820,8 +828,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4988B7799P;
 				INFOPLIST_FILE = FoodApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
