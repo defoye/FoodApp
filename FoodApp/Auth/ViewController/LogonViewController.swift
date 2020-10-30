@@ -46,7 +46,10 @@ class LogonViewController: UIViewController, UITableViewDelegate {
         return tableView
     }()
     
-    init() {
+    private let coordinatorDelegate: LogonCoordinatorDelegate
+    
+    init(coordinatorDelegate: LogonCoordinatorDelegate) {
+        self.coordinatorDelegate = coordinatorDelegate
         super.init(nibName: nil, bundle: nil)
         tableView.dataSource = dataSource
     }
@@ -59,6 +62,12 @@ class LogonViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
         addSubviewsAndConstraints()
         setupDataSource()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupNavigationBar()
     }
     
     private func setupDataSource() {
@@ -81,6 +90,10 @@ class LogonViewController: UIViewController, UITableViewDelegate {
         tableView.pin(to: view)
     }
     
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     private func cellProvider(_ tableView: UITableView, indexPath: IndexPath, row: Row) -> UITableViewCell? {
         
         switch row {
@@ -96,6 +109,21 @@ class LogonViewController: UIViewController, UITableViewDelegate {
             return tableView.configuredCell(SignInCell.self) { cell in
                 cell.configure()
             }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+        
+        switch item {
+        case .logo(_):
+            break
+        case .apple(_), .google(_), .facebook(_), .email(_):
+            coordinatorDelegate.coordinateToSignUp()
+        case .signIn:
+            coordinatorDelegate.coordinateToSignIn()
         }
     }
 }

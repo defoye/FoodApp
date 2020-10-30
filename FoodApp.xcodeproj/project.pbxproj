@@ -53,6 +53,9 @@
 		53EA5542254B5EB900A33807 /* SignUpLogoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */; };
 		53EA5546254B76DE00A33807 /* FoodAppImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5545254B76DE00A33807 /* FoodAppImageConstants.swift */; };
 		53EA5552254B87D800A33807 /* SignInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5551254B87D800A33807 /* SignInCell.swift */; };
+		53EA5556254B8DFB00A33807 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5555254B8DFB00A33807 /* SignInViewController.swift */; };
+		53EA555A254B8E0600A33807 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5559254B8E0600A33807 /* SignUpViewController.swift */; };
+		53EA555E254B8E3100A33807 /* LogonCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA555D254B8E3100A33807 /* LogonCoordinator.swift */; };
 		53F47A90247EA74200554A2C /* RecipeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F47A8F247EA74200554A2C /* RecipeCell.xib */; };
 		53F47A92247EA74C00554A2C /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A91247EA74C00554A2C /* RecipeCell.swift */; };
 		53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */; };
@@ -124,6 +127,9 @@
 		53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpLogoCell.swift; sourceTree = "<group>"; };
 		53EA5545254B76DE00A33807 /* FoodAppImageConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAppImageConstants.swift; sourceTree = "<group>"; };
 		53EA5551254B87D800A33807 /* SignInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCell.swift; sourceTree = "<group>"; };
+		53EA5555254B8DFB00A33807 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		53EA5559254B8E0600A33807 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		53EA555D254B8E3100A33807 /* LogonCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogonCoordinator.swift; sourceTree = "<group>"; };
 		53F47A8F247EA74200554A2C /* RecipeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeCell.xib; sourceTree = "<group>"; };
 		53F47A91247EA74C00554A2C /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchViewController.swift; sourceTree = "<group>"; };
@@ -377,12 +383,31 @@
 		53EA5536254B55D800A33807 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				53EA5537254B560400A33807 /* LogonViewController.swift */,
+				53EA5561254B900600A33807 /* Coordinator */,
+				53EA5562254B900D00A33807 /* ViewController */,
 				53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */,
 				53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */,
 				53EA5551254B87D800A33807 /* SignInCell.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		53EA5561254B900600A33807 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				53EA555D254B8E3100A33807 /* LogonCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		53EA5562254B900D00A33807 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				53EA5537254B560400A33807 /* LogonViewController.swift */,
+				53EA5555254B8DFB00A33807 /* SignInViewController.swift */,
+				53EA5559254B8E0600A33807 /* SignUpViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		53F47A97247F389B00554A2C /* RecipeSearch */ = {
@@ -608,11 +633,14 @@
 				53D1719F24809FF60099B8A4 /* RecipeDetailViewController.swift in Sources */,
 				53D171A52480A1F20099B8A4 /* RecipeDetailHeaderCell.swift in Sources */,
 				5340046E247F563400060A12 /* MainCoordinator.swift in Sources */,
+				53EA555A254B8E0600A33807 /* SignUpViewController.swift in Sources */,
 				53D171AD2480A22C0099B8A4 /* RecipeDetailInstructionCell.swift in Sources */,
 				53C38E9D247EA27500BD42D4 /* RecipesViewController.swift in Sources */,
 				53D171A72480A2060099B8A4 /* RecipeDetailIngredientCell.swift in Sources */,
+				53EA5556254B8DFB00A33807 /* SignInViewController.swift in Sources */,
 				53C104D7247C0BEE00001DEB /* AppDelegate.swift in Sources */,
 				5340046C247F44F900060A12 /* RecipeSearchCoordinator.swift in Sources */,
+				53EA555E254B8E3100A33807 /* LogonCoordinator.swift in Sources */,
 				5321A94C247F39DF00F55FBB /* CuisineCell.swift in Sources */,
 				53C38E98247E209000BD42D4 /* SpoonacularAPI.swift in Sources */,
 				53D1719624808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift in Sources */,

@@ -12,6 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
 
+    var logonCoordinator: LogonCoordinator?
 	var mainCoordinator: MainCoordinator?
     var recipePresenter: UINavigationController?
 
@@ -37,8 +38,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
     
     func authenticate() -> Bool {
+        self.logonCoordinator = LogonCoordinator(recipePresenter)
+        self.logonCoordinator?.start()
         
-        window?.rootViewController = LogonViewController()
+        window?.rootViewController = recipePresenter
         
         return false
     }
