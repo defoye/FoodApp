@@ -11,14 +11,22 @@ import UIKit
 protocol LogonCoordinatorDelegate {
     func coordinateToSignIn()
     func coordinateToSignUp()
+    func logon(_ logonCredentials: LogonCoordinator.LogonCredentials)
 }
 
 class LogonCoordinator {
     
-    weak var presenter: UINavigationController?
+    struct LogonCredentials {
+        let username: String
+        let password: String
+    }
     
-    init(_ presenter: UINavigationController?) {
+    weak var presenter: UINavigationController?
+    weak var sceneDelegate: SceneDelegate?
+    
+    init(_ presenter: UINavigationController?, sceneDelegate: SceneDelegate?) {
         self.presenter = presenter
+        self.sceneDelegate = sceneDelegate
     }
     
     func start() {
@@ -39,5 +47,9 @@ extension LogonCoordinator: LogonCoordinatorDelegate {
         let viewController = SignUpViewController()
         
         presenter?.pushViewController(viewController, animated: true)
+    }
+    
+    func logon(_ logonCredentials: LogonCredentials) {
+        sceneDelegate?.logon(logonCredentials)
     }
 }

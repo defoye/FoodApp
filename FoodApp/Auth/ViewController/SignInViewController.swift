@@ -17,6 +17,7 @@ class SignInViewController: UIViewController, UITableViewDelegate {
         case logonLabel(_ model: LabelCell.Model)
         case username
         case password
+        case logonButton
     }
     
     private lazy var dataSource: UITableViewDiffableDataSource<Section, Row> = {
@@ -36,7 +37,9 @@ class SignInViewController: UIViewController, UITableViewDelegate {
     }()
     
     private let coordinatorDelegate: LogonCoordinatorDelegate
-    
+    private weak var usernameCellDelegate: TextFieldTableViewCellDelegate?
+    private weak var passwordCellDelegate: TextFieldTableViewCellDelegate?
+
     init(coordinatorDelegate: LogonCoordinatorDelegate) {
         self.coordinatorDelegate = coordinatorDelegate
         super.init(nibName: nil, bundle: nil)
@@ -65,7 +68,8 @@ class SignInViewController: UIViewController, UITableViewDelegate {
         snapshot.appendItems([
             .logonLabel(LabelCell.Model()),
             .username,
-            .password
+            .password,
+            .logonButton
         ])
         
         dataSource.apply(snapshot)
@@ -77,7 +81,7 @@ class SignInViewController: UIViewController, UITableViewDelegate {
     }
     
     private func setupNavigationBar() {
-
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     private func cellProvider(_ tableView: UITableView, indexPath: IndexPath, row: Row) -> UITableViewCell? {
@@ -95,6 +99,7 @@ class SignInViewController: UIViewController, UITableViewDelegate {
                 model.textContentType = .username
                 model.keyboardType = .emailAddress
                 cell.configure(model)
+                self.usernameCellDelegate = cell
             }
         case .password:
             return tableView.configuredCell(TextFieldTableViewCell.self) { cell in
@@ -104,6 +109,16 @@ class SignInViewController: UIViewController, UITableViewDelegate {
                 model.textContentType = .password
                 model.isSecureTextEntry = true
                 cell.configure(model, UIView())
+                self.passwordCellDelegate = cell
+            }
+        case .logonButton:
+            return tableView.configuredCell(ButtonTableViewCell.self) { cell in
+                let model = ButtonTableViewCell.Model()
+                model.title = "Log in"
+                model.backgroundColor = .blue
+                model.titleColor = .white
+                model.insets = .init(top: 20, left: 20, bottom: -20, right: -20)
+                cell.configure(model, delegate: self)
             }
         }
     }
@@ -112,5 +127,21 @@ class SignInViewController: UIViewController, UITableViewDelegate {
         guard let item = dataSource.itemIdentifier(for: indexPath) else {
             return
         }
+        
+        switch item {
+        case .logonLabel(_), .username, .password:
+            break
+        case .logonButton:
+            break
+        }
+    }
+}
+
+extension SignInViewController: ButtonTableViewCellDelegate {
+    func buttonCellButtonTapped(_ id: String?) {
+        guard let username = usernameCellDelegate?.textFieldValue, let password = passwordCellDelegate?.textFieldValue, !username.isEmpty, !password.isEmpty else {
+            return
+        }
+        coordinatorDelegate.logon(LogonCoordinator.LogonCredentials(username: username, password: password))
     }
 }

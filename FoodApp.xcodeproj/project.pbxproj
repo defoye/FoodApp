@@ -16,8 +16,9 @@
 		5340046C247F44F900060A12 /* RecipeSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */; };
 		5340046E247F563400060A12 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046D247F563400060A12 /* MainCoordinator.swift */; };
 		536636A8254C56A300646060 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A6254C56A200646060 /* LabelCell.swift */; };
-		536636A9254C56A300646060 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A7254C56A300646060 /* ButtonCell.swift */; };
+		536636A9254C56A300646060 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A7254C56A300646060 /* ButtonTableViewCell.swift */; };
 		536636AF254C575100646060 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636AE254C575100646060 /* TextFieldTableViewCell.swift */; };
+		53674F3B254CAB5200F53B26 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53674F3A254CAB5200F53B26 /* CustomTextField.swift */; };
 		536F7C53247DFFCA0064A1AB /* BaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536F7C52247DFFCA0064A1AB /* BaseDataManager.swift */; };
 		537A913B2481B78E00141F20 /* RecipeQueryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537A913A2481B78E00141F20 /* RecipeQueryCell.swift */; };
 		537A913D2481B79A00141F20 /* RecipeQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 537A913C2481B79A00141F20 /* RecipeQueryCell.xib */; };
@@ -88,8 +89,9 @@
 		5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchCoordinator.swift; sourceTree = "<group>"; };
 		5340046D247F563400060A12 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		536636A6254C56A200646060 /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
-		536636A7254C56A300646060 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
+		536636A7254C56A300646060 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		536636AE254C575100646060 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		53674F3A254CAB5200F53B26 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		536F7C52247DFFCA0064A1AB /* BaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataManager.swift; sourceTree = "<group>"; };
 		537A913A2481B78E00141F20 /* RecipeQueryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeQueryCell.swift; sourceTree = "<group>"; };
 		537A913C2481B79A00141F20 /* RecipeQueryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeQueryCell.xib; sourceTree = "<group>"; };
@@ -194,6 +196,17 @@
 			path = CuisinesPicker;
 			sourceTree = "<group>";
 		};
+		53674F3E254CAB7700F53B26 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				536636AE254C575100646060 /* TextFieldTableViewCell.swift */,
+				53674F3A254CAB5200F53B26 /* CustomTextField.swift */,
+				536636A7254C56A300646060 /* ButtonTableViewCell.swift */,
+				536636A6254C56A200646060 /* LabelCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		536F7C4F247DFF920064A1AB /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,9 +283,7 @@
 		539EE9A4247CBD56002BED74 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				536636AE254C575100646060 /* TextFieldTableViewCell.swift */,
-				536636A7254C56A300646060 /* ButtonCell.swift */,
-				536636A6254C56A200646060 /* LabelCell.swift */,
+				53674F3E254CAB7700F53B26 /* View */,
 				53DF1F2B248230270034E4AC /* BaseViewController.swift */,
 				536F7C4F247DFF920064A1AB /* DataManager */,
 			);
@@ -312,10 +323,10 @@
 		53C104D5247C0BEE00001DEB /* FoodApp */ = {
 			isa = PBXGroup;
 			children = (
-				53EA5536254B55D800A33807 /* Auth */,
 				5340046D247F563400060A12 /* MainCoordinator.swift */,
 				53C104D6247C0BEE00001DEB /* AppDelegate.swift */,
 				53C104D8247C0BEE00001DEB /* SceneDelegate.swift */,
+				53EA5536254B55D800A33807 /* Auth */,
 				539EE9A4247CBD56002BED74 /* Base */,
 				53C38E9B247EA26600BD42D4 /* Recipes */,
 				539EE9A7247CBD77002BED74 /* Utility */,
@@ -627,6 +638,7 @@
 				53DF1F2C248230270034E4AC /* BaseViewController.swift in Sources */,
 				537A913B2481B78E00141F20 /* RecipeQueryCell.swift in Sources */,
 				53C104F9247C0EF800001DEB /* RecipeDataManager.swift in Sources */,
+				53674F3B254CAB5200F53B26 /* CustomTextField.swift in Sources */,
 				53D17198248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift in Sources */,
 				53D1719A248093490099B8A4 /* SpoonacularAPI+ExtractRecipeModel.swift in Sources */,
 				537A913F2481C40400141F20 /* SpoonacularAPI+RecipeInformationModel.swift in Sources */,
@@ -637,7 +649,7 @@
 				539EE9A9247CBD87002BED74 /* Extensions.swift in Sources */,
 				53EA5538254B560400A33807 /* LogonViewController.swift in Sources */,
 				53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */,
-				536636A9254C56A300646060 /* ButtonCell.swift in Sources */,
+				536636A9254C56A300646060 /* ButtonTableViewCell.swift in Sources */,
 				53D1719F24809FF60099B8A4 /* RecipeDetailViewController.swift in Sources */,
 				53D171A52480A1F20099B8A4 /* RecipeDetailHeaderCell.swift in Sources */,
 				5340046E247F563400060A12 /* MainCoordinator.swift in Sources */,

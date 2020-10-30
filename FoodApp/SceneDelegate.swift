@@ -38,12 +38,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
     
     func authenticate() -> Bool {
-        self.logonCoordinator = LogonCoordinator(recipePresenter)
+        self.logonCoordinator = LogonCoordinator(recipePresenter, sceneDelegate: self)
         self.logonCoordinator?.start()
         
         window?.rootViewController = recipePresenter
         
         return false
+    }
+    
+    func logon(_ logonCredentials: LogonCoordinator.LogonCredentials) {
+        
     }
 
 	func sceneDidDisconnect(_ scene: UIScene) {

@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol ButtonTableViewCellDelegate: class {
+    func buttonCellButtonTapped(_ id: String?)
+}
+
 public class ButtonTableViewCell: UITableViewCell {
     
     public class Model {
+        var id: String?
         var insets: UIEdgeInsets = UIEdgeInsets()
         var buttonHeight: CGFloat?
         var title: String?
@@ -23,22 +28,33 @@ public class ButtonTableViewCell: UITableViewCell {
     lazy var button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(buttonCellButtonTapped), for: .touchUpInside)
         return button
     }()
     
-    func setup(_ insets: UIEdgeInsets, _ buttonHeight: CGFloat?) {
+    private weak var delegate: ButtonTableViewCellDelegate?
+    private var id: String?
+    
+    func configure(_ model: Model, delegate: ButtonTableViewCellDelegate?) {
+        setup(model.insets, model.buttonHeight)
+        self.delegate = delegate
+        self.id = model.id
+        button.setTitle(model.title, for: .normal)
+        button.setTitleColor(model.titleColor, for: .normal)
+        button.setTitleColor(model.tappedTitleColor, for: .selected)
+        button.backgroundColor = model.backgroundColor
+        button.layer.cornerRadius = model.cornerRadius ?? 5
+    }
+    
+    private func setup(_ insets: UIEdgeInsets, _ buttonHeight: CGFloat?) {
         selectionStyle = .none
         contentView.addSubview(button)
         button.pin(to: contentView, insets: insets)
         button.heightAnchor.constraint(equalToConstant: buttonHeight ?? 40).isActive = true
     }
     
-    public func configure(_ model: Model) {
-        setup(model.insets, model.buttonHeight)
-        button.setTitle(model.title, for: .normal)
-        button.setTitleColor(model.titleColor, for: .normal)
-        button.setTitleColor(model.tappedTitleColor, for: .selected)
-        button.backgroundColor = model.backgroundColor
-        button.layer.cornerRadius = model.cornerRadius ?? 5
+    @objc
+    func buttonCellButtonTapped() {
+        delegate?.buttonCellButtonTapped(id)
     }
 }
