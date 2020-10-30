@@ -30,7 +30,7 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		viewController.coordinatorDelegate = self
 		
 		recipeSearchViewController = viewController
-		presenter?.pushViewController(viewController, animated: false)
+        presenter?.viewControllers = [viewController]
 	}
 		
 	func coordinateToCuisinePicker(_ type: RecipePickerType) {

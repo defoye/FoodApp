@@ -26,14 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window?.makeKeyAndVisible()
         self.recipePresenter = UINavigationController()
         
-        if authenticate() {
-            let mainCoordinator = MainCoordinator(recipePresenter)
-                
-            window?.rootViewController = recipePresenter
-            
-            mainCoordinator.start()
-            
-            self.mainCoordinator = mainCoordinator
+        if !authenticate() {
+            // Do something when logon fails
         }
 	}
     
@@ -47,7 +41,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func logon(_ logonCredentials: LogonCoordinator.LogonCredentials) {
-        
+        recipePresenter?.popViewController(animated: false)
+        let mainCoordinator = MainCoordinator(recipePresenter)
+        mainCoordinator.start()
+        self.mainCoordinator = mainCoordinator
     }
 
 	func sceneDidDisconnect(_ scene: UIScene) {
