@@ -19,6 +19,7 @@ class CuisineViewController: UIViewController {
 	weak var delegate: RecipeSearchCoordinatorDelegate?
 	let cuisineItems: [SpoonacularAPI.Cuisine] = SpoonacularAPI.Cuisine.allCases
 	let dishItems: [SpoonacularAPI.DishType] = SpoonacularAPI.DishType.allCases
+    let selectDishItems: [SpoonacularAPI.DishType] = [.appetizer, .breakfast, .lunch, .dinner, .brunch, .beverage, .dessert, .salad, .snack, .soup]
 	
 	var type: RecipePickerType?
 	
