@@ -8,4 +8,4 @@ env:
     - TEST_SDK=iphonesimulator13.1 OS=13.1 NAME='iPhone 7'
 
 script:
-  - set -o pipefail && xcodebuild -project FoodApp.xcodeproj -scheme FoodApp -destination platform\=iOS\ Simulator,OS\=14.0,name\=iPhone\ 11 build test | xcpretty
+  - set -o pipefail && xcodebuild -workspace FoodApp.xcworkspace -scheme FoodApp -destination platform\=iOS\ Simulator,OS\=14.0,name\=iPhone\ 11 build test | xcpretty
