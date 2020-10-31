@@ -45,6 +45,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainCoordinator = MainCoordinator(recipePresenter)
         mainCoordinator.start()
         self.mainCoordinator = mainCoordinator
+        
+        window?.rootViewController = mainCoordinator.containerController
     }
 
 	func sceneDidDisconnect(_ scene: UIScene) {

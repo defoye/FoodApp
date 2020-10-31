@@ -16,18 +16,20 @@ protocol RecipeSearchCoordinatorDelegate: class {
 	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item)
 }
 
-class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
-	
+class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {    
 	weak var presenter: UINavigationController?
+    weak var containerDelegate: ContainerDelegate?
 	var recipeSearchViewController: RecipeSearchViewController?
 	
-	init(_ presenter: UINavigationController?) {
+    init(_ presenter: UINavigationController?, containerDelegate: ContainerDelegate?) {
 		self.presenter = presenter
+        self.containerDelegate = containerDelegate
 	}
 	
 	func start() {
 		let viewController = RecipeSearchViewController.instantiate("RecipeSearch")
 		viewController.coordinatorDelegate = self
+        viewController.containerDelegate = containerDelegate
 		
 		recipeSearchViewController = viewController
         presenter?.viewControllers = [viewController]

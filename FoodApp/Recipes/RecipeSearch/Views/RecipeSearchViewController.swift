@@ -15,12 +15,13 @@ enum RecipeSearchRow: Int, CaseIterable {
 	case instructionsRequired
 }
 
-class RecipeSearchViewController: UIViewController, Storyboarded {
+class RecipeSearchViewController: UIViewController, Storyboarded, ContainerDelegator {
 	@IBOutlet weak var searchButtonView: UIView!
 	
 	@IBOutlet weak var searchButton: UIButton!
 	@IBOutlet weak var tableView: UITableView!
 	
+    weak var containerDelegate: ContainerDelegate?
 	weak var coordinatorDelegate: RecipeSearchCoordinatorDelegate?
 	weak var recipeQueryCellDelegate: RecipeQueryCellDelegate?
 	
@@ -40,8 +41,6 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		searchButton.addTarget(self, action: #selector(searchButtonAction), for: .touchUpInside)
 				
 		tabBarItem = UITabBarItem(title: "Recipes", image: UIImage(named: "cooking_book"), selectedImage: nil)
-		navigationItem.title = "Recipe Search"
-//		title = "Recipes"
 		
 		let queryCellNib = UINib.init(nibName: "RecipeQueryCell", bundle: .current)
 		tableView.register(queryCellNib, forCellReuseIdentifier: "RecipeQueryCell")
@@ -51,7 +50,26 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		tableView.register(instructionsRequiredCellNib, forCellReuseIdentifier: "InstructionsRequiredCell")
 		tableView.delegate = self
 		tableView.dataSource = self
+        
+        setupNavigationController()
 	}
+    
+    private func setupNavigationController() {
+        navigationItem.title = "Recipe Search"
+
+        if #available(iOS 14.0, *) {
+            self.navigationController?.visibleViewController?.navigationItem.leftBarButtonItem = .init(systemItem: .action, primaryAction: UIAction(handler: { [weak self] action in
+                self?.containerDelegate?.menuButtonTapped()
+            }), menu: nil)
+        } else {
+            self.navigationController?.visibleViewController?.navigationItem.leftBarButtonItem = .init(title: "Menu", style: .plain, target: self, action: #selector(menuTapped))
+        }
+    }
+    
+    @objc
+    func menuTapped() {
+        containerDelegate?.menuButtonTapped()
+    }
 	
 	@objc func searchButtonAction() {
 		var passThroughData: [String: String] = [
