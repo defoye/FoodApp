@@ -18,6 +18,7 @@ target 'FoodApp' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'FirebaseUI/Google'
+  pod 'QuiteAdaptableKit', '~> 0.0.1'
 
   target 'FoodAppTests' do
     inherit! :search_paths
