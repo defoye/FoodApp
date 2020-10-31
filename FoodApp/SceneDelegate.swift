@@ -40,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return false
     }
     
-    func logon(_ logonCredentials: LogonCoordinator.LogonCredentials) {
+    func logon() {
         recipePresenter?.popViewController(animated: false)
         let mainCoordinator = MainCoordinator(recipePresenter)
         mainCoordinator.start()

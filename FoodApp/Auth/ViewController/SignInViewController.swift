@@ -162,9 +162,6 @@ class SignInViewController: UIViewController, UITableViewDelegate {
 
 extension SignInViewController: ButtonTableViewCellDelegate {
     func buttonCellButtonTapped(_ id: String?) {
-        guard let username = usernameCellDelegate?.textFieldValue, let password = passwordCellDelegate?.textFieldValue, !username.isEmpty, !password.isEmpty else {
-            return
-        }
-        coordinatorDelegate.logon(LogonCoordinator.LogonCredentials(username: username, password: password))
+        coordinatorDelegate.logon()
     }
 }
