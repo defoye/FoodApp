@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Int {
+public extension Int {
     
     func minutesIntToTimeString() -> String {
         let minutes = self

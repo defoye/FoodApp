@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UITableView {
+public extension UITableView {
     
     func configuredCell<T: UITableViewCell>(_ type: T.Type, identifier: String, indexPath: IndexPath? = nil, configurator: ((T) -> Void)) -> T {
         let cell: T

@@ -352,7 +352,7 @@ PODS:
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
   - PromisesObjC (1.2.11)
-  - QuiteAdaptableKit (0.0.1)
+  - QuiteAdaptableKit (0.0.2)
 
 DEPENDENCIES:
   - Firebase/Analytics
@@ -361,7 +361,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - FirebaseUI/Google
   - GoogleSignIn
-  - QuiteAdaptableKit (~> 0.0.1)
+  - QuiteAdaptableKit (~> 0.0.2)
 
 SPEC REPOS:
   trunk:
@@ -412,8 +412,8 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
-  QuiteAdaptableKit: 13f8c86f775d1ed8e4d058aece3886f557376711
+  QuiteAdaptableKit: 9a103d57cbc0f206b767714191a3efacc9978aab
 
-PODFILE CHECKSUM: 9731dd11777623eb22a12c42ebc1d1cf76ae0580
+PODFILE CHECKSUM: 25bed9fe469eeb8edccff64cf50687cb1a1e7e98
 
 COCOAPODS: 1.10.0

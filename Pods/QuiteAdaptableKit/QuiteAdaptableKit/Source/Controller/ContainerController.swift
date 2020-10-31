@@ -9,34 +9,37 @@ import UIKit
 
 import UIKit
 
-protocol ContainerDelegate: class {
+public protocol ContainerDelegate: class {
     func menuButtonTapped()
 }
 
-protocol ContainerDelegator: UIViewController {
+public protocol ContainerDelegator: UIViewController {
     var containerDelegate: ContainerDelegate? { get set }
 }
 
-class ContainerController: UIViewController, ContainerDelegate {
-    private let navBar: UINavigationController
-    private let containerDelegator: ContainerDelegator
-    private let slideInController: UIViewController
+/**
+ Make container controller the root controller.
+ */
+public class ContainerController: UIViewController, ContainerDelegate {
+    private weak var navBar: UINavigationController?
+    private weak var containerDelegator: ContainerDelegator?
+    private weak var slideInController: UIViewController?
     
     private var menuToggled: Bool = false {
         didSet {
             if oldValue {
                 UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                    self.navBar.view.frame.origin.x = 0
+                    self.navBar?.view.frame.origin.x = 0
                 }, completion: nil)
             } else {
                 UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-                    self.navBar.view.frame.origin.x = self.navBar.view.frame.width - 120
+                    self.navBar?.view.frame.origin.x = (self.navBar?.view.frame.width ?? 120) - 120
                 }, completion: nil)
             }
         }
     }
     
-    init(_ presenter: UINavigationController, _ containerDelegator: ContainerDelegator, slideInController: UIViewController) {
+    public init(_ presenter: UINavigationController?, _ containerDelegator: ContainerDelegator? = nil, slideInController: UIViewController) {
         self.navBar = presenter
         self.containerDelegator = containerDelegator
         self.slideInController = slideInController
@@ -47,24 +50,28 @@ class ContainerController: UIViewController, ContainerDelegate {
     }
     
     private func initFinish() {
-        containerDelegator.containerDelegate = self
+        containerDelegator?.containerDelegate = self
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         addViewControllerViews()
     }
     
-    private func addViewControllerViews() {
-        view.addSubview(slideInController.view)
-        view.addSubview(navBar.view)
+    public func menuButtonTapped() {
+        menuToggled = !menuToggled
     }
     
-    func menuButtonTapped() {
-        menuToggled = !menuToggled
+    private func addViewControllerViews() {
+        if let slideInView = slideInController?.view {
+            view.addSubview(slideInView)
+        }
+        if let navBar = navBar {
+            view.addSubview(navBar.view)
+        }
     }
 }

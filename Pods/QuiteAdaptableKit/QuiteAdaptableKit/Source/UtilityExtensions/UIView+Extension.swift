@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     
     func pin(to superView: UIView, insets: UIEdgeInsets = UIEdgeInsets()) {
         if !superView.subviews.contains(self) {

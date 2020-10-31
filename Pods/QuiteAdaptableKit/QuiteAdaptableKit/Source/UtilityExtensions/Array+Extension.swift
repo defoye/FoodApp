@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Array {
+public extension Array {
     struct CurrPrevPair {
         let curr: Element
         let prev: Element

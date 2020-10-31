@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoadingView: UIView {
+public class LoadingView: UIView {
     
     let first = "Loading."
     let second = "Loading.."
@@ -32,18 +32,22 @@ class LoadingView: UIView {
         }
     }()
 
-    func start() {
+    public func start() {
         setup()
         timer.fire()
         isHidden = false
     }
     
-    func stop() {
+    public func stop() {
         timer.invalidate()
         isHidden = true
     }
     
-    func setup() {
+    public func configure() {
+        setup()
+    }
+    
+    private func setup() {
         self.translatesAutoresizingMaskIntoConstraints = false
         loadingLabel.translatesAutoresizingMaskIntoConstraints = false
         loadingLabel.textAlignment = .center

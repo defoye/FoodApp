@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Date {
+public extension Date {
     func changedBy(days: Int) -> Date {
         return Calendar.current.date(byAdding: .day, value: days, to: self)!
     }

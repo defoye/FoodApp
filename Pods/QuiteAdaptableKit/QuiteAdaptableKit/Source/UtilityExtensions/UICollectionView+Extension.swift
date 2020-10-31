@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UICollectionView {
+public extension UICollectionView {
     func reloadDataOnMain() {
         DispatchQueue.main.async {
             self.reloadData()
