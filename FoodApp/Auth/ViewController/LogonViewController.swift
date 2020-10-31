@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseUI
+import GoogleSignIn
 
 class LogonViewController: UIViewController, UITableViewDelegate {
     
@@ -18,7 +20,7 @@ class LogonViewController: UIViewController, UITableViewDelegate {
         case logo(_ image: FoodAppImageConstants)
         
         case apple(_ model: SignUpOptionModel)
-        case google(_ model: SignUpOptionModel)
+        case google(_ setupModel: BlankTableViewCell.SetupModel, _ viewModel: BlankTableViewCell.ViewModel)
         case facebook(_ model: SignUpOptionModel)
         case email(_ model: SignUpOptionModel)
         
@@ -60,6 +62,7 @@ class LogonViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        GIDSignIn.sharedInstance()?.presentingViewController = self
         addSubviewsAndConstraints()
         setupDataSource()
     }
@@ -73,10 +76,14 @@ class LogonViewController: UIViewController, UITableViewDelegate {
     private func setupDataSource() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Row>()
         snapshot.appendSections([.main])
+        
+        let googleSignInModel = BlankTableViewCell.ViewModel()
+        googleSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
+        
         snapshot.appendItems([
             .logo(.apple_logo),
             .apple(SignUpOptionModel(imageConstant: .apple_logo, description: "Sign up with Apple")),
-            .google(SignUpOptionModel(imageConstant: .google_logo, description: "Sign up with Google")),
+            .google(BlankTableViewCell.SetupModel(), googleSignInModel),
             .facebook(SignUpOptionModel(imageConstant: .facebook_logo, description: "Sign up with Facebook")),
             .email(SignUpOptionModel(imageConstant: .email_logo, description: "Sign up with Email")),
             .signIn
@@ -101,7 +108,18 @@ class LogonViewController: UIViewController, UITableViewDelegate {
             return tableView.configuredCell(SignUpLogoCell.self) { cell in
                 cell.configure(image: image.image)
             }
-        case .apple(let model), .google(let model), .facebook(let model), .email(let model):
+        case .google(let setupModel, let viewModel):
+            return tableView.configuredCell(BlankTableViewCell.self) { cell in
+                
+                if #available(iOS 14.0, *) {
+                    cell.configure(GIDSignInButton(frame: .zero, primaryAction: .init(handler: googleSignInTapped)), setupModel: setupModel, viewModel: viewModel)
+                } else {
+//                    return tableView.configuredCell(SignUpOptionCell.self) { cell in
+//                        cell.configure(image: model.imageConstant?.image, description: model.description)
+//                    }
+                }
+            }
+        case .apple(let model), .facebook(let model), .email(let model):
             return tableView.configuredCell(SignUpOptionCell.self) { cell in
                 cell.configure(image: model.imageConstant?.image, description: model.description)
             }
@@ -113,6 +131,11 @@ class LogonViewController: UIViewController, UITableViewDelegate {
                 cell.configure(model)
             }
         }
+    }
+    
+    @objc
+    func googleSignInTapped(_ action: UIAction) {
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

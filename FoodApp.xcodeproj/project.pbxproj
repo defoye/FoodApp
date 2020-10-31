@@ -13,6 +13,7 @@
 		5321A94C247F39DF00F55FBB /* CuisineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321A94B247F39DF00F55FBB /* CuisineCell.swift */; };
 		5321A94E247F3A1A00F55FBB /* InstructionsRequiredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321A94D247F3A1A00F55FBB /* InstructionsRequiredCell.swift */; };
 		5321A950247F3A2800F55FBB /* InstructionsRequiredCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */; };
+		5324DA76254DBE3C00473BA1 /* BlankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */; };
 		5340046C247F44F900060A12 /* RecipeSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */; };
 		5340046E247F563400060A12 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046D247F563400060A12 /* MainCoordinator.swift */; };
 		536636A8254C56A300646060 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A6254C56A200646060 /* LabelCell.swift */; };
@@ -86,6 +87,7 @@
 		5321A94B247F39DF00F55FBB /* CuisineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineCell.swift; sourceTree = "<group>"; };
 		5321A94D247F3A1A00F55FBB /* InstructionsRequiredCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsRequiredCell.swift; sourceTree = "<group>"; };
 		5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionsRequiredCell.xib; sourceTree = "<group>"; };
+		5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankTableViewCell.swift; sourceTree = "<group>"; };
 		5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchCoordinator.swift; sourceTree = "<group>"; };
 		5340046D247F563400060A12 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		536636A6254C56A200646060 /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				53674F3A254CAB5200F53B26 /* CustomTextField.swift */,
 				536636A7254C56A300646060 /* ButtonTableViewCell.swift */,
 				536636A6254C56A200646060 /* LabelCell.swift */,
+				5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				53C104D0247C0BEE00001DEB /* Frameworks */,
 				53C104D1247C0BEE00001DEB /* Resources */,
 				9C34DC3827A8ECF8DC72AB46 /* [CP] Embed Pods Frameworks */,
+				707CDEC2D074F456B1A80B5E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -556,6 +560,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		707CDEC2D074F456B1A80B5E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FoodApp/Pods-FoodApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FoodApp/Pods-FoodApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FoodApp/Pods-FoodApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9C34DC3827A8ECF8DC72AB46 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -635,6 +656,7 @@
 				53EA5546254B76DE00A33807 /* FoodAppImageConstants.swift in Sources */,
 				536636AF254C575100646060 /* TextFieldTableViewCell.swift in Sources */,
 				53D1719424802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift in Sources */,
+				5324DA76254DBE3C00473BA1 /* BlankTableViewCell.swift in Sources */,
 				53DF1F2C248230270034E4AC /* BaseViewController.swift in Sources */,
 				537A913B2481B78E00141F20 /* RecipeQueryCell.swift in Sources */,
 				53C104F9247C0EF800001DEB /* RecipeDataManager.swift in Sources */,

@@ -14,6 +14,10 @@ target 'FoodApp' do
   # For example, to use Firebase Authentication and Cloud Firestore
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'GoogleSignIn'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Core'
+  pod 'FirebaseUI/Google'
 
   target 'FoodAppTests' do
     inherit! :search_paths
