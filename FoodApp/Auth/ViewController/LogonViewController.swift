@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseUI
 import GoogleSignIn
 
 class LogonViewController: UIViewController, UITableViewDelegate {

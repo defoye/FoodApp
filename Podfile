@@ -15,6 +15,9 @@ target 'FoodApp' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'GoogleSignIn'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Core'
+  pod 'FirebaseUI/Google'
 
   target 'FoodAppTests' do
     inherit! :search_paths
