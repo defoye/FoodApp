@@ -6,7 +6,7 @@
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
-import UIKit
+import QuiteAdaptableKit
 
 class SignInViewController: UIViewController, UITableViewDelegate {
     enum Section: Hashable {
