@@ -223,6 +223,16 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.7):
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Interface (0.0.7)
+  - FBSDKCoreKit (7.1.1):
+    - FBSDKCoreKit/Basics (= 7.1.1)
+    - FBSDKCoreKit/Core (= 7.1.1)
+  - FBSDKCoreKit/Basics (7.1.1)
+  - FBSDKCoreKit/Core (7.1.1):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (7.1.1):
+    - FBSDKLoginKit/Login (= 7.1.1)
+  - FBSDKLoginKit/Login (7.1.1):
+    - FBSDKCoreKit (~> 7.1.1)
   - Firebase/Analytics (7.0.0):
     - Firebase/Core
   - Firebase/Auth (7.0.0):
@@ -279,9 +289,18 @@ PODS:
   - FirebaseUI/Auth (9.0.0):
     - Firebase/Auth
     - GoogleUtilities/UserDefaults
+  - FirebaseUI/Email (9.0.0):
+    - FirebaseUI/Auth
+  - FirebaseUI/Facebook (9.0.0):
+    - FBSDKLoginKit (~> 7.0)
+    - FirebaseUI/Auth
   - FirebaseUI/Google (9.0.0):
     - FirebaseUI/Auth
     - GoogleSignIn (~> 5.0)
+  - FirebaseUI/OAuth (9.0.0):
+    - FirebaseUI/Auth
+  - FirebaseUI/Phone (9.0.0):
+    - FirebaseUI/Auth
   - GoogleAppMeasurement (7.0.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
@@ -359,7 +378,11 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
+  - FirebaseUI/Email
+  - FirebaseUI/Facebook
   - FirebaseUI/Google
+  - FirebaseUI/OAuth
+  - FirebaseUI/Phone
   - GoogleSignIn
   - QuiteAdaptableKit (~> 0.0.2)
 
@@ -368,6 +391,8 @@ SPEC REPOS:
     - abseil
     - AppAuth
     - BoringSSL-GRPC
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -393,6 +418,8 @@ SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
+  FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
+  FBSDKLoginKit: 1a61d79e2b25e2fc0d03dccab1e34b38bbdf2546
   Firebase: 50be68416f50eb4eb2ecb0e78acab9a051ef95df
   FirebaseAnalytics: c1166b7990bae464c6436132510bb718c6680f80
   FirebaseAuth: 228dd0faa5b5263eaa8c63518b16faef438289a3
@@ -414,6 +441,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   QuiteAdaptableKit: 9a103d57cbc0f206b767714191a3efacc9978aab
 
-PODFILE CHECKSUM: 25bed9fe469eeb8edccff64cf50687cb1a1e7e98
+PODFILE CHECKSUM: 0b9e6e9b6ac99919f5441cd50038311d52689217
 
 COCOAPODS: 1.10.0
