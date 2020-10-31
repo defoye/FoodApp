@@ -78,7 +78,7 @@ class LogonViewController: UIViewController, UITableViewDelegate {
         snapshot.appendSections([.main])
         
         let googleSignInModel = BlankTableViewCell.ViewModel()
-        googleSignInModel.viewInsets = .init(top: 0, left: 20, bottom: -20, right: -20)
+        googleSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
         
         snapshot.appendItems([
             .logo(.apple_logo),
