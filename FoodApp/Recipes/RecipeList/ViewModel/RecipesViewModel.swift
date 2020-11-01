@@ -57,6 +57,7 @@ class RecipesViewModel {
 		guard let recipes = model.results else {
 			return
 		}
+        FirebaseDataManager.shared.addRecipeSearchData(recipes)
 		totalResults = model.totalResults ?? 0
 		let dGroup = DispatchGroup()
 		
