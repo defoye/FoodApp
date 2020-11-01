@@ -6,60 +6,60 @@
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
-import UIKit
+import QuiteAdaptableKit
 
 class RecipeDataManager: BaseDataManager { }
 
 extension RecipeDataManager {
 	
-	func recipeSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSearchModel?) -> Void)) {
-		let urlString = SpoonacularAPI.Recipes.search.url
+    func extractRecipeSearch(_ params: SpoonacularAPI.Extract.ParamDict, _ completion: @escaping ((RequestStatus, SpoonacularAPI.ExtractRecipeModel?) -> Void)) {
+        let urlString = SpoonacularAPI.Extract.url
 		let key = SpoonacularAPI.key
-		let combinedParams = ["apiKey": key].merged(with: params)
+        let combinedParams = ["apiKey": key].merged(with: params.convertedToRawValues())
 		let request = createRequest(urlString, combinedParams, nil)
 		
 		dataTask(request, completion)
 	}
 	
-	func extractRecipeSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.ExtractRecipeModel?) -> Void)) {
-		let urlString = SpoonacularAPI.Recipes.extract.url
-		let key = SpoonacularAPI.key
-		let combinedParams = ["apiKey": key].merged(with: params)
-		let request = createRequest(urlString, combinedParams, nil)
-		
-		dataTask(request, completion)
-	}
-	
-	func recipeInformationSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeInformationModel?) -> Void)) {
-		guard let id = params["id"] else {
+    func recipeInformationSearch(_ params: SpoonacularAPI.Information.ParamDict, _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeInformationModel?) -> Void)) {
+        guard let id = params[.id] else {
 			fatalError()
 		}
-		let urlString = SpoonacularAPI.Recipes.search.url + "\(id)/information"
+        let urlString = SpoonacularAPI.Information.url(id)
 		let key = SpoonacularAPI.key
-		let combinedParams = ["apiKey": key].merged(with: params)
+        let combinedParams = ["apiKey": key].merged(with: params.convertedToRawValues())
 		let request = createRequest(urlString, combinedParams, nil)
 		
 		dataTask(request, completion)
 	}
 	
-	func recipeComplexSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeComplexSearchModel?) -> Void)) {
-		let urlString = SpoonacularAPI.Recipes.complexSearch.url
+    func recipeComplexSearch(_ params: SpoonacularAPI.ComplexSearch.ParamDict, _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeComplexSearchModel?) -> Void)) {
+        let urlString = SpoonacularAPI.ComplexSearch.url
 		let key = SpoonacularAPI.key
-		let combinedParams = ["apiKey": key].merged(with: params)
+        let combinedParams = ["apiKey": key].merged(with: params.convertedToRawValues())
 		let request = createRequest(urlString, combinedParams, nil)
 		
 		dataTask(request, completion)
 	}
 	
-	func recipeSimilarSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSimilarModel?) -> Void)) {
-		guard let id = params["id"] else {
+    func recipeSimilarSearch(_ params: SpoonacularAPI.Similar.ParamDict, _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSimilarModel?) -> Void)) {
+        guard let id = params[.id] else {
 			fatalError()
 		}
-		let urlString = SpoonacularAPI.Recipes.similar.url + "\(id)/similar"
+        let urlString = SpoonacularAPI.Similar.url(id)
 		let key = SpoonacularAPI.key
-		let combinedParams = ["apiKey": key].merged(with: params)
+        let combinedParams = ["apiKey": key].merged(with: params.convertedToRawValues())
 		let request = createRequest(urlString, combinedParams, nil)
 		
 		dataTask(request, completion)
 	}
+    
+    func recipeSearchByIngredients(_ params: SpoonacularAPI.SearchByIngredient.ParamDict, _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSimilarModel?) -> Void)) {
+        let urlString = SpoonacularAPI.SearchByIngredient.url
+        let key = SpoonacularAPI.key
+        let combinedParams = ["apiKey": key].merged(with: params.convertedToRawValues())
+        let request = createRequest(urlString, combinedParams, nil)
+        
+        dataTask(request, completion)
+    }
 }

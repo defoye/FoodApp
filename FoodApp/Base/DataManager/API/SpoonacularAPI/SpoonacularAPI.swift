@@ -9,31 +9,103 @@
 import Foundation
 
 enum SpoonacularAPI {
-	enum Recipes {
-		case search
-		case extract
-		case information
-		case informationBulk
-		case complexSearch
-		case similar
-		
-		var url: String {
-			switch self {
-			case .search:
-				return "https://api.spoonacular.com/recipes/search"
-			case .extract:
-				return "https://api.spoonacular.com/recipes/extract"
-			case .information:
-				return "https://api.spoonacular.com/recipes/"
-			case .informationBulk:
-				return "https://api.spoonacular.com/recipes/informationBulk"
-			case .complexSearch:
-				return "https://api.spoonacular.com/recipes/complexSearch"
-			case .similar:
-				return "https://api.spoonacular.com/recipes/"
-			}
-		}
-	}
+    
+    enum Extract {
+        
+        typealias ParamDict = [Param: String]
+        
+        enum Param: String {
+            case url
+            case forceExtraction
+            case analyze
+        }
+        
+        static var url: String {
+            return "https://api.spoonacular.com/recipes/extract"
+        }
+    }
+    
+    enum Information {
+        
+        typealias ParamDict = [Param: String]
+        
+        enum Param: String {
+            case id
+            case includeNutrition
+        }
+        
+        static func url(_ id: String) -> String {
+            "https://api.spoonacular.com/recipes/" + id + "/information"
+        }
+    }
+    
+    enum InformationBulk {
+        
+        typealias ParamDict = [Param: String]
+        
+        enum Param: String {
+            case ids
+            case includeNutrition
+        }
+        
+        static var url: String {
+            return "https://api.spoonacular.com/recipes/informationBulk"
+        }
+    }
+    
+    enum ComplexSearch {
+        
+        typealias ParamDict = [Param: String]
+        
+        enum Param: String {
+            case ingredients
+            case number
+            case ranking
+            case ignorePantry
+            case offset
+            case instructionsRequired
+            case addRecipeInformation
+            case cuisine
+            case type
+            case sort
+            case query
+        }
+        
+        static var url: String {
+            return "https://api.spoonacular.com/recipes/complexSearch"
+        }
+    }
+    
+    enum Similar {
+        
+        typealias ParamDict = [Param: String]
+        
+        enum Param: String {
+            case id
+            case number
+            case limitLicense
+        }
+        
+        static func url(_ id: String) -> String {
+            "https://api.spoonacular.com/recipes/" + id + "/similar"
+        }
+    }
+    
+    enum SearchByIngredient {
+        
+        typealias ParamDict = [Param: String]
+        
+        enum Param: String {
+            case ingredients
+            case number
+            case ranking
+            case ignorePantry
+        }
+        
+        static var url: String {
+            return "https://api.spoonacular.com/recipes/findByIngredients"
+        }
+    }
 	
 	static var key: String {
 		return "95c9f7da7d9e4d0f896eea3aa81e4a63"
