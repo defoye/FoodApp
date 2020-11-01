@@ -19,6 +19,7 @@
 		53659600254F207A005A5DF1 /* FirebaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536595FF254F207A005A5DF1 /* FirebaseDataManager.swift */; };
 		53659655254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json in Resources */ = {isa = PBXBuildFile; fileRef = 53659654254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json */; };
 		5365965C254F398B005A5DF1 /* RecipeComplexSearchModel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5365965B254F398B005A5DF1 /* RecipeComplexSearchModel+Extension.swift */; };
+		5365966C254F44EC005A5DF1 /* Firestore+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5365966B254F44EC005A5DF1 /* Firestore+Extension.swift */; };
 		536636A8254C56A300646060 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A6254C56A200646060 /* LabelCell.swift */; };
 		536636A9254C56A300646060 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A7254C56A300646060 /* ButtonTableViewCell.swift */; };
 		536636AF254C575100646060 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636AE254C575100646060 /* TextFieldTableViewCell.swift */; };
@@ -95,6 +96,7 @@
 		536595FF254F207A005A5DF1 /* FirebaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDataManager.swift; sourceTree = "<group>"; };
 		53659654254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SpoonacularComplexSearchResponse1.json; sourceTree = "<group>"; };
 		5365965B254F398B005A5DF1 /* RecipeComplexSearchModel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeComplexSearchModel+Extension.swift"; sourceTree = "<group>"; };
+		5365966B254F44EC005A5DF1 /* Firestore+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firestore+Extension.swift"; sourceTree = "<group>"; };
 		536636A6254C56A200646060 /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		536636A7254C56A300646060 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		536636AE254C575100646060 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -220,6 +222,23 @@
 			path = ComplexSearch;
 			sourceTree = "<group>";
 		};
+		53659661254F44BF005A5DF1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				539EE9A8247CBD87002BED74 /* Extensions.swift */,
+				5365966A254F44E0005A5DF1 /* Firebase */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5365966A254F44E0005A5DF1 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				5365966B254F44EC005A5DF1 /* Firestore+Extension.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		53674F3E254CAB7700F53B26 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,7 +338,7 @@
 		539EE9A7247CBD77002BED74 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				539EE9A8247CBD87002BED74 /* Extensions.swift */,
+				53659661254F44BF005A5DF1 /* Extensions */,
 				539EE9AA247CBDB2002BED74 /* Protocols.swift */,
 				53EA5545254B76DE00A33807 /* FoodAppImageConstants.swift */,
 			);
@@ -673,6 +692,7 @@
 				53F47A92247EA74C00554A2C /* RecipeCell.swift in Sources */,
 				53D1719D2480980D0099B8A4 /* RecipeDetailViewModel.swift in Sources */,
 				53EA5542254B5EB900A33807 /* SignUpLogoCell.swift in Sources */,
+				5365966C254F44EC005A5DF1 /* Firestore+Extension.swift in Sources */,
 				531595F5247F3C330002C750 /* CuisineViewController.swift in Sources */,
 				536636A8254C56A300646060 /* LabelCell.swift in Sources */,
 				5321A94E247F3A1A00F55FBB /* InstructionsRequiredCell.swift in Sources */,
