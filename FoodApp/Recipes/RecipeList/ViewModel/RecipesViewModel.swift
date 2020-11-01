@@ -66,7 +66,6 @@ class RecipesViewModel {
 		
 		recipes.forEach { recipe in
 			if var imageURLString = recipe.image {
-//				imageURLString = "https://spoonacular.com/recipeImages/" + imageURLString
 				dGroup.enter()
 				dataManager.downloadImage(from: imageURLString) { image in
 					if let image = image {
