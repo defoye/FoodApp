@@ -15,6 +15,7 @@ class RecipesViewModel {
 	var fetchAmount: Int = 20
 	var isLoading: Bool = false
 	var items: [Item]?
+    var totalResults: Int = 0
 
 	let passThroughParams: [String: String]
 	
@@ -51,8 +52,6 @@ class RecipesViewModel {
 			"addRecipeInformation": "true"
 		])
 	}
-	
-	var totalResults: Int = 0
 		
 	func createItems(_ model: SpoonacularAPI.RecipeComplexSearchModel, _ completion: @escaping (() -> Void)) {
 		guard let recipes = model.results else {
