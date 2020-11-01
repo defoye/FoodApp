@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum SpoonacularAPI {
+class SpoonacularAPI {
     
-    enum Extract {
+    class Extract {
         
         typealias ParamDict = [Param: String]
         
@@ -25,7 +25,7 @@ enum SpoonacularAPI {
         }
     }
     
-    enum Information {
+    class Information {
         
         typealias ParamDict = [Param: String]
         
@@ -39,7 +39,7 @@ enum SpoonacularAPI {
         }
     }
     
-    enum InformationBulk {
+    class InformationBulk {
         
         typealias ParamDict = [Param: String]
         
@@ -53,7 +53,7 @@ enum SpoonacularAPI {
         }
     }
     
-    enum ComplexSearch {
+    class ComplexSearch {
         
         typealias ParamDict = [Param: String]
         
@@ -76,7 +76,7 @@ enum SpoonacularAPI {
         }
     }
     
-    enum Similar {
+    class Similar {
         
         typealias ParamDict = [Param: String]
         
@@ -91,7 +91,7 @@ enum SpoonacularAPI {
         }
     }
     
-    enum SearchByIngredient {
+    class SearchByIngredient {
         
         typealias ParamDict = [Param: String]
         
