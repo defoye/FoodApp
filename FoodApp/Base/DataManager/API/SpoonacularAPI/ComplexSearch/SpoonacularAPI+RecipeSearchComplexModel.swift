@@ -50,6 +50,10 @@ extension SpoonacularAPI {
 			case spoonacularSourceURL = "spoonacularSourceUrl"
 		}
 	}
+    
+    /**
+     Model appears in "ExtractRecipeModel" file. Keep it here for reference of the API
+     */
 
 //	// MARK: - AnalyzedInstruction
 //	struct AnalyzedInstruction: Codable {
@@ -167,19 +171,4 @@ extension SpoonacularAPI {
 		}
 	}
 
-}
-
-extension SpoonacularAPI.RecipeComplexSearchResult {
-    
-    func toDict() -> [String: Any] {
-        var dict: [String: Any] = [:]
-        
-        dict["title"] = title
-        dict["timeTitle"] = self.readyInMinutes
-        dict["sourceURL"] = sourceURL
-        dict["id"] = id
-        dict["image"] = image
-        
-        return dict
-    }
 }
