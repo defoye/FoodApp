@@ -12,15 +12,6 @@ class RecipeDataManager: BaseDataManager { }
 
 extension RecipeDataManager {
 	
-	func recipeSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSearchModel?) -> Void)) {
-		let urlString = SpoonacularAPI.Recipes.search.url
-		let key = SpoonacularAPI.key
-		let combinedParams = ["apiKey": key].merged(with: params)
-		let request = createRequest(urlString, combinedParams, nil)
-		
-		dataTask(request, completion)
-	}
-	
 	func extractRecipeSearch(_ params: [String: String], _ completion: @escaping ((RequestStatus, SpoonacularAPI.ExtractRecipeModel?) -> Void)) {
 		let urlString = SpoonacularAPI.Recipes.extract.url
 		let key = SpoonacularAPI.key
