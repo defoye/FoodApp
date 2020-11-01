@@ -168,3 +168,18 @@ extension SpoonacularAPI {
 	}
 
 }
+
+extension SpoonacularAPI.RecipeComplexSearchResult {
+    
+    func toDict() -> [String: Any] {
+        var dict: [String: Any] = [:]
+        
+        dict["title"] = title
+        dict["timeTitle"] = self.readyInMinutes
+        dict["sourceURL"] = sourceURL
+        dict["id"] = id
+        dict["image"] = image
+        
+        return dict
+    }
+}

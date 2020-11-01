@@ -18,6 +18,7 @@
 		5340046E247F563400060A12 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046D247F563400060A12 /* MainCoordinator.swift */; };
 		53659600254F207A005A5DF1 /* FirebaseDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536595FF254F207A005A5DF1 /* FirebaseDataManager.swift */; };
 		53659655254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json in Resources */ = {isa = PBXBuildFile; fileRef = 53659654254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json */; };
+		5365965C254F398B005A5DF1 /* RecipeComplexSearchModel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5365965B254F398B005A5DF1 /* RecipeComplexSearchModel+Extension.swift */; };
 		536636A8254C56A300646060 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A6254C56A200646060 /* LabelCell.swift */; };
 		536636A9254C56A300646060 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636A7254C56A300646060 /* ButtonTableViewCell.swift */; };
 		536636AF254C575100646060 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536636AE254C575100646060 /* TextFieldTableViewCell.swift */; };
@@ -93,6 +94,7 @@
 		5340046D247F563400060A12 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		536595FF254F207A005A5DF1 /* FirebaseDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDataManager.swift; sourceTree = "<group>"; };
 		53659654254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SpoonacularComplexSearchResponse1.json; sourceTree = "<group>"; };
+		5365965B254F398B005A5DF1 /* RecipeComplexSearchModel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecipeComplexSearchModel+Extension.swift"; sourceTree = "<group>"; };
 		536636A6254C56A200646060 /* LabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelCell.swift; sourceTree = "<group>"; };
 		536636A7254C56A300646060 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		536636AE254C575100646060 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -207,6 +209,15 @@
 				53659654254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		5365965A254F38E1005A5DF1 /* ComplexSearch */ = {
+			isa = PBXGroup;
+			children = (
+				53D1719324802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift */,
+				5365965B254F398B005A5DF1 /* RecipeComplexSearchModel+Extension.swift */,
+			);
+			path = ComplexSearch;
 			sourceTree = "<group>";
 		};
 		53674F3E254CAB7700F53B26 /* View */ = {
@@ -368,7 +379,7 @@
 			isa = PBXGroup;
 			children = (
 				53C38E97247E209000BD42D4 /* SpoonacularAPI.swift */,
-				53D1719324802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift */,
+				5365965A254F38E1005A5DF1 /* ComplexSearch */,
 				53D1719524808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift */,
 				53D17197248090710099B8A4 /* SpoonacularAPI+RecipeEquipmentSearchModel.swift */,
 				53D17199248093490099B8A4 /* SpoonacularAPI+ExtractRecipeModel.swift */,
@@ -701,6 +712,7 @@
 				53C38E98247E209000BD42D4 /* SpoonacularAPI.swift in Sources */,
 				53D1719624808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift in Sources */,
 				53C104D9247C0BEE00001DEB /* SceneDelegate.swift in Sources */,
+				5365965C254F398B005A5DF1 /* RecipeComplexSearchModel+Extension.swift in Sources */,
 				53EA553E254B5C1100A33807 /* SignUpOptionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
