@@ -374,6 +374,7 @@ PODS:
   - QuiteAdaptableKit (0.0.2)
 
 DEPENDENCIES:
+  - FBSDKCoreKit
   - FBSDKLoginKit
   - Firebase/Analytics
   - Firebase/Auth
@@ -442,6 +443,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   QuiteAdaptableKit: 9a103d57cbc0f206b767714191a3efacc9978aab
 
-PODFILE CHECKSUM: 6510f2087bd73b817b9634d18a7db80ee1c86eea
+PODFILE CHECKSUM: 22d003831227562e56f3f9bec48942afd2176e7d
 
 COCOAPODS: 1.10.0
