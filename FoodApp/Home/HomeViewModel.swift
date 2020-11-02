@@ -6,4 +6,8 @@
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
-import Foundation
+import QuiteAdaptableKit
+
+class HomeViewModel {
+    
+}

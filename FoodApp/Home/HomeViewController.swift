@@ -6,4 +6,19 @@
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class HomeViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .blue
+        
+        self.title = "Home"
+        
+        FirebaseDataManager.shared.fetchTopRecipes(numberOfResults: 20) { models in
+            
+        }
+    }
+}
