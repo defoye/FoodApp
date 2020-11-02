@@ -15,6 +15,7 @@ class RecipesViewModel {
 	var fetchAmount: Int = 20
 	var isLoading: Bool = false
 	var items: [Item]?
+    var totalResults: Int = 0
 
     let passThroughParams: SpoonacularAPI.ComplexSearch.ParamDict
 	
@@ -53,47 +54,12 @@ class RecipesViewModel {
         
         return passThroughParams.merged(with: paramDict)
 	}
-	
-	var totalResults: Int = 0
 		
-//	func createItems(_ model: SpoonacularAPI.RecipeSearchModel, _ completion: @escaping (() -> Void)) {
-//		guard let recipes = model.results else {
-//			return
-//		}
-//		totalResults = model.totalResults ?? 0
-//		let dGroup = DispatchGroup()
-//
-//		var items: [Item] = []
-//
-//		isLoading = true
-//
-//		recipes.forEach { recipe in
-//			if var imageURLString = recipe.image {
-//				imageURLString = "https://spoonacular.com/recipeImages/" + imageURLString
-//				dGroup.enter()
-//				dataManager.downloadImage(from: imageURLString) { image in
-//					if let image = image {
-//						let ratio = image.size.width / image.size.height
-//						if abs(ratio - 1) <= 0.5 {
-//							items.append(Item(recipe, image: image))
-//						}
-//					}
-//					dGroup.leave()
-//				}
-//			}
-//		}
-//
-//		dGroup.notify(queue: .main) {
-//			self.isLoading = false
-//			self.items = (self.items ?? []) + items
-//			completion()
-//		}
-//	}
-	
 	func createItems(_ model: SpoonacularAPI.RecipeComplexSearchModel, _ completion: @escaping (() -> Void)) {
 		guard let recipes = model.results else {
 			return
 		}
+        FirebaseDataManager.shared.addRecipeSearchData(recipes)
 		totalResults = model.totalResults ?? 0
 		let dGroup = DispatchGroup()
 		
@@ -103,7 +69,6 @@ class RecipesViewModel {
 		
 		recipes.forEach { recipe in
 			if var imageURLString = recipe.image {
-//				imageURLString = "https://spoonacular.com/recipeImages/" + imageURLString
 				dGroup.enter()
 				dataManager.downloadImage(from: imageURLString) { image in
 					if let image = image {
@@ -138,45 +103,6 @@ class RecipesViewModel {
 import UIKit
 
 extension RecipesViewModel {
-//	struct Item {
-//		let title: String?
-//		let timeTitle: String
-//		let sourceURL: String?
-//
-//		let image: UIImage
-//
-//		init(_ obj: SpoonacularAPI.Result, image: UIImage) {
-//			self.title = obj.title
-//			if let minutes = obj.readyInMinutes {
-//				let hours = Int(Double(minutes) / 60)
-//				let days = Int((Double(minutes) / 60) / 24)
-//
-//				if days > 0 {
-//					if days == 1 {
-//						timeTitle = "1 day"
-//					} else {
-//						timeTitle = "\(days) days"
-//					}
-//				} else if hours > 0 {
-//					if hours == 1 {
-//						timeTitle = "1 hour"
-//					} else {
-//						timeTitle = "\(hours) hours"
-//					}
-//				} else {
-//					if minutes == 1 {
-//						timeTitle = "1 minute"
-//					} else {
-//						timeTitle = "\(minutes) minutes"
-//					}
-//				}
-//			} else {
-//				timeTitle = ""
-//			}
-//			self.sourceURL = obj.sourceURL
-//			self.image = image
-//		}
-//	}
 	
 	struct Item {
 		let title: String?

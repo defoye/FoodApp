@@ -8,7 +8,19 @@
 
 import QuiteAdaptableKit
 
-class RecipeDataManager: BaseDataManager { }
+class RecipeDataManager: BaseDataManager {
+    
+    let useOnlineData: Bool = false
+    
+    fileprivate func offlineRequest<T: Decodable>(_ fileName: String, forType type: T.Type, _ completion: @escaping ((RequestStatus, T?) -> Void)) {
+        guard let decodedData = decodedJSONData(from: fileName, forType: T.self) else {
+            completion(.error, nil)
+            return
+        }
+        
+        completion(.success, decodedData)
+    }
+}
 
 extension RecipeDataManager {
 	
@@ -39,7 +51,11 @@ extension RecipeDataManager {
         let combinedParams = ["apiKey": key].merged(with: params.convertedToRawValues())
 		let request = createRequest(urlString, combinedParams, nil)
 		
-		dataTask(request, completion)
+        if useOnlineData {
+            dataTask(request, completion)
+        } else {
+            offlineRequest("SpoonacularComplexSearchResponse1", forType: SpoonacularAPI.RecipeComplexSearchModel.self, completion)
+        }
 	}
 	
     func recipeSimilarSearch(_ params: SpoonacularAPI.Similar.ParamDict, _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeSimilarModel?) -> Void)) {
