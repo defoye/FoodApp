@@ -1,5 +1,5 @@
 //
-//  FoodAppImageConstants.swift
+//  Constants.swift
 //  FoodApp
 //
 //  Created by Ernest DeFoy on 10/29/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum FoodAppImageConstants {
+enum Constants {
     case apple_logo
     case google_logo
     case facebook_logo
