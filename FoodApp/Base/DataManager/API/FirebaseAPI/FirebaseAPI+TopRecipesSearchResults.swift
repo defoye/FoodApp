@@ -6,7 +6,7 @@
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension FirebaseAPI {
     
@@ -23,23 +23,27 @@ extension FirebaseAPI {
             case title
         }
         
-        struct ResponseModel: Decodable {
+        class ResponseModel: Decodable, Hashable {
+            
+            let uuid = UUID()
             let hits: Int
             let id: Int
-            let image: String
+            let imageURL: String
             let sourceURL: String
             let timeTitle: Int
             let title: String
+            
+            var image: UIImage?
             
             private enum CodingKeys: String, CodingKey {
                 case hits, id, image, sourceURL, timeTitle, title
             }
             
-            init(from decoder: Decoder) throws {
+            required init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 self.hits = Int(try container.decode(String.self, forKey: .hits)) ?? 0
                 self.id = Int(try container.decode(String.self, forKey: .id)) ?? 0
-                self.image = try container.decode(String.self, forKey: .image)
+                self.imageURL = try container.decode(String.self, forKey: .image)
                 self.sourceURL = try container.decode(String.self, forKey: .sourceURL)
                 self.timeTitle = Int(try container.decode(String.self, forKey: .timeTitle)) ?? 0
                 self.title = try container.decode(String.self, forKey: .title)
@@ -51,7 +55,7 @@ extension FirebaseAPI {
                     switch param {
                     case .hits: dict[param] = String(self.hits)
                     case .id: dict[param] = String(self.id)
-                    case .image: dict[param] = self.image
+                    case .image: dict[param] = self.imageURL
                     case .sourceURL: dict[param] = self.sourceURL
                     case .timeTitle: dict[param] = String(self.timeTitle)
                     case .title: dict[param] = self.title
@@ -59,6 +63,14 @@ extension FirebaseAPI {
                     
                     return dict
                 }
+            }
+            
+            func hash(into hasher: inout Hasher) {
+                hasher.combine(uuid)
+            }
+            
+            static func == (lhs: ResponseModel, rhs: ResponseModel) -> Bool {
+                return lhs.uuid == rhs.uuid
             }
         }
         
