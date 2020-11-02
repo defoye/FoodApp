@@ -169,24 +169,7 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     func appleSignInTapped() {
         performSignin()
     }
- 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = dataSource.itemIdentifier(for: indexPath) else {
-            return
-        }
-        
-        switch item {
-        case .logo(_):
-            break
-        case .apple(_):
-            appleSignInTapped()
-        case .google(_), .facebook(_), .email(_):
-            coordinatorDelegate.coordinateToSignUp()
-        case .signIn:
-            coordinatorDelegate.coordinateToSignIn()
-        }
-    }
-}
+ }
 
 extension LogonViewController {
     
@@ -292,7 +275,7 @@ extension LogonViewController {
             appleSignInTapped()
         case .facebook(_):
             facebookSignInTapped()
-        case .google(_), .facebook(_), .email(_):
+        case .google(_), .email(_):
             coordinatorDelegate.coordinateToSignUp()
         case .signIn:
             coordinatorDelegate.coordinateToSignIn()
