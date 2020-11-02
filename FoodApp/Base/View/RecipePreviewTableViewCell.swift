@@ -75,7 +75,7 @@ class RecipePreviewTableViewCell: UITableViewCell {
         verticalStackView.addArrangedSubview(headerLabel)
         verticalStackView.addArrangedSubview(descriptionLabel)
         
-        horizontalStackView.pin(to: contentView, insets: .init(top: 0, left: 20, bottom: -20, right: -20))
+        horizontalStackView.pin(to: contentView, insets: .init(top: 10, left: 20, bottom: -10, right: -20))
         NSLayoutConstraint.activate([
             recipeImageView.heightAnchor.constraint(equalToConstant: 70),
             recipeImageView.widthAnchor.constraint(equalToConstant: 70)
