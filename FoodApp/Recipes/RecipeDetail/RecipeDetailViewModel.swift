@@ -82,7 +82,7 @@ class RecipeDetailViewModel {
 	
 	private func loadRecipeDetails(_ completion: @escaping (() -> Void)) {
 		isLoading = true
-		dataManager.extractRecipeSearch(["url": urlParam]) { (status, model) in
+        dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
 			self.isLoading = false
 			switch status {
 			case .success:
@@ -100,7 +100,7 @@ class RecipeDetailViewModel {
 			return
 		}
 		isLoading = true
-		dataManager.recipeSimilarSearch(["id": String(id)]) { [weak self] (status, model) in
+        dataManager.recipeSimilarSearch([.id: String(id)]) { [weak self] (status, model) in
 			guard let self = self else { return }
 			self.isLoading = false
 			switch status {

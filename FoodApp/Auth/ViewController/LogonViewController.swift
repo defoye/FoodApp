@@ -15,7 +15,6 @@ import FBSDKLoginKit
 
 class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegate {
     
-    
     enum Section: Hashable {
         case main
     }
@@ -53,6 +52,8 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     }()
     
     private let coordinatorDelegate: LogonCoordinatorDelegate
+    // Unhashed nonce.
+    fileprivate var currentNonce: String?
     
     init(coordinatorDelegate: LogonCoordinatorDelegate) {
         self.coordinatorDelegate = coordinatorDelegate
@@ -122,15 +123,12 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
                 cell.configure(image: image.image)
             }
         case .google(let setupModel, let viewModel):
-            return tableView.configuredCell(BlankTableViewCell.self) { cell in
-                
-                if #available(iOS 14.0, *) {
+            if #available(iOS 14.0, *) {
+                return tableView.configuredCell(BlankTableViewCell.self) { cell in
                     cell.configure(GIDSignInButton(frame: .zero, primaryAction: .init(handler: googleSignInTapped)), setupModel: setupModel, viewModel: viewModel)
-                } else {
-//                    return tableView.configuredCell(SignUpOptionCell.self) { cell in
-//                        cell.configure(image: model.imageConstant?.image, description: model.description)
-//                    }
                 }
+            } else {
+                return nil
             }
         case .facebook(let viewModel):
             return tableView.configuredCell(BlankTableViewCell.self) { cell in
@@ -154,7 +152,7 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
             }
         case .signIn:
             return tableView.configuredCell(LabelCell.self) { cell in
-                var model = LabelCell.Model()
+                let model = LabelCell.Model()
                 model.text = "Already have an account? Tap here to sign in."
                 model.textInsets = .init(top: 20, left: 20, bottom: -20, right: -20)
                 cell.configure(model)
@@ -171,6 +169,26 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     func appleSignInTapped() {
         performSignin()
     }
+ 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+        
+        switch item {
+        case .logo(_):
+            break
+        case .apple(_):
+            appleSignInTapped()
+        case .google(_), .facebook(_), .email(_):
+            coordinatorDelegate.coordinateToSignUp()
+        case .signIn:
+            coordinatorDelegate.coordinateToSignIn()
+        }
+    }
+}
+
+extension LogonViewController {
     
     @objc
     func facebookSignInTapped() {
@@ -230,10 +248,6 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
 
     }
     
-
-    // Unhashed nonce.
-    fileprivate var currentNonce: String?
-
     @available(iOS 13, *)
     func startSignInWithAppleFlow() {
       let nonce = randomNonceString()
