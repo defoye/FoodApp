@@ -19,7 +19,6 @@ class FirebaseDataManager {
 extension FirebaseDataManager {
     
     func addRecipeSearchData(_ recipeSearchModel: [SpoonacularAPI.RecipeComplexSearchResult]) {
-        var readCount: Int = 0
         recipeSearchModel.map { model -> FirebaseAPI.TopRecipesSearchResults.ParamDict in
             return FirebaseAPI.TopRecipesSearchResults.toDict(model)
         }
@@ -35,7 +34,6 @@ extension FirebaseDataManager {
                     self.db.collection(FirebaseAPI.Collection.topRecipesSearchResults.rawValue).document(documentPath).setData(data.convertedToRawValues(), merge: true)
                     return
                 }
-                readCount += 1
                 var modelDict = model.toDict()
                 modelDict[.hits] = String(model.hits + 1)
                 self.db.collection(FirebaseAPI.Collection.topRecipesSearchResults.rawValue).document(documentPath).setData(modelDict.convertedToRawValues(), merge: true)
