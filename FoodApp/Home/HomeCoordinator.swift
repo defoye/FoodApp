@@ -6,4 +6,20 @@
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class HomeCoordinator {
+    
+    let presenter: UINavigationController
+    
+    init() {
+        self.presenter = UINavigationController()
+    }
+    
+    func start() {
+        let homeViewController = HomeViewController()
+        
+        presenter.viewControllers = [homeViewController]
+    }
+}
+
