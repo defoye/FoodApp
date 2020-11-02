@@ -9,18 +9,11 @@
 import UIKit
 
 class MainCoordinator {
-	
-    weak var navigationController: UINavigationController?
-	var recipeSearchCoordinator: RecipeSearchCoordinator?
 		
-	init(_ navigationController: UINavigationController?) {
-		self.navigationController = navigationController
-						
-		let coordinator = RecipeSearchCoordinator(navigationController)
-		self.recipeSearchCoordinator = coordinator
-	}
-	
-	func start() {
-		recipeSearchCoordinator?.start()
+	func start() -> [UIViewController] {
+        let recipeSearchCoordinator = RecipeSearchCoordinator()
+		recipeSearchCoordinator.start()
+        
+        return [recipeSearchCoordinator.presenter]
 	}
 }
