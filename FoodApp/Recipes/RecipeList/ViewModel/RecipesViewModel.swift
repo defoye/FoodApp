@@ -17,13 +17,13 @@ class RecipesViewModel {
 	var items: [Item]?
     var totalResults: Int = 0
 
-	let passThroughParams: [String: String]
+    let passThroughParams: SpoonacularAPI.ComplexSearch.ParamDict
 	
-	init(_ passThroughData: [String: String]) {
+	init(_ passThroughData: SpoonacularAPI.ComplexSearch.ParamDict) {
 		passThroughParams = passThroughData
 	}
 	
-	func loadComplexRecipes(_ params: [String: String], _ completion: @escaping (() -> Void)) {
+    func loadComplexRecipes(_ params: SpoonacularAPI.ComplexSearch.ParamDict, _ completion: @escaping (() -> Void)) {
 		isLoading = true
 		dataManager.recipeComplexSearch(params) { [weak self] (status, model) in
 			guard let self = self else { return }
@@ -44,13 +44,15 @@ class RecipesViewModel {
 		return offset < totalResults
 	}
 	
-	func createParams(instructionsRequired: Bool) -> [String: String] {
-		return passThroughParams.merged(with: [
-			"offset": String(offset),
-			"number": String(fetchAmount),
-			"instructionsRequired": String(instructionsRequired),
-			"addRecipeInformation": "true"
-		])
+    func createParams(instructionsRequired: Bool) -> SpoonacularAPI.ComplexSearch.ParamDict {
+        let paramDict: SpoonacularAPI.ComplexSearch.ParamDict = [
+            .offset: String(offset),
+            .number: String(fetchAmount),
+            .instructionsRequired: String(instructionsRequired),
+            .addRecipeInformation: "true"
+        ]
+        
+        return passThroughParams.merged(with: paramDict)
 	}
 		
 	func createItems(_ model: SpoonacularAPI.RecipeComplexSearchModel, _ completion: @escaping (() -> Void)) {
