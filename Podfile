@@ -24,7 +24,7 @@ target 'FoodApp' do
   pod 'FirebaseUI/Phone'
   pod 'FirebaseUI/OAuth'
   pod 'FBSDKLoginKit'
-  
+  pod 'FBSDKCoreKit'
 
   target 'FoodAppTests' do
     inherit! :search_paths
