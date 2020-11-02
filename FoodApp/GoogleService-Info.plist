@@ -13,21 +13,21 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>flexibles.FoodApp</string>
+	<string>com.flexibles.development</string>
 	<key>PROJECT_ID</key>
 	<string>foodapp-5f684</string>
 	<key>STORAGE_BUCKET</key>
 	<string>foodapp-5f684.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:946810700327:ios:7c12c02eab4deca3d34402</string>
 	<key>DATABASE_URL</key>
