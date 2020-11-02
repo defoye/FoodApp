@@ -10,6 +10,7 @@ import QuiteAdaptableKit
 
 class RecipeDataManager: BaseDataManager {
     
+    static let shared = RecipeDataManager()
     let useOnlineData: Bool = false
     
     fileprivate func offlineRequest<T: Decodable>(_ fileName: String, forType type: T.Type, _ completion: @escaping ((RequestStatus, T?) -> Void)) {
