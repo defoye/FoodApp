@@ -53,7 +53,7 @@ class RecipePreviewTableViewCell: UITableViewCell {
         setup()
         recipeImageView.image = item.image
         headerLabel.text = item.title
-        descriptionLabel.text = String(item.timeTitle)
+        descriptionLabel.text = item.timeTitle
     }
     
     func configure(_ item: RecipeDetailViewModel.SimilarRecipeItem) {
