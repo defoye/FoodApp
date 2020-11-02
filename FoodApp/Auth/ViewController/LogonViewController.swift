@@ -20,7 +20,7 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     }
     
     enum Row: Hashable {
-        case logo(_ image: FoodAppImageConstants)
+        case logo(_ image: Constants.Images)
         
         case apple(_ model: SignUpOptionModel)
         case google(_ setupModel: BlankTableViewCell.SetupModel, _ viewModel: BlankTableViewCell.ViewModel)
@@ -31,7 +31,7 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     }
     
     struct SignUpOptionModel: Hashable {
-        let imageConstant: FoodAppImageConstants?
+        let imageConstant: Constants.Images?
         let description: String
     }
     
