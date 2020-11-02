@@ -42,8 +42,29 @@ extension CollectionReference {
     }
 }
 
+extension Query {
+    
+    func getDecodedDocuments<T: Decodable>(_ type: T.Type, _ completion: @escaping ([T]) -> Void) {
+        self.getDocuments { (snapshot, error) in
+            if let error = error {
+                print("[Query] - \(error.localizedDescription)")
+            }
+            
+            guard let snapshot = snapshot else {
+                return
+            }
+            
+            let models = snapshot.documents.compactMap { snapshot -> T? in
+                snapshot.data().decodedJSON(T.self)
+            }
+            
+            completion(models)
+        }
+    }
+}
+
 extension Firestore {
-    func getDecodedCollectionDocumentsPaginated<T: Decodable>(_ collection: FirebaseCollection, _ type: T.Type, limit: Int, _ completion: @escaping ([T]) -> Void) {
+    func getDecodedCollectionDocumentsPaginated<T: Decodable>(_ collection: FirebaseAPI.Collection, _ type: T.Type, limit: Int, _ completion: @escaping ([T]) -> Void) {
         self.collection(collection.rawValue)
             .limit(to: limit)
             .addSnapshotListener { (snapshot, error) in
@@ -72,7 +93,8 @@ extension Firestore {
             }
             
     }
-    func getDecodedCollectionDocuments<T: Decodable>(_ collection: FirebaseCollection, _ type: T.Type, _ completion: @escaping ([T]) -> Void) {
+    
+    func getDecodedCollectionDocuments<T: Decodable>(_ collection: FirebaseAPI.Collection, _ type: T.Type, _ completion: @escaping ([T]) -> Void) {
     
         self.collection(collection.rawValue).getDocuments { snapshot in
             guard let snapshot = snapshot else {
@@ -87,7 +109,7 @@ extension Firestore {
         }
     }
     
-    func getDecodedCollectionDocument<T: Decodable>(_ collection: FirebaseCollection, documentPath: String, _ type: T.Type, _ completion: @escaping (T?) -> Void) {
+    func getDecodedCollectionDocument<T: Decodable>(_ collection: FirebaseAPI.Collection, documentPath: String, _ type: T.Type, _ completion: @escaping (T?) -> Void) {
         
         self.collection(collection.rawValue).getDocument(documentPath) { snapshot in
             guard let snapshot = snapshot else {

@@ -9,11 +9,23 @@
 import UIKit
 
 class MainCoordinator {
-		
-	func start() -> [UIViewController] {
-        let recipeSearchCoordinator = RecipeSearchCoordinator()
+    
+    let viewControllers: [UIViewController]
+    private let recipeSearchCoordinator: RecipeSearchCoordinator
+    private let homeCoordinator: HomeCoordinator
+    
+    init() {
+        self.recipeSearchCoordinator = RecipeSearchCoordinator()
+        self.homeCoordinator = HomeCoordinator()
+        self.viewControllers = [
+            homeCoordinator.presenter,
+            recipeSearchCoordinator.presenter
+        ]
+    }
+    
+	func start() {
 		recipeSearchCoordinator.start()
         
-        return [recipeSearchCoordinator.presenter]
-	}
+        homeCoordinator.start()
+    }
 }

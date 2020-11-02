@@ -71,9 +71,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainCoordinator = MainCoordinator()
         self.mainCoordinator = mainCoordinator
             
-        tabBarController.viewControllers = mainCoordinator.start()
+        tabBarController.viewControllers = mainCoordinator.viewControllers
         
         window?.rootViewController = tabBarController
+        
+        mainCoordinator.start()
     }
 
 	func sceneDidDisconnect(_ scene: UIScene) {
