@@ -1,0 +1,6 @@
+framework module QuiteAdaptableKit {
+  umbrella header "QuiteAdaptableKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

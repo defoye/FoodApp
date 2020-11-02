@@ -19,6 +19,7 @@ target 'FoodApp' do
   pod 'Firebase/Core'
   pod 'FirebaseUI/Email'
   pod 'FirebaseUI/Google'
+  pod 'QuiteAdaptableKit', '~> 0.0.2'
   pod 'FirebaseUI/Facebook'
   pod 'FirebaseUI/Phone'
   pod 'FirebaseUI/OAuth'
