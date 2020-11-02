@@ -14,6 +14,23 @@ enum RequestStatus {
 }
 
 class BaseDataManager {
+    
+    public func decodedJSONData<T: Decodable>(from resourceName: String, forType type: T.Type) -> T? {
+        if let path = Bundle.current.path(forResource: resourceName, ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                
+                return try JSONDecoder().decode(T.self, from: data)
+            } catch {
+                print("BaseDataManager::decodedJSONData - Error while decoding data - \(error.localizedDescription)")
+                return nil
+            }
+        } else {
+            print("BaseDataManager::decodedJSONData - File not found")
+            return nil
+        }
+    }
+    
 	public func dataTask<T : Decodable>(_ url: URL, _ completion: @escaping ((RequestStatus, T?) -> Void)) {
 		print("----------------------------------REQUEST START----------------------------------")
 		URLSession.shared.dataTask(with: url) { (data, reponse, error) in
