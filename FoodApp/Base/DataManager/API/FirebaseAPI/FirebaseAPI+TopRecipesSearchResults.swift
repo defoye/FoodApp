@@ -19,7 +19,7 @@ extension FirebaseAPI {
             case id
             case image
             case sourceURL
-            case timeTitle
+            case readyInMinutes
             case title
         }
         
@@ -30,8 +30,9 @@ extension FirebaseAPI {
             let id: Int
             let imageURL: String
             let sourceURL: String
-            let timeTitle: Int
+            let readyInMinutes: Int
             let title: String
+            let timeTitle: String
             
             var image: UIImage?
             
@@ -45,8 +46,9 @@ extension FirebaseAPI {
                 self.id = Int(try container.decode(String.self, forKey: .id)) ?? 0
                 self.imageURL = try container.decode(String.self, forKey: .image)
                 self.sourceURL = try container.decode(String.self, forKey: .sourceURL)
-                self.timeTitle = Int(try container.decode(String.self, forKey: .timeTitle)) ?? 0
+                self.readyInMinutes = Int(try container.decode(String.self, forKey: .timeTitle)) ?? 0
                 self.title = try container.decode(String.self, forKey: .title)
+                self.timeTitle = "Ready in \(self.readyInMinutes.minutesIntToTimeString())"
             }
             
             func toDict() -> ParamDict {
@@ -57,7 +59,7 @@ extension FirebaseAPI {
                     case .id: dict[param] = String(self.id)
                     case .image: dict[param] = self.imageURL
                     case .sourceURL: dict[param] = self.sourceURL
-                    case .timeTitle: dict[param] = String(self.timeTitle)
+                    case .readyInMinutes: dict[param] = String(self.readyInMinutes)
                     case .title: dict[param] = self.title
                     }
                     
@@ -87,7 +89,7 @@ extension FirebaseAPI {
             
             dict[.title] = model.title
             if let readyInMinutes = model.readyInMinutes {
-                dict[.timeTitle] = String(readyInMinutes)
+                dict[.readyInMinutes] = String(readyInMinutes)
             }
             if let sourceURL = model.sourceURL {
                 dict[.sourceURL] = sourceURL
