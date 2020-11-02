@@ -15,6 +15,8 @@ class Constants {
         case google_logo
         case facebook_logo
         case email_logo
+        case cooking_book
+        case home
         
         var name: String {
             switch self {
@@ -26,6 +28,10 @@ class Constants {
                 return "facebook_logo"
             case .email_logo:
                 return "email_logo"
+            case .cooking_book:
+                return "cooking_book"
+            case .home:
+                return "home"
             }
         }
         
