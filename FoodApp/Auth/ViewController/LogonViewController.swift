@@ -11,6 +11,7 @@ import FirebaseUI
 import GoogleSignIn
 import AuthenticationServices
 import CryptoKit
+import FBSDKLoginKit
 
 class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegate {
     
@@ -68,12 +69,21 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
         GIDSignIn.sharedInstance()?.presentingViewController = self
         addSubviewsAndConstraints()
         setupDataSource()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
+        
+        //FB token verify
+        if let token = AccessToken.current,
+                !token.isExpired {
+                // User is logged in, do work such as go to next view controller.
+            print("FB Logged in")
+        }
     }
     
     private func setupDataSource() {
@@ -122,7 +132,23 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
 //                    }
                 }
             }
-        case .apple(let model), .facebook(let model), .email(let model):
+        case .facebook(let viewModel):
+            return tableView.configuredCell(BlankTableViewCell.self) { cell in
+                
+                if #available(iOS 14.0, *) {
+                    let loginButton = FBLoginButton()
+//                            loginButton.center = view.center
+//                            view.addSubview(loginButton)
+                    loginButton.permissions = ["public_profile", "email"]
+
+                    cell.configure(loginButton, setupModel: BlankTableViewCell.SetupModel(), viewModel: BlankTableViewCell.ViewModel())
+                } else {
+//                    return tableView.configuredCell(SignUpOptionCell.self) { cell in
+//                        cell.configure(image: model.imageConstant?.image, description: model.description)
+//                    }
+                }
+            }
+        case .apple(let model), .email(let model):
             return tableView.configuredCell(SignUpOptionCell.self) { cell in
                 cell.configure(image: model.imageConstant?.image, description: model.description)
             }
@@ -144,6 +170,11 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     @objc
     func appleSignInTapped() {
         performSignin()
+    }
+    
+    @objc
+    func facebookSignInTapped() {
+        
     }
     
     func performSignin() {
@@ -245,11 +276,28 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
             break
         case .apple(_):
             appleSignInTapped()
-            
+        case .facebook(_):
+            facebookSignInTapped()
         case .google(_), .facebook(_), .email(_):
             coordinatorDelegate.coordinateToSignUp()
         case .signIn:
             coordinatorDelegate.coordinateToSignIn()
+        }
+    }
+    
+    func loginButton(loginButton: FBLoginButton!, didCompleteWithResult result: LoginManagerLoginResult!, error: NSError!)
+        {
+        print(result.token?.tokenString) //YOUR FB TOKEN
+        let req = GraphRequest(graphPath: "me", parameters: ["fields":"email,name"], tokenString: result.token?.tokenString, version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
+        req.start { (connection, result, error) in
+            if(error == nil)
+            {
+                print("result \(result)")
+            }
+            else
+            {
+                print("error \(error)")
+            }
         }
     }
 }
