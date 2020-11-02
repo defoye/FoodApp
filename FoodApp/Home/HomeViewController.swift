@@ -8,22 +8,33 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UITableViewDelegate {
     
     enum Section {
-        case main
+        case topRecipes
     }
     
     enum Item: Hashable {
-        case recipeSimilar(_ model: FirebaseAPI.TopRecipesSearchResults.ResponseModel)
+        case topRecipesItem(_ model: FirebaseAPI.TopRecipesSearchResults.ResponseModel)
+        case separatorItem(_ uuid: UUID)
     }
     
     lazy var dataSource: UITableViewDiffableDataSource<Section, Item> = {
         UITableViewDiffableDataSource<Section, Item>(tableView: tableView) { [weak self] (tableView, indexPath, item) -> UITableViewCell? in
             switch item {
-            case .recipeSimilar(let model):
+            case .topRecipesItem(let model):
                 return tableView.configuredCell(RecipePreviewTableViewCell.self, identifier: RecipePreviewTableViewCell.reuseIdentifier) { cell in
                     cell.configure(model)
+                }
+            case .separatorItem:
+                return tableView.configuredCell(BlankTableViewCell.self) { cell in
+                    let view = UIView()
+                    view.backgroundColor = .lightGray
+                    view.heightAnchor.constraint(equalToConstant: 1).isActive = true
+                    let setupModel = BlankTableViewCell.SetupModel()
+                    let viewModel = BlankTableViewCell.ViewModel()
+                    viewModel.viewInsets = .init(top: 0, left: 110, bottom: 0, right: 0)
+                    cell.configure(view, setupModel: setupModel, viewModel: viewModel)
                 }
             }
         }
@@ -35,50 +46,52 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(RecipePreviewTableViewCell.self, forCellReuseIdentifier: RecipePreviewTableViewCell.reuseIdentifier)
+        tableView.register(BlankTableViewCell.self, forCellReuseIdentifier: "BlankTableViewCell")
         tableView.separatorStyle = .none
+        tableView.contentInset = .init(top: 20, left: 0, bottom: 0, right: 0)
         return tableView
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    let viewModel: HomeViewModel
+    
+    init() {
+        self.viewModel = HomeViewModel()
+        super.init(nibName: nil, bundle: nil)
+        setupTabBar()
         tableView.dataSource = dataSource
-        view.backgroundColor = .blue
-            
-        view.addSubview(tableView)
-        tableView.pin(to: view.safeAreaLayoutGuide)
-
-        self.title = "Home"
-        
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        
-        snapshot.appendSections([.main])
-        
-        let fetchAmount = Constants.Ints.homeTopRecipesCount.rawValue
-        FirebaseDataManager.shared.fetchTopRecipes(numberOfResults: fetchAmount) { models in
-            let items = models.map { model -> Item in
-                return .recipeSimilar(model)
+        self.viewModel.dataSourceApplyBlock = { [weak self] snapshot in
+            guard let self = self else {
+                return
             }
-            snapshot.appendItems(items)
             self.dataSource.apply(snapshot)
-            items.forEach { item in
-                switch item {
-                case .recipeSimilar(let model):
-                    RecipeDataManager.shared.downloadImage(from: model.imageURL) { image in
-                        if let image = image {
-                            let ratio = image.size.width / image.size.height
-                            if abs(ratio - 1) <= 0.5 {
-                                model.image = image
-                                snapshot.reloadItems([item])
-                                self.dataSource.apply(snapshot)
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
-}
-
-extension HomeViewController: UITableViewDelegate {
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addSubviewsAndConstraints()
+        viewModel.fetchData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavBar()
+    }
+    
+    private func setupNavBar() {
+        navigationItem.title = "Home"
+    }
+    
+    private func setupTabBar() {
+        tabBarItem = UITabBarItem(title: "Home", image: Constants.Images.home.image, selectedImage: nil)
+    }
+    
+    private func addSubviewsAndConstraints() {
+        view.addSubview(tableView)
+        tableView.pin(to: view)
+    }
 }
