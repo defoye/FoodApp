@@ -49,6 +49,12 @@ class RecipePreviewTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var infoImageView: UIImageView = {
+        let imageView = UIImageView(image: Constants.Images.info.image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     func configure(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
         setup()
         recipeImageView.image = item.image
@@ -70,15 +76,22 @@ class RecipePreviewTableViewCell: UITableViewCell {
     
     private func addSubviewsAndConstraints() {
         contentView.addSubview(horizontalStackView)
+        contentView.addSubview(infoImageView)
         horizontalStackView.addArrangedSubview(recipeImageView)
         horizontalStackView.addArrangedSubview(verticalStackView)
         verticalStackView.addArrangedSubview(headerLabel)
         verticalStackView.addArrangedSubview(descriptionLabel)
         
-        horizontalStackView.pin(to: contentView, insets: .init(top: 10, left: 20, bottom: -10, right: -20))
+        horizontalStackView.pin(to: contentView, insets: .init(top: 10, left: 20, bottom: -10, right: -50))
         NSLayoutConstraint.activate([
             recipeImageView.heightAnchor.constraint(equalToConstant: 70),
             recipeImageView.widthAnchor.constraint(equalToConstant: 70)
+        ])
+        NSLayoutConstraint.activate([
+            infoImageView.heightAnchor.constraint(equalToConstant: 20),
+            infoImageView.widthAnchor.constraint(equalToConstant: 20),
+            infoImageView.leadingAnchor.constraint(equalTo: horizontalStackView.trailingAnchor, constant: 10),
+            infoImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }
