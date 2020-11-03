@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>946810700327-qmg5bia6snbk2f30s0ai8vptc1p9osuk.apps.googleusercontent.com</string>
+	<string>946810700327-6a4al9vke97soa03efg0hv57721as359.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.946810700327-qmg5bia6snbk2f30s0ai8vptc1p9osuk</string>
+	<string>com.googleusercontent.apps.946810700327-6a4al9vke97soa03efg0hv57721as359</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDH6IHmPMA1N1FnjUtmlHNmzwsH53sjv_A</string>
 	<key>GCM_SENDER_ID</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:946810700327:ios:7c12c02eab4deca3d34402</string>
+	<string>1:946810700327:ios:ac7f85ba0818b8e5d34402</string>
 	<key>DATABASE_URL</key>
 	<string>https://foodapp-5f684.firebaseio.com</string>
 </dict>
