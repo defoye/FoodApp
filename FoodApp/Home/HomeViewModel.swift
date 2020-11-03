@@ -28,6 +28,7 @@ class HomeViewModel {
     private func fetchTopRecipes() {
         let fetchAmount = Constants.Ints.homeTopRecipesCount.rawValue
         FirebaseDataManager.shared.fetchTopRecipes(numberOfResults: fetchAmount) { models in
+            self.snapshot.appendItems([.labelItem(self.topRecipesLabelModel())])
             let items = self.createTopRecipesItems(fromModels: models)
             self.snapshot.appendItems(items)
             items.forEach { item in
@@ -43,6 +44,15 @@ class HomeViewModel {
             }
             self.dataSourceApplyBlock?(self.snapshot)
         }
+    }
+    
+    private func topRecipesLabelModel() -> LabelCell.Model {
+        let labelItemModel = LabelCell.Model()
+        labelItemModel.text = "Top Searched Recipes"
+        labelItemModel.font = .systemFont(ofSize: 30)
+        labelItemModel.alignment = .left
+        labelItemModel.textInsets = .init(top: 0, left: 20, bottom: -10, right: -20)
+        return labelItemModel
     }
     
     private func createTopRecipesItems(fromModels models: [FirebaseAPI.TopRecipesSearchResults.ResponseModel]) -> [Item] {
