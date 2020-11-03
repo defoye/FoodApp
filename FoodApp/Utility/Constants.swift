@@ -10,33 +10,17 @@ import UIKit
 
 class Constants {
     
-    enum Images {
+    enum Images: String {
         case apple_logo
         case google_logo
         case facebook_logo
         case email_logo
         case cooking_book
         case home
-        
-        var name: String {
-            switch self {
-            case .apple_logo:
-                return "apple_logo"
-            case .google_logo:
-                return "google_logo"
-            case .facebook_logo:
-                return "facebook_logo"
-            case .email_logo:
-                return "email_logo"
-            case .cooking_book:
-                return "cooking_book"
-            case .home:
-                return "home"
-            }
-        }
+        case info
         
         var image: UIImage? {
-            return UIImage(named: self.name)
+            return UIImage(named: self.rawValue)
         }
     }
     
