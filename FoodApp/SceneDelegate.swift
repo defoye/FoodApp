@@ -7,12 +7,29 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
 import FBSDKCoreKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, GIDSignInDelegate {
 
 	var window: UIWindow?
 
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        // ...
+        if let error = error {
+          // ...
+          return
+        }
+
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+          // User is signed in
+          // ...
+        }
+    }
+    
     var tabBarController: UITabBarController
     var logonCoordinator: LogonCoordinator
 	var mainCoordinator: MainCoordinator
@@ -33,6 +50,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         				
         self.window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
+        
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
         
         initVars()
         
