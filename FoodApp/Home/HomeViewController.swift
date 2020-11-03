@@ -15,6 +15,7 @@ class HomeViewController: UIViewController, UITableViewDelegate {
     }
     
     enum Item: Hashable {
+        case labelItem(_ model: LabelCell.Model)
         case topRecipesItem(_ model: FirebaseAPI.TopRecipesSearchResults.ResponseModel)
         case separatorItem(_ uuid: UUID)
     }
@@ -36,6 +37,10 @@ class HomeViewController: UIViewController, UITableViewDelegate {
                     viewModel.viewInsets = .init(top: 0, left: 110, bottom: 0, right: 0)
                     cell.configure(view, setupModel: setupModel, viewModel: viewModel)
                 }
+            case .labelItem(let model):
+                return tableView.configuredCell(LabelCell.self) { cell in
+                    cell.configure(model)
+                }
             }
         }
     }()
@@ -53,6 +58,7 @@ class HomeViewController: UIViewController, UITableViewDelegate {
     }()
     
     let viewModel: HomeViewModel
+    weak var coordinatorDelegate: HomeCoordinatorDelegate?
     
     init() {
         self.viewModel = HomeViewModel()
@@ -93,5 +99,18 @@ class HomeViewController: UIViewController, UITableViewDelegate {
     private func addSubviewsAndConstraints() {
         view.addSubview(tableView)
         tableView.pin(to: view)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+        
+        switch item {
+        case .topRecipesItem(let model):
+            coordinatorDelegate?.coordinateToRecipeDetail(item: model)
+        case .separatorItem(_), .labelItem(_):
+            break
+        }
     }
 }

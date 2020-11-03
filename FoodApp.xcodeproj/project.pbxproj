@@ -218,8 +218,8 @@
 		531AFB1025507E1700F18EAA /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				531AFB1125507E2500F18EAA /* HomeViewController.swift */,
 				531AFB1725507E5400F18EAA /* HomeCoordinator.swift */,
+				531AFB1125507E2500F18EAA /* HomeViewController.swift */,
 				531AFB1B25507F0F00F18EAA /* HomeViewModel.swift */,
 			);
 			path = Home;
@@ -352,7 +352,6 @@
 			children = (
 				53674F3E254CAB7700F53B26 /* View */,
 				53DF1F2B248230270034E4AC /* BaseViewController.swift */,
-				536F7C4F247DFF920064A1AB /* DataManager */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -390,16 +389,17 @@
 		53C104D5247C0BEE00001DEB /* FoodApp */ = {
 			isa = PBXGroup;
 			children = (
-				531AFB1025507E1700F18EAA /* Home */,
-				5365964B254F337E005A5DF1 /* Resources */,
-				7BB671C2254DF0DE00D74922 /* FoodApp.entitlements */,
-				5340046D247F563400060A12 /* MainCoordinator.swift */,
 				53C104D6247C0BEE00001DEB /* AppDelegate.swift */,
+				5340046D247F563400060A12 /* MainCoordinator.swift */,
 				53C104D8247C0BEE00001DEB /* SceneDelegate.swift */,
-				53EA5536254B55D800A33807 /* Auth */,
 				539EE9A4247CBD56002BED74 /* Base */,
+				53EA5536254B55D800A33807 /* Auth */,
+				536F7C4F247DFF920064A1AB /* DataManager */,
+				531AFB1025507E1700F18EAA /* Home */,
 				53C38E9B247EA26600BD42D4 /* Recipes */,
 				539EE9A7247CBD77002BED74 /* Utility */,
+				5365964B254F337E005A5DF1 /* Resources */,
+				7BB671C2254DF0DE00D74922 /* FoodApp.entitlements */,
 				53C104DF247C0BF700001DEB /* Assets.xcassets */,
 				53C104E1247C0BF700001DEB /* LaunchScreen.storyboard */,
 				53C104E4247C0BF700001DEB /* Info.plist */,

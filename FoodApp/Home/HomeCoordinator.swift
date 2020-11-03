@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol HomeCoordinatorDelegate: class {
+    func coordinateToRecipeDetail(item: FirebaseAPI.TopRecipesSearchResults.ResponseModel)
+}
+
 class HomeCoordinator {
     
     let presenter: UINavigationController
@@ -18,8 +22,19 @@ class HomeCoordinator {
     
     func start() {
         let homeViewController = HomeViewController()
+        homeViewController.coordinatorDelegate = self
         
         presenter.viewControllers = [homeViewController]
     }
 }
 
+extension HomeCoordinator: HomeCoordinatorDelegate {
+    
+    func coordinateToRecipeDetail(item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
+        let vc = RecipeDetailViewController.instantiate("RecipeDetail")
+        let vm = RecipeDetailViewModel(item)
+        vc.initViewModel(vm)
+        
+        presenter.pushViewController(vc, animated: true)
+    }
+}
