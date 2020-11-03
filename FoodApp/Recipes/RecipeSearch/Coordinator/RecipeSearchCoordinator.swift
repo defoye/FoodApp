@@ -24,6 +24,7 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 	func start() {
 		let viewController = RecipeSearchViewController.instantiate("RecipeSearch")
 		viewController.coordinatorDelegate = self
+        viewController.tabBarItem = UITabBarItem(title: "Recipes", image: Constants.Images.cooking_book.image, selectedImage: nil)
 		
 		recipeSearchViewController = viewController
         presenter.viewControllers = [viewController]

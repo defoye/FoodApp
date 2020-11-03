@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icons8-cooking-book-30.png",
+      "filename" : "icons8-home-page-30.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icons8-cooking-book-60.png",
+      "filename" : "icons8-home-page-60.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icons8-cooking-book-90.png",
+      "filename" : "icons8-home-page-90.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

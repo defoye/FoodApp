@@ -6,7 +6,7 @@
 //  Copyright © 2020 Ernest DeFoy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension FirebaseAPI {
     
@@ -19,30 +19,36 @@ extension FirebaseAPI {
             case id
             case image
             case sourceURL
-            case timeTitle
+            case readyInMinutes
             case title
         }
         
-        struct ResponseModel: Decodable {
+        class ResponseModel: Decodable, Hashable {
+            
+            let uuid = UUID()
             let hits: Int
             let id: Int
-            let image: String
+            let imageURL: String
             let sourceURL: String
-            let timeTitle: Int
+            let readyInMinutes: Int
             let title: String
+            let timeTitle: String
+            
+            var image: UIImage?
             
             private enum CodingKeys: String, CodingKey {
                 case hits, id, image, sourceURL, timeTitle, title
             }
             
-            init(from decoder: Decoder) throws {
+            required init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
                 self.hits = Int(try container.decode(String.self, forKey: .hits)) ?? 0
                 self.id = Int(try container.decode(String.self, forKey: .id)) ?? 0
-                self.image = try container.decode(String.self, forKey: .image)
+                self.imageURL = try container.decode(String.self, forKey: .image)
                 self.sourceURL = try container.decode(String.self, forKey: .sourceURL)
-                self.timeTitle = Int(try container.decode(String.self, forKey: .timeTitle)) ?? 0
+                self.readyInMinutes = Int(try container.decode(String.self, forKey: .timeTitle)) ?? 0
                 self.title = try container.decode(String.self, forKey: .title)
+                self.timeTitle = "Ready in \(self.readyInMinutes.minutesIntToTimeString())"
             }
             
             func toDict() -> ParamDict {
@@ -51,14 +57,22 @@ extension FirebaseAPI {
                     switch param {
                     case .hits: dict[param] = String(self.hits)
                     case .id: dict[param] = String(self.id)
-                    case .image: dict[param] = self.image
+                    case .image: dict[param] = self.imageURL
                     case .sourceURL: dict[param] = self.sourceURL
-                    case .timeTitle: dict[param] = String(self.timeTitle)
+                    case .readyInMinutes: dict[param] = String(self.readyInMinutes)
                     case .title: dict[param] = self.title
                     }
                     
                     return dict
                 }
+            }
+            
+            func hash(into hasher: inout Hasher) {
+                hasher.combine(uuid)
+            }
+            
+            static func == (lhs: ResponseModel, rhs: ResponseModel) -> Bool {
+                return lhs.uuid == rhs.uuid
             }
         }
         
@@ -75,7 +89,7 @@ extension FirebaseAPI {
             
             dict[.title] = model.title
             if let readyInMinutes = model.readyInMinutes {
-                dict[.timeTitle] = String(readyInMinutes)
+                dict[.readyInMinutes] = String(readyInMinutes)
             }
             if let sourceURL = model.sourceURL {
                 dict[.sourceURL] = sourceURL

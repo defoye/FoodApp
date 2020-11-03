@@ -39,7 +39,6 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		searchButton.setTitleColor(.black, for: .normal)
 		searchButton.addTarget(self, action: #selector(searchButtonAction), for: .touchUpInside)
 				
-		tabBarItem = UITabBarItem(title: "Recipes", image: UIImage(named: "cooking_book"), selectedImage: nil)
 		navigationItem.title = "Recipe Search"
 //		title = "Recipes"
 		

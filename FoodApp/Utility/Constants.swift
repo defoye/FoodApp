@@ -1,0 +1,34 @@
+//
+//  Constants.swift
+//  FoodApp
+//
+//  Created by Ernest DeFoy on 10/29/20.
+//  Copyright © 2020 Ernest DeFoy. All rights reserved.
+//
+
+import UIKit
+
+class Constants {
+    
+    enum Images: String {
+        case apple_logo
+        case google_logo
+        case facebook_logo
+        case email_logo
+        case cooking_book
+        case home
+        case info
+        
+        var image: UIImage? {
+            return UIImage(named: self.rawValue)
+        }
+    }
+    
+    enum Ints: Int {
+        case homeTopRecipesCount = 3
+    }
+    
+    enum CGFloats: CGFloat {
+        case cornerRadius1 = 5
+    }
+}
