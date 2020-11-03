@@ -71,13 +71,9 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance().delegate = self
         addSubviewsAndConstraints()
         setupDataSource()
-        if let token = AccessToken.current,
-                !token.isExpired {
-                // User is logged in, do work such as go to next view controller.
-            print("FB Logged in")
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -88,14 +84,11 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
                 // User is logged in, do work such as go to next view controller.
             print("FB Logged in")
         }
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupNavigationBar()
-        
     }
     
     private func setupDataSource() {
@@ -113,7 +106,6 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
             .email(SignUpOptionModel(imageConstant: .email_logo, description: "Sign up with Email")),
             .signIn
         ])
-        
         dataSource.apply(snapshot)
     }
     
@@ -201,9 +193,8 @@ extension LogonViewController {
         view.addSubview(loginButton)
         if let token = AccessToken.current,
                 !token.isExpired {
-            // User is logged in, do work such as go to next view controller.
+                // User is logged in, do work such as go to next view controller.
         }
-        
         loginButton.permissions = ["public_profile", "email"]
     }
     
@@ -267,7 +258,10 @@ extension LogonViewController: ASAuthorizationControllerDelegate {
             
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nounce)
             Auth.auth().signIn(with: credential) { (authDataResult, error) in
-                self.coordinatorDelegate.logon()
+                if let user = authDataResult?.user {
+                    print("ypu have signed in as \(user.uid)")
+                    self.coordinatorDelegate.logon()
+                }
             }
         }
     }
@@ -292,14 +286,13 @@ extension LogonViewController: LoginButtonDelegate {
             coordinatorDelegate.logon()
         }
         print("Suucess login with Facebook")
+        self.coordinatorDelegate.logon()
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        
     }
     
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-        
     }
 }
 
@@ -316,7 +309,10 @@ extension LogonViewController: GIDSignInDelegate {
         guard let authentication = user.authentication else { return }
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
         Auth.auth().signIn(with: credential) { (authResult, error) in
+          // User is signed in
+            print("User is signed in via google")
+          // ...
             self.coordinatorDelegate.logon()
         }
-    }
+    }    
 }

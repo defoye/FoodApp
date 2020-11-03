@@ -13,7 +13,6 @@ import FBSDKCoreKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
-    
     var tabBarController: UITabBarController
     var logonCoordinator: LogonCoordinator
 	var mainCoordinator: MainCoordinator
@@ -31,7 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         				
         self.window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
-                
+        
+//        initVars()
         if !authenticate() {
             // Do something when logon fails
         }
