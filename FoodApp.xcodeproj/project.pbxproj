@@ -218,8 +218,8 @@
 		531AFB1025507E1700F18EAA /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				531AFB1125507E2500F18EAA /* HomeViewController.swift */,
 				531AFB1725507E5400F18EAA /* HomeCoordinator.swift */,
+				531AFB1125507E2500F18EAA /* HomeViewController.swift */,
 				531AFB1B25507F0F00F18EAA /* HomeViewModel.swift */,
 			);
 			path = Home;
