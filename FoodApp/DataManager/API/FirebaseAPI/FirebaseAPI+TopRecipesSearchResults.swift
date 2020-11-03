@@ -102,6 +102,26 @@ extension FirebaseAPI {
             return dict
         }
         
+        static func toDict(_ model: SpoonacularAPI.RecipeSimilarModelElement) -> ParamDict {
+            var dict: ParamDict = [:]
+            
+            let similarModel = RecipeDetailViewModel.SimilarRecipeItem(model, image: nil)
+            
+            dict[.title] = model.title
+            if let readyInMinutes = model.readyInMinutes {
+                dict[.readyInMinutes] = String(readyInMinutes)
+            }
+            if let sourceURL = model.sourceURL {
+                dict[.sourceURL] = sourceURL
+            }
+            if let id = model.id {
+                dict[.id] = String(id)
+            }
+            dict[.image] = similarModel.imageURL
+            
+            return dict
+        }
+        
         static var url: String {
             return "https://api.spoonacular.com/recipes/extract"
         }

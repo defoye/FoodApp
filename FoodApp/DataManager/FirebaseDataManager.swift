@@ -12,6 +12,9 @@ import Firebase
 class FirebaseDataManager {
     static let shared = FirebaseDataManager()
     private let db = Firestore.firestore()
+    static var currentUserUID: String? {
+        Auth.auth().currentUser?.uid
+    }
 }
 
 // MARK: - Writing
@@ -40,6 +43,32 @@ extension FirebaseDataManager {
             }
         }
     }
+    
+    func addRecipeSearchData(_ recipeSimiarModel: [SpoonacularAPI.RecipeSimilarModelElement]) {
+        recipeSimiarModel.map { model -> FirebaseAPI.TopRecipesSearchResults.ParamDict in
+            return FirebaseAPI.TopRecipesSearchResults.toDict(model)
+        }
+        .forEach { data in
+            guard let documentPath = data[.id] else {
+                return
+            }
+            
+            let collection = FirebaseAPI.Collection.topRecipesSearchResults
+            
+            db.getDecodedCollectionDocument(collection, documentPath: documentPath, FirebaseAPI.TopRecipesSearchResults.ResponseModel.self) { model in
+                guard let model = model else {
+                    var data = data
+                    data[.hits] = String(1)
+                    self.db.collection(collection.rawValue).document(documentPath).setData(data.convertedToRawValues(), merge: true)
+                    return
+                }
+                var modelDict = model.toDict()
+                modelDict[.hits] = String(model.hits + 1)
+                self.db.collection(collection.rawValue).document(documentPath).setData(modelDict.convertedToRawValues(), merge: true)
+            }
+        }
+    }
+    
 }
 
 // MARK: - Retrieving

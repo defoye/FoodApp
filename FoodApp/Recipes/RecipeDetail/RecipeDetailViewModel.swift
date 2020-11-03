@@ -25,8 +25,9 @@ class RecipeDetailViewModel {
 	let idParam: Int?
 	
 	var items: [RecipeDetailSection: Any]? = [:]
+    var extractRecipeModel: SpoonacularAPI.ExtractRecipeModel?
 	
-	init(_ urlParam: String, _ item: RecipesViewModel.Item) {
+    init(_ urlParam: String, _ item: RecipesViewModel.Item, _ extractRecipeModel: SpoonacularAPI.ExtractRecipeModel? = nil) {
 		self.urlParam = urlParam
 		self.idParam = item.id
 		self.items?[.header] = HeaderItem(title: item.title ?? "Error", image: item.image)
@@ -38,7 +39,7 @@ class RecipeDetailViewModel {
 		self.items?[.header] = HeaderItem(title: item.title, image: item.image)
 	}
     
-    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
+    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel, _ extractRecipeModel: SpoonacularAPI.ExtractRecipeModel? = nil) {
         self.urlParam = item.sourceURL
         self.idParam = item.id
         self.items?[.header] = HeaderItem(title: item.title, image: item.image)
@@ -88,17 +89,23 @@ class RecipeDetailViewModel {
 	
 	private func loadRecipeDetails(_ completion: @escaping (() -> Void)) {
 		isLoading = true
-        dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
-			self.isLoading = false
-			switch status {
-			case .success:
-				if let model = model {
-					self.createItems(model, completion)
-				}
-			case .error:
-				fatalError()
-			}
-		}
+        if let model = extractRecipeModel {
+            FirebaseDataManager.shared.addFavoriteRecipe(nil, self.searchOriginalObject, model)
+            self.createItems(model, completion)
+        } else {
+            dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
+                self.isLoading = false
+                switch status {
+                case .success:
+                    if let model = model {
+                        FirebaseDataManager.shared.addFavoriteRecipe(nil, self.searchOriginalObject, model)
+                        self.createItems(model, completion)
+                    }
+                case .error:
+                    fatalError("API ran out")
+                }
+            }
+        }
 	}
 	
 	private func loadSimilarRecipes(_ completion: @escaping (() -> Void)) {
@@ -121,7 +128,8 @@ class RecipeDetailViewModel {
 	}
 	
 	func createSimilarRecipeItems(_ model: SpoonacularAPI.RecipeSimilarModel, _ completion: @escaping (() -> Void)) {
-		
+        FirebaseDataManager.shared.addRecipeSearchData(model)
+
 		var similarItems: [SimilarRecipeItem] = []
 		
 		let dGroup = DispatchGroup()
@@ -129,17 +137,18 @@ class RecipeDetailViewModel {
 		isLoading = true
 		
 		model.forEach { (element) in
-			if let id = element.id, let imageType = element.imageType {
-				let size = "240x150"
-				let imageURL = "https://spoonacular.com/recipeImages/\(id)-\(size).\(imageType)"
-				dGroup.enter()
-				dataManager.downloadImage(from: imageURL) { (image) in
-					if let image = image {
-						similarItems.append(SimilarRecipeItem(element, image: image))
-					}
-					dGroup.leave()
-				}
-			}
+            var item = SimilarRecipeItem(element, image: nil)
+            guard let imageURL = item.imageURL else {
+                return
+            }
+            dGroup.enter()
+            dataManager.downloadImage(from: imageURL) { (image) in
+                if let image = image {
+                    item.image = image
+                    similarItems.append(item)
+                }
+                dGroup.leave()
+            }
 		}
 		
 		dGroup.notify(queue: .main) {
@@ -240,12 +249,14 @@ extension RecipeDetailViewModel {
 		let title: String
 		let timeTitle: String
 		
-		let image: UIImage
+		var image: UIImage?
 		
 		let id: Int?
 		let sourceURL: String?
+        
+        let imageURL: String?
 		
-		init(_ obj: SpoonacularAPI.RecipeSimilarModelElement, image: UIImage) {
+		init(_ obj: SpoonacularAPI.RecipeSimilarModelElement, image: UIImage?) {
 			title = obj.title ?? "Error"
 			if let minutes = obj.readyInMinutes {
 				timeTitle = minutes.minutesIntToTimeString()
@@ -255,6 +266,12 @@ extension RecipeDetailViewModel {
 			self.image = image
 			id = obj.id
 			sourceURL = obj.sourceURL
+            if let id = obj.id, let imageType = obj.imageType {
+                let size = "240x150"
+                self.imageURL = "https://spoonacular.com/recipeImages/\(id)-\(size).\(imageType)"
+            } else {
+                self.imageURL = ""
+            }
 		}
 	}
 }
