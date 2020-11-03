@@ -37,6 +37,12 @@ class RecipeDetailViewModel {
 		self.idParam = item.id
 		self.items?[.header] = HeaderItem(title: item.title, image: item.image)
 	}
+    
+    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
+        self.urlParam = item.sourceURL
+        self.idParam = item.id
+        self.items?[.header] = HeaderItem(title: item.title, image: item.image)
+    }
 	
 	func numberOfRows(in section: RecipeDetailSection) -> Int {
 		switch section {
