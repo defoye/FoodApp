@@ -12,6 +12,7 @@ import GoogleSignIn
 import AuthenticationServices
 import CryptoKit
 import FBSDKLoginKit
+import Firebase
 
 class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegate {
     
@@ -70,8 +71,24 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
         GIDSignIn.sharedInstance()?.presentingViewController = self
         addSubviewsAndConstraints()
         setupDataSource()
+        if let token = AccessToken.current,
+                !token.isExpired {
+                // User is logged in, do work such as go to next view controller.
+            print("FB Logged in")
+        }
+
         
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //FB token verify
+        if let token = AccessToken.current,
+                !token.isExpired {
+                // User is logged in, do work such as go to next view controller.
+            print("FB Logged in")
+        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,12 +96,6 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
         
         setupNavigationBar()
         
-        //FB token verify
-        if let token = AccessToken.current,
-                !token.isExpired {
-                // User is logged in, do work such as go to next view controller.
-            print("FB Logged in")
-        }
     }
     
     private func setupDataSource() {
@@ -131,21 +142,10 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
                 return nil
             }
         case .facebook(let viewModel):
-            return tableView.configuredCell(BlankTableViewCell.self) { cell in
-                
-                if #available(iOS 14.0, *) {
-                    let loginButton = FBLoginButton()
-//                            loginButton.center = view.center
-//                            view.addSubview(loginButton)
-                    loginButton.permissions = ["public_profile", "email"]
-
-                    cell.configure(loginButton, setupModel: BlankTableViewCell.SetupModel(), viewModel: BlankTableViewCell.ViewModel())
-                } else {
-//                    return tableView.configuredCell(SignUpOptionCell.self) { cell in
-//                        cell.configure(image: model.imageConstant?.image, description: model.description)
-//                    }
-                }
+            return tableView.configuredCell(SignUpOptionCell.self) { cell in
+                cell.configure(image: viewModel.imageConstant?.image, description: viewModel.description)
             }
+
         case .apple(let model), .email(let model):
             return tableView.configuredCell(SignUpOptionCell.self) { cell in
                 cell.configure(image: model.imageConstant?.image, description: model.description)
@@ -175,7 +175,19 @@ extension LogonViewController {
     
     @objc
     func facebookSignInTapped() {
+        let loginButton = FBLoginButton()
+        loginButton.center = view.center
+        loginButton.delegate = self
+        view.addSubview(loginButton)
+        if let token = AccessToken.current,
+                !token.isExpired {
+            
+                // User is logged in, do work such as go to next view controller.
+        }
         
+        loginButton.permissions = ["public_profile", "email"]
+
+
     }
     
     func performSignin() {
@@ -281,22 +293,6 @@ extension LogonViewController {
             coordinatorDelegate.coordinateToSignIn()
         }
     }
-    
-    func loginButton(loginButton: FBLoginButton!, didCompleteWithResult result: LoginManagerLoginResult!, error: NSError!)
-        {
-        print(result.token?.tokenString) //YOUR FB TOKEN
-        let req = GraphRequest(graphPath: "me", parameters: ["fields":"email,name"], tokenString: result.token?.tokenString, version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
-        req.start { (connection, result, error) in
-            if(error == nil)
-            {
-                print("result \(result)")
-            }
-            else
-            {
-                print("error \(error)")
-            }
-        }
-    }
 }
 
 extension LogonViewController: ASAuthorizationControllerDelegate {
@@ -332,4 +328,32 @@ extension LogonViewController: ASAuthorizationControllerPresentationContextProvi
     }
     
 
+}
+
+extension LogonViewController: LoginButtonDelegate {
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        
+        if error != nil {
+            print("Facebook login with error: \(error?.localizedDescription)")
+            return
+        }
+        if let token = AccessToken.current,
+                !token.isExpired {
+            
+                // User is logged in, do work such as go to next view controller.
+        }
+
+        print("Suucess login with Facebook")
+        
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        
+    }
+    
+    
 }
