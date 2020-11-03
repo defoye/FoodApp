@@ -14,7 +14,7 @@ import CryptoKit
 import FBSDKLoginKit
 import Firebase
 
-class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegate {
+class LogonViewController: UIViewController, FUIAuthDelegate {
     
     enum Section: Hashable {
         case main
@@ -60,6 +60,8 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
         self.coordinatorDelegate = coordinatorDelegate
         super.init(nibName: nil, bundle: nil)
         tableView.dataSource = dataSource
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -76,8 +78,6 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
                 // User is logged in, do work such as go to next view controller.
             print("FB Logged in")
         }
-
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -136,7 +136,9 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
         case .google(let setupModel, let viewModel):
             if #available(iOS 14.0, *) {
                 return tableView.configuredCell(BlankTableViewCell.self) { cell in
-                    cell.configure(GIDSignInButton(frame: .zero, primaryAction: .init(handler: googleSignInTapped)), setupModel: setupModel, viewModel: viewModel)
+                    cell.configure(GIDSignInButton(frame: .zero, primaryAction: .init(handler: { action in
+
+                    })), setupModel: setupModel, viewModel: viewModel)
                 }
             } else {
                 return nil
@@ -161,120 +163,14 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     }
     
     @objc
-    func googleSignInTapped(_ action: UIAction) {
-        
-    }
-    
-    @objc
     func appleSignInTapped() {
         performSignin()
     }
- }
+}
 
-extension LogonViewController {
-    
-    @objc
-    func facebookSignInTapped() {
-        let loginButton = FBLoginButton()
-        loginButton.center = view.center
-        loginButton.delegate = self
-        view.addSubview(loginButton)
-        if let token = AccessToken.current,
-                !token.isExpired {
-            
-                // User is logged in, do work such as go to next view controller.
-        }
-        
-        loginButton.permissions = ["public_profile", "email"]
+// MARK:- UITableViewDelegate
 
-
-    }
-    
-    func performSignin() {
-        let request = createAppleIDRequest()
-        let authrozationController = ASAuthorizationController(authorizationRequests: [request])
-        authrozationController.delegate = self
-        authrozationController.presentationContextProvider = self
-        authrozationController.performRequests()
-    }
-    
-    func createAppleIDRequest() -> ASAuthorizationAppleIDRequest {
-        let applePro = ASAuthorizationAppleIDProvider()
-        let request = applePro.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        let nounce = randomNonceString()
-        request.nonce = sha256(nounce)
-        currentNonce = nounce
-        return request
-        
-    }
-    
-    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
-    private func randomNonceString(length: Int = 32) -> String {
-      precondition(length > 0)
-      let charset: Array<Character> =
-          Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-      var result = ""
-      var remainingLength = length
-
-      while remainingLength > 0 {
-        let randoms: [UInt8] = (0 ..< 16).map { _ in
-          var random: UInt8 = 0
-          let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-          if errorCode != errSecSuccess {
-            fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
-          }
-          return random
-        }
-
-        randoms.forEach { random in
-          if remainingLength == 0 {
-            return
-          }
-
-          if random < charset.count {
-            result.append(charset[Int(random)])
-            remainingLength -= 1
-          }
-        }
-      }
-
-      return result
-
-    }
-    
-    @available(iOS 13, *)
-    func startSignInWithAppleFlow() {
-      let nonce = randomNonceString()
-      currentNonce = nonce
-      let appleIDProvider = ASAuthorizationAppleIDProvider()
-      let request = appleIDProvider.createRequest()
-      request.requestedScopes = [.fullName, .email]
-      request.nonce = sha256(nonce)
-
-      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-      authorizationController.delegate = self
-      authorizationController.presentationContextProvider = self
-      authorizationController.performRequests()
-    }
-
-    @available(iOS 13, *)
-    private func sha256(_ input: String) -> String {
-      let inputData = Data(input.utf8)
-      let hashedData = SHA256.hash(data: inputData)
-      let hashString = hashedData.compactMap {
-        return String(format: "%02x", $0)
-      }.joined()
-
-      return hashString
-    }
-
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        if let user = authDataResult?.user {
-            print("Nice! you logged in \(user.uid)")
-        }
-    }
-
+extension LogonViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let item = dataSource.itemIdentifier(for: indexPath) else {
             return
@@ -295,6 +191,65 @@ extension LogonViewController {
     }
 }
 
+extension LogonViewController {
+    
+    @objc
+    func facebookSignInTapped() {
+        let loginButton = FBLoginButton()
+        loginButton.center = view.center
+        loginButton.delegate = self
+        view.addSubview(loginButton)
+        if let token = AccessToken.current,
+                !token.isExpired {
+            // User is logged in, do work such as go to next view controller.
+        }
+        
+        loginButton.permissions = ["public_profile", "email"]
+    }
+    
+    func performSignin() {
+        let request = createAppleIDRequest()
+        let authrozationController = ASAuthorizationController(authorizationRequests: [request])
+        authrozationController.delegate = self
+        authrozationController.presentationContextProvider = self
+        authrozationController.performRequests()
+    }
+    
+    func createAppleIDRequest() -> ASAuthorizationAppleIDRequest {
+        let applePro = ASAuthorizationAppleIDProvider()
+        let request = applePro.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let nounce = String.randomNonceString()
+        request.nonce = nounce.sha256()
+        currentNonce = nounce
+        return request
+    }
+    
+    @available(iOS 13, *)
+    func startSignInWithAppleFlow() {
+        let nonce = String.randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = nonce.sha256()
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+
+    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+        if let user = authDataResult?.user {
+            print("Nice! you logged in \(user.uid)")
+        }
+    }
+
+}
+
+// MARK:- Appla Sign in
+
 extension LogonViewController: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
@@ -312,11 +267,8 @@ extension LogonViewController: ASAuthorizationControllerDelegate {
             
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nounce)
             Auth.auth().signIn(with: credential) { (authDataResult, error) in
-                if let user = authDataResult?.user {
-                    print("ypu have signed in as \(user.uid)")
-                }
+                self.coordinatorDelegate.logon()
             }
-
         }
     }
 }
@@ -326,25 +278,20 @@ extension LogonViewController: ASAuthorizationControllerPresentationContextProvi
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!
     }
-    
-
 }
+
+// MARK: - Facebook Sign in
 
 extension LogonViewController: LoginButtonDelegate {
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
-        
         if error != nil {
             print("Facebook login with error: \(error?.localizedDescription)")
             return
         }
-        if let token = AccessToken.current,
-                !token.isExpired {
-            
-                // User is logged in, do work such as go to next view controller.
+        if let token = AccessToken.current, !token.isExpired {
+            coordinatorDelegate.logon()
         }
-
         print("Suucess login with Facebook")
-        
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
@@ -354,6 +301,22 @@ extension LogonViewController: LoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         
     }
+}
+
+// MARK: - Google Sign in
+
+extension LogonViewController: GIDSignInDelegate {
     
-    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            print("LogonViewController::sign - \(error.localizedDescription)")
+            return
+        }
+
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+            self.coordinatorDelegate.logon()
+        }
+    }
 }
