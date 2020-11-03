@@ -27,7 +27,7 @@ class RecipeDetailViewModel {
 	var items: [RecipeDetailSection: Any]? = [:]
     var searchOriginalObject: FirebaseAPI.TopRecipesSearchResults.ResponseModel?
 	
-    init(_ urlParam: String, _ item: RecipesViewModel.Item, _ extractRecipeModel: SpoonacularAPI.ExtractRecipeModel? = nil) {
+    init(_ urlParam: String, _ item: RecipesViewModel.Item) {
 		self.urlParam = urlParam
 		self.idParam = item.id
 		self.items?[.header] = HeaderItem(title: item.title ?? "Error", image: item.image)
@@ -39,7 +39,7 @@ class RecipeDetailViewModel {
 		self.items?[.header] = HeaderItem(title: item.title, image: item.image)
 	}
     
-    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel, _ extractRecipeModel: SpoonacularAPI.ExtractRecipeModel? = nil) {
+    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
         self.urlParam = item.sourceURL
         self.idParam = item.id
         self.items?[.header] = HeaderItem(title: item.title, image: item.image)
