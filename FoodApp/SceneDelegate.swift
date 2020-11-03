@@ -8,28 +8,11 @@
 
 import UIKit
 import Firebase
-import GoogleSignIn
 import FBSDKCoreKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, GIDSignInDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
-
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        // ...
-        if let error = error {
-          // ...
-          return
-        }
-
-        guard let authentication = user.authentication else { return }
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-        Auth.auth().signIn(with: credential) { (authResult, error) in
-          // User is signed in
-          // ...
-        }
-    }
-    
     var tabBarController: UITabBarController
     var logonCoordinator: LogonCoordinator
 	var mainCoordinator: MainCoordinator
@@ -43,40 +26,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, GIDSignInDelegate {
     }
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-		// Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-		// If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-		// This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 		guard let scene = (scene as? UIWindowScene) else { return }
         				
         self.window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
         
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        GIDSignIn.sharedInstance().delegate = self
-        
-        initVars()
-        
+//        initVars()
         if !authenticate() {
             // Do something when logon fails
         }
 	}
-    
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else {
-            return
-        }
-
-        ApplicationDelegate.shared.application(
-            UIApplication.shared,
-            open: url,
-            sourceApplication: nil,
-            annotation: [UIApplication.OpenURLOptionsKey.annotation]
-        )
-    }
-    
-    func initVars() {
-        self.tabBarController = UITabBarController()
-    }
     
     func authenticate() -> Bool {
         self.logonCoordinator.start()
@@ -128,4 +87,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, GIDSignInDelegate {
 
 
 }
-
