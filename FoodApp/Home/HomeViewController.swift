@@ -30,7 +30,7 @@ class HomeViewController: UIViewController, UITableViewDelegate {
                 return tableView.configuredCell(BlankTableViewCell.self) { cell in
                     let view = UIView()
                     view.backgroundColor = .lightGray
-                    view.heightAnchor.constraint(equalToConstant: 1).isActive = true
+                    view.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
                     let setupModel = BlankTableViewCell.SetupModel()
                     let viewModel = BlankTableViewCell.ViewModel()
                     viewModel.viewInsets = .init(top: 0, left: 110, bottom: 0, right: 0)
