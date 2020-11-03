@@ -73,6 +73,9 @@
 		53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */; };
 		53F47A9A247F38E300554A2C /* RecipeSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53F47A99247F38E300554A2C /* RecipeSearch.storyboard */; };
 		5FB9BD1E8294860DAA3E174C /* Pods_FoodApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A865AD7C04970A6C21BEC5 /* Pods_FoodApp.framework */; };
+		7B12A5112551ECDF006D68EB /* Profile&Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B12A5102551ECDF006D68EB /* Profile&Settings.storyboard */; };
+		7B12A51F2551EDD0006D68EB /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B12A51E2551EDD0006D68EB /* ProfileSettingsViewController.swift */; };
+		7B12A5232551F004006D68EB /* ProfileSettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B12A5222551F004006D68EB /* ProfileSettingsCoordinator.swift */; };
 		7BF679F9254B44B300E28CDD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BF679F8254B44B200E28CDD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -158,6 +161,9 @@
 		53F47A91247EA74C00554A2C /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		53F47A95247F387F00554A2C /* RecipeSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchViewController.swift; sourceTree = "<group>"; };
 		53F47A99247F38E300554A2C /* RecipeSearch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RecipeSearch.storyboard; sourceTree = "<group>"; };
+		7B12A5102551ECDF006D68EB /* Profile&Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Profile&Settings.storyboard"; sourceTree = "<group>"; };
+		7B12A51E2551EDD0006D68EB /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
+		7B12A5222551F004006D68EB /* ProfileSettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCoordinator.swift; sourceTree = "<group>"; };
 		7BB671C2254DF0DE00D74922 /* FoodApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FoodApp.entitlements; sourceTree = "<group>"; };
 		7BF679F8254B44B200E28CDD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C0733EDEFD906196A86C4ED9 /* Pods_FoodAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -397,6 +403,7 @@
 				536F7C4F247DFF920064A1AB /* DataManager */,
 				531AFB1025507E1700F18EAA /* Home */,
 				53C38E9B247EA26600BD42D4 /* Recipes */,
+				7B12A50B2551EC68006D68EB /* Settings */,
 				539EE9A7247CBD77002BED74 /* Utility */,
 				5365964B254F337E005A5DF1 /* Resources */,
 				7BB671C2254DF0DE00D74922 /* FoodApp.entitlements */,
@@ -515,6 +522,32 @@
 			path = RecipeList;
 			sourceTree = "<group>";
 		};
+		7B12A50B2551EC68006D68EB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7B12A50E2551ECA7006D68EB /* Views */,
+				7B12A50C2551EC91006D68EB /* Coordinator */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		7B12A50C2551EC91006D68EB /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				7B12A5222551F004006D68EB /* ProfileSettingsCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		7B12A50E2551ECA7006D68EB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7B12A5102551ECDF006D68EB /* Profile&Settings.storyboard */,
+				7B12A51E2551EDD0006D68EB /* ProfileSettingsViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -613,6 +646,7 @@
 				53D171AB2480A21F0099B8A4 /* RecipeDetailInstructionCell.xib in Resources */,
 				53659655254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json in Resources */,
 				5321A950247F3A2800F55FBB /* InstructionsRequiredCell.xib in Resources */,
+				7B12A5112551ECDF006D68EB /* Profile&Settings.storyboard in Resources */,
 				53C104E0247C0BF700001DEB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,6 +757,7 @@
 				53C38E9F247EA27E00BD42D4 /* RecipesViewModel.swift in Sources */,
 				537A914224820A6000141F20 /* SpoonacularAPI+RecipeSimilarModel.swift in Sources */,
 				53EA5546254B76DE00A33807 /* Constants.swift in Sources */,
+				7B12A5232551F004006D68EB /* ProfileSettingsCoordinator.swift in Sources */,
 				536636AF254C575100646060 /* TextFieldTableViewCell.swift in Sources */,
 				53D1719424802EFF0099B8A4 /* SpoonacularAPI+RecipeSearchComplexModel.swift in Sources */,
 				5324DA76254DBE3C00473BA1 /* BlankTableViewCell.swift in Sources */,
@@ -754,6 +789,7 @@
 				53C104D7247C0BEE00001DEB /* AppDelegate.swift in Sources */,
 				5340046C247F44F900060A12 /* RecipeSearchCoordinator.swift in Sources */,
 				535E1BAD2550951D009FEED2 /* FirebaseAPI+TopRecipesSearchResults.swift in Sources */,
+				7B12A51F2551EDD0006D68EB /* ProfileSettingsViewController.swift in Sources */,
 				53EA555E254B8E3100A33807 /* LogonCoordinator.swift in Sources */,
 				531AFB202550814D00F18EAA /* FirebaseAPI.swift in Sources */,
 				53659600254F207A005A5DF1 /* FirebaseDataManager.swift in Sources */,

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile Settings View Controller-->
+        <scene sceneID="qPs-n7-iCc">
+            <objects>
+                <viewController storyboardIdentifier="ProfileSettingsViewController" id="cjS-2D-1Zw" customClass="ProfileSettingsViewController" customModule="FoodApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vk9-fI-Eok">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rdv-GJ-g9j">
+                                <rect key="frame" x="0.0" y="44" width="414" height="742"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="cjS-2D-1Zw" id="qyd-cC-1Eu"/>
+                                    <outlet property="delegate" destination="cjS-2D-1Zw" id="tFl-qk-ncj"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMV-eV-Cli">
+                                <rect key="frame" x="20" y="813" width="374" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="signOutButtonTapped:" destination="cjS-2D-1Zw" eventType="touchUpInside" id="fvZ-Ml-CYw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="YQV-dc-SEp"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Rdv-GJ-g9j" firstAttribute="leading" secondItem="YQV-dc-SEp" secondAttribute="leading" id="0gN-A8-a0N"/>
+                            <constraint firstItem="Rdv-GJ-g9j" firstAttribute="trailing" secondItem="YQV-dc-SEp" secondAttribute="trailing" id="8kE-w4-v2z"/>
+                            <constraint firstItem="YQV-dc-SEp" firstAttribute="trailing" secondItem="aMV-eV-Cli" secondAttribute="trailing" constant="20" id="9qc-2S-bRy"/>
+                            <constraint firstItem="YQV-dc-SEp" firstAttribute="bottom" secondItem="aMV-eV-Cli" secondAttribute="bottom" constant="19" id="mR2-Hx-YYO"/>
+                            <constraint firstItem="aMV-eV-Cli" firstAttribute="top" secondItem="Rdv-GJ-g9j" secondAttribute="bottom" constant="27" id="tKs-cC-eXT"/>
+                            <constraint firstItem="aMV-eV-Cli" firstAttribute="leading" secondItem="YQV-dc-SEp" secondAttribute="leading" constant="20" id="zlr-CB-Vfk"/>
+                            <constraint firstItem="Rdv-GJ-g9j" firstAttribute="top" secondItem="YQV-dc-SEp" secondAttribute="top" id="zvO-tc-3Vc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="signOutButton" destination="aMV-eV-Cli" id="PA9-56-hp1"/>
+                        <outlet property="tableView" destination="Rdv-GJ-g9j" id="rSI-Qq-UNH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jf2-Qr-SbI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-413.04347826086962" y="-130.58035714285714"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
