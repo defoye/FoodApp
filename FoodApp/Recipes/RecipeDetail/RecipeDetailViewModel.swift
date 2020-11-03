@@ -25,7 +25,7 @@ class RecipeDetailViewModel {
 	let idParam: Int?
 	
 	var items: [RecipeDetailSection: Any]? = [:]
-    var extractRecipeModel: SpoonacularAPI.ExtractRecipeModel?
+    var searchOriginalObject: FirebaseAPI.TopRecipesSearchResults.ResponseModel?
 	
     init(_ urlParam: String, _ item: RecipesViewModel.Item, _ extractRecipeModel: SpoonacularAPI.ExtractRecipeModel? = nil) {
 		self.urlParam = urlParam
@@ -43,6 +43,7 @@ class RecipeDetailViewModel {
         self.urlParam = item.sourceURL
         self.idParam = item.id
         self.items?[.header] = HeaderItem(title: item.title, image: item.image)
+        self.searchOriginalObject = item
     }
 	
 	func numberOfRows(in section: RecipeDetailSection) -> Int {
@@ -89,21 +90,17 @@ class RecipeDetailViewModel {
 	
 	private func loadRecipeDetails(_ completion: @escaping (() -> Void)) {
 		isLoading = true
-        if let model = extractRecipeModel {
-            FirebaseDataManager.shared.addFavoriteRecipe(nil, self.searchOriginalObject, model)
-            self.createItems(model, completion)
-        } else {
-            dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
-                self.isLoading = false
-                switch status {
-                case .success:
-                    if let model = model {
-                        FirebaseDataManager.shared.addFavoriteRecipe(nil, self.searchOriginalObject, model)
-                        self.createItems(model, completion)
-                    }
-                case .error:
-                    fatalError("API ran out")
+
+        dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
+            self.isLoading = false
+            switch status {
+            case .success:
+                if let model = model {
+                    FirebaseDataManager.shared.addFavoriteRecipe(nil, self.searchOriginalObject, model)
+                    self.createItems(model, completion)
                 }
+            case .error:
+                fatalError("API ran out")
             }
         }
 	}
@@ -211,7 +208,7 @@ extension RecipeDetailViewModel {
 		}
 	}
 	
-	struct IngredientItem {
+    struct IngredientItem: Codable {
 		
 		let originalName: String
 		let name: String
@@ -221,11 +218,11 @@ extension RecipeDetailViewModel {
 		let primaryTitleLabelText: String
 		let secondaryTitleLabelText: String
 		
-		let usValue: Double?
-		let usUnit: String?
+		let usValue: Double
+		let usUnit: String
 		
-		let metricValue: Double?
-		let metricUnit: String?
+		let metricValue: Double
+		let metricUnit: String
 		
 		init(_ obj: SpoonacularAPI.ExtendedIngredient) {
 			originalName = obj.original ?? obj.originalString ?? "Error"
@@ -237,11 +234,44 @@ extension RecipeDetailViewModel {
 			primaryTitleLabelText = "\(name.capitalized), \(amount.roundedFractionString()) \(unit)"
 			secondaryTitleLabelText = originalName.capitalized
 			
-			metricValue = obj.measures?.metric?.value
-			metricUnit = obj.measures?.metric?.unit
-			usValue = obj.measures?.us?.value
-			usUnit = obj.measures?.us?.unit
+			metricValue = obj.measures?.metric?.value ?? 0
+			metricUnit = obj.measures?.metric?.unit ?? ""
+			usValue = obj.measures?.us?.value ?? 0
+			usUnit = obj.measures?.us?.unit ?? ""
 		}
+        
+        enum Param: String {
+            case originalName
+            case name
+            case amount
+            case unit
+            
+            case primaryTitleLabelText
+            case secondaryTitleLabelText
+            
+            case usValue
+            case usUnit
+            
+            case metricValue
+            case metricUnit
+        }
+        
+        func toDict() -> [String: String] {
+            var paramDict: [Param: String] = [:]
+            
+            paramDict[.originalName] = originalName
+            paramDict[.name] = name
+            paramDict[.amount] = String(amount)
+            paramDict[.unit] = unit
+            paramDict[.primaryTitleLabelText] = primaryTitleLabelText
+            paramDict[.secondaryTitleLabelText] = secondaryTitleLabelText
+            paramDict[.usValue] = String(usValue)
+            paramDict[.usUnit] = usUnit
+            paramDict[.metricValue] = String(metricValue)
+            paramDict[.metricUnit] = metricUnit
+
+            return paramDict.convertedToRawValues()
+        }
 	}
 	
 	struct SimilarRecipeItem {
