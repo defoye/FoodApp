@@ -16,18 +16,21 @@ protocol LogonCoordinatorDelegate {
 
 class LogonCoordinator {
     
-    weak var presenter: UINavigationController?
+    let presenter: UINavigationController
     weak var sceneDelegate: SceneDelegate?
     
-    init(_ presenter: UINavigationController?, sceneDelegate: SceneDelegate?) {
-        self.presenter = presenter
-        self.sceneDelegate = sceneDelegate
+    init() {
+        self.presenter = UINavigationController()
     }
     
     func start() {
         let viewController = LogonViewController(coordinatorDelegate: self)
         
-        presenter?.pushViewController(viewController, animated: false)
+        presenter.pushViewController(viewController, animated: false)
+    }
+    
+    func finish() {
+        presenter.popViewController(animated: false)
     }
 }
 
@@ -35,13 +38,13 @@ extension LogonCoordinator: LogonCoordinatorDelegate {
     func coordinateToSignIn() {
         let viewController = SignInViewController(coordinatorDelegate: self)
         
-        presenter?.pushViewController(viewController, animated: true)
+        presenter.pushViewController(viewController, animated: true)
     }
     
     func coordinateToSignUp() {
         let viewController = SignUpViewController()
         
-        presenter?.pushViewController(viewController, animated: true)
+        presenter.pushViewController(viewController, animated: true)
     }
     
     func logon() {

@@ -243,9 +243,15 @@ PODS:
     - FirebaseAnalytics (= 7.0.0)
   - Firebase/CoreOnly (7.0.0):
     - FirebaseCore (= 7.0.0)
+  - Firebase/Database (7.0.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 7.0.0)
   - Firebase/Firestore (7.0.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 7.0.0)
+  - Firebase/Storage (7.0.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 7.0.0)
   - FirebaseAnalytics (7.0.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
@@ -269,6 +275,9 @@ PODS:
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
     - nanopb (~> 2.30906.0)
+  - FirebaseDatabase (7.0.0):
+    - FirebaseCore (~> 7.0)
+    - leveldb-library (~> 1.22)
   - FirebaseFirestore (7.0.0):
     - abseil/algorithm (= 0.20200225.0)
     - abseil/base (= 0.20200225.0)
@@ -286,6 +295,9 @@ PODS:
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
     - PromisesObjC (~> 1.2)
+  - FirebaseStorage (7.0.0):
+    - FirebaseCore (~> 7.0)
+    - GTMSessionFetcher/Core (~> 1.4)
   - FirebaseUI/Auth (9.0.0):
     - Firebase/Auth
     - GoogleUtilities/UserDefaults
@@ -374,10 +386,14 @@ PODS:
   - QuiteAdaptableKit (0.0.2)
 
 DEPENDENCIES:
+  - FBSDKCoreKit
+  - FBSDKLoginKit
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/Database
   - Firebase/Firestore
+  - Firebase/Storage
   - FirebaseUI/Email
   - FirebaseUI/Facebook
   - FirebaseUI/Google
@@ -398,8 +414,10 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseInstallations
+    - FirebaseStorage
     - FirebaseUI
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -425,8 +443,10 @@ SPEC CHECKSUMS:
   FirebaseAuth: 228dd0faa5b5263eaa8c63518b16faef438289a3
   FirebaseCore: cf3122185fce1cf71cedbbc498ea84d2b3e7cb69
   FirebaseCoreDiagnostics: 5f4aa04fdb04923693cc704c7ef9158bdf41a48b
+  FirebaseDatabase: 2481b48ebfd233ef591095d79d76720ea85cde74
   FirebaseFirestore: 969dd448250bee681d0e2d0af89cbb76ef955bb0
   FirebaseInstallations: c28d4bcbb5c6884d1a39afbc0bd7fc590e31e9b7
+  FirebaseStorage: ea52bc7a1cb540406ed1e1acfc2bf3946621ed34
   FirebaseUI: f0677a1cc235f6da602cbd5c9b5fbbd24544a6b3
   GoogleAppMeasurement: 7790ef975d1d463c8614cd949a847e612edf087a
   GoogleDataTransport: 6ce8004a961db1b905740d7be106c61ba7e89c21
@@ -441,6 +461,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   QuiteAdaptableKit: 9a103d57cbc0f206b767714191a3efacc9978aab
 
-PODFILE CHECKSUM: 0b9e6e9b6ac99919f5441cd50038311d52689217
+PODFILE CHECKSUM: ff9224acf852f85a0b74e10400b8e8a34ad10f1d
 
 COCOAPODS: 1.10.0

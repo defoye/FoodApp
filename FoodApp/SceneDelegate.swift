@@ -7,44 +7,54 @@
 //
 
 import UIKit
+import Firebase
+import FBSDKCoreKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
-
-    var logonCoordinator: LogonCoordinator?
-	var mainCoordinator: MainCoordinator?
-    var recipePresenter: UINavigationController?
+    var tabBarController: UITabBarController
+    var logonCoordinator: LogonCoordinator
+	var mainCoordinator: MainCoordinator
+    
+    override init() {
+        self.tabBarController = UITabBarController()
+        self.logonCoordinator = LogonCoordinator()
+        self.mainCoordinator = MainCoordinator()
+        super.init()
+        self.logonCoordinator.sceneDelegate = self
+    }
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-		// Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-		// If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-		// This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 		guard let scene = (scene as? UIWindowScene) else { return }
         				
-		window = UIWindow(windowScene: scene)
-		window?.makeKeyAndVisible()
-        self.recipePresenter = UINavigationController()
+        self.window = UIWindow(windowScene: scene)
+        window?.makeKeyAndVisible()
         
+//        initVars()
         if !authenticate() {
             // Do something when logon fails
         }
 	}
     
     func authenticate() -> Bool {
-        self.logonCoordinator = LogonCoordinator(recipePresenter, sceneDelegate: self)
-        self.logonCoordinator?.start()
+        self.logonCoordinator.start()
         
-        window?.rootViewController = recipePresenter
+        window?.rootViewController = self.logonCoordinator.presenter
         
         return false
     }
     
     func logon() {
-        recipePresenter?.popViewController(animated: false)
-        let mainCoordinator = MainCoordinator(recipePresenter)
-        mainCoordinator.start()
+        self.logonCoordinator.finish()
+        let mainCoordinator = MainCoordinator()
         self.mainCoordinator = mainCoordinator
+            
+        tabBarController.viewControllers = mainCoordinator.viewControllers
+        
+        window?.rootViewController = tabBarController
+        
+        mainCoordinator.start()
     }
 
 	func sceneDidDisconnect(_ scene: UIScene) {
@@ -77,4 +87,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-

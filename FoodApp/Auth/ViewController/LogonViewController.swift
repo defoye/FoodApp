@@ -11,16 +11,17 @@ import FirebaseUI
 import GoogleSignIn
 import AuthenticationServices
 import CryptoKit
+import FBSDKLoginKit
+import Firebase
 
-class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegate {
-    
+class LogonViewController: UIViewController, FUIAuthDelegate {
     
     enum Section: Hashable {
         case main
     }
     
     enum Row: Hashable {
-        case logo(_ image: FoodAppImageConstants)
+        case logo(_ image: Constants.Images)
         
         case apple(_ model: SignUpOptionModel)
         case google(_ setupModel: BlankTableViewCell.SetupModel, _ viewModel: BlankTableViewCell.ViewModel)
@@ -31,7 +32,7 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     }
     
     struct SignUpOptionModel: Hashable {
-        let imageConstant: FoodAppImageConstants?
+        let imageConstant: Constants.Images?
         let description: String
     }
     
@@ -52,11 +53,15 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     }()
     
     private let coordinatorDelegate: LogonCoordinatorDelegate
+    // Unhashed nonce.
+    fileprivate var currentNonce: String?
     
     init(coordinatorDelegate: LogonCoordinatorDelegate) {
         self.coordinatorDelegate = coordinatorDelegate
         super.init(nibName: nil, bundle: nil)
         tableView.dataSource = dataSource
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -66,14 +71,17 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance().delegate = self
         addSubviewsAndConstraints()
         setupDataSource()
+        
+
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupNavigationBar()
+        
     }
     
     private func setupDataSource() {
@@ -91,7 +99,6 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
             .email(SignUpOptionModel(imageConstant: .email_logo, description: "Sign up with Email")),
             .signIn
         ])
-        
         dataSource.apply(snapshot)
     }
     
@@ -112,23 +119,27 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
                 cell.configure(image: image.image)
             }
         case .google(let setupModel, let viewModel):
-            return tableView.configuredCell(BlankTableViewCell.self) { cell in
-                
-                if #available(iOS 14.0, *) {
-                    cell.configure(GIDSignInButton(frame: .zero, primaryAction: .init(handler: googleSignInTapped)), setupModel: setupModel, viewModel: viewModel)
-                } else {
-//                    return tableView.configuredCell(SignUpOptionCell.self) { cell in
-//                        cell.configure(image: model.imageConstant?.image, description: model.description)
-//                    }
+            if #available(iOS 14.0, *) {
+                return tableView.configuredCell(BlankTableViewCell.self) { cell in
+                    cell.configure(GIDSignInButton(frame: .zero, primaryAction: .init(handler: { action in
+
+                    })), setupModel: setupModel, viewModel: viewModel)
                 }
+            } else {
+                return nil
             }
-        case .apple(let model), .facebook(let model), .email(let model):
+        case .facebook(let viewModel):
+            return tableView.configuredCell(SignUpOptionCell.self) { cell in
+                cell.configure(image: viewModel.imageConstant?.image, description: viewModel.description)
+            }
+
+        case .apple(let model), .email(let model):
             return tableView.configuredCell(SignUpOptionCell.self) { cell in
                 cell.configure(image: model.imageConstant?.image, description: model.description)
             }
         case .signIn:
             return tableView.configuredCell(LabelCell.self) { cell in
-                var model = LabelCell.Model()
+                let model = LabelCell.Model()
                 model.text = "Already have an account? Tap here to sign in."
                 model.textInsets = .init(top: 20, left: 20, bottom: -20, right: -20)
                 cell.configure(model)
@@ -137,13 +148,43 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
     }
     
     @objc
-    func googleSignInTapped(_ action: UIAction) {
-        
-    }
-    
-    @objc
     func appleSignInTapped() {
         performSignin()
+    }
+}
+
+// MARK:- UITableViewDelegate
+
+extension LogonViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+        
+        switch item {
+        case .logo(_):
+            break
+        case .apple(_):
+            appleSignInTapped()
+        case .facebook(_):
+            facebookSignInTapped()
+        case .google(_), .email(_):
+            coordinatorDelegate.coordinateToSignUp()
+        case .signIn:
+            coordinatorDelegate.coordinateToSignIn()
+        }
+    }
+}
+
+extension LogonViewController {
+    
+    @objc
+    func facebookSignInTapped() {
+        let loginButton = FBLoginButton()
+        loginButton.center = view.center
+        loginButton.delegate = self
+        view.addSubview(loginButton)
+        loginButton.permissions = ["public_profile", "email"]
     }
     
     func performSignin() {
@@ -158,75 +199,25 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
         let applePro = ASAuthorizationAppleIDProvider()
         let request = applePro.createRequest()
         request.requestedScopes = [.fullName, .email]
-        let nounce = randomNonceString()
-        request.nonce = sha256(nounce)
+        let nounce = String.randomNonceString()
+        request.nonce = nounce.sha256()
         currentNonce = nounce
         return request
-        
     }
     
-    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
-    private func randomNonceString(length: Int = 32) -> String {
-      precondition(length > 0)
-      let charset: Array<Character> =
-          Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-      var result = ""
-      var remainingLength = length
-
-      while remainingLength > 0 {
-        let randoms: [UInt8] = (0 ..< 16).map { _ in
-          var random: UInt8 = 0
-          let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-          if errorCode != errSecSuccess {
-            fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
-          }
-          return random
-        }
-
-        randoms.forEach { random in
-          if remainingLength == 0 {
-            return
-          }
-
-          if random < charset.count {
-            result.append(charset[Int(random)])
-            remainingLength -= 1
-          }
-        }
-      }
-
-      return result
-
-    }
-    
-
-    // Unhashed nonce.
-    fileprivate var currentNonce: String?
-
     @available(iOS 13, *)
     func startSignInWithAppleFlow() {
-      let nonce = randomNonceString()
-      currentNonce = nonce
-      let appleIDProvider = ASAuthorizationAppleIDProvider()
-      let request = appleIDProvider.createRequest()
-      request.requestedScopes = [.fullName, .email]
-      request.nonce = sha256(nonce)
+        let nonce = String.randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = nonce.sha256()
 
-      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-      authorizationController.delegate = self
-      authorizationController.presentationContextProvider = self
-      authorizationController.performRequests()
-    }
-
-    @available(iOS 13, *)
-    private func sha256(_ input: String) -> String {
-      let inputData = Data(input.utf8)
-      let hashedData = SHA256.hash(data: inputData)
-      let hashString = hashedData.compactMap {
-        return String(format: "%02x", $0)
-      }.joined()
-
-      return hashString
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
 
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
@@ -235,24 +226,9 @@ class LogonViewController: UIViewController, UITableViewDelegate, FUIAuthDelegat
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = dataSource.itemIdentifier(for: indexPath) else {
-            return
-        }
-        
-        switch item {
-        case .logo(_):
-            break
-        case .apple(_):
-            appleSignInTapped()
-            
-        case .google(_), .facebook(_), .email(_):
-            coordinatorDelegate.coordinateToSignUp()
-        case .signIn:
-            coordinatorDelegate.coordinateToSignIn()
-        }
-    }
 }
+
+// MARK:- Appla Sign in
 
 extension LogonViewController: ASAuthorizationControllerDelegate {
     
@@ -273,9 +249,9 @@ extension LogonViewController: ASAuthorizationControllerDelegate {
             Auth.auth().signIn(with: credential) { (authDataResult, error) in
                 if let user = authDataResult?.user {
                     print("ypu have signed in as \(user.uid)")
+                    self.coordinatorDelegate.logon()
                 }
             }
-
         }
     }
 }
@@ -285,6 +261,56 @@ extension LogonViewController: ASAuthorizationControllerPresentationContextProvi
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!
     }
-    
+}
 
+// MARK: - Facebook Sign in
+
+extension LogonViewController: LoginButtonDelegate {
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        if error != nil {
+            print("Facebook login with error: \(error?.localizedDescription)")
+            return
+        }
+        guard let token = AccessToken.current?.tokenString else { return }
+        
+        let credential = FacebookAuthProvider.credential(withAccessToken: token)
+
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+          if let error = error {
+            let authError = error as NSError
+            if (authError.code == AuthErrorCode.secondFactorRequired.rawValue) {
+                print("// The user is a multi-factor user. Second factor challenge is required.")
+            }
+          }
+            print("Suucess login with Facebook")
+            self.coordinatorDelegate.logon()
+       }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+    }
+}
+
+// MARK: - Google Sign in
+
+extension LogonViewController: GIDSignInDelegate {
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            print("LogonViewController::sign - \(error.localizedDescription)")
+            return
+        }
+
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+          // User is signed in
+            print("User is signed in via google")
+          // ...
+            self.coordinatorDelegate.logon()
+        }
+    }    
 }
