@@ -354,6 +354,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		5391CAA22552FF0200E0AC36 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				53D1719C2480980D0099B8A4 /* RecipeDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		539EE9A4247CBD56002BED74 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,9 +460,9 @@
 		53D1719B248097FD0099B8A4 /* RecipeDetail */ = {
 			isa = PBXGroup;
 			children = (
-				53D171AE2480A2330099B8A4 /* Cell */,
-				53D1719C2480980D0099B8A4 /* RecipeDetailViewModel.swift */,
 				53D1719E24809FF60099B8A4 /* RecipeDetailViewController.swift */,
+				5391CAA22552FF0200E0AC36 /* ViewModel */,
+				53D171AE2480A2330099B8A4 /* Cell */,
 			);
 			path = RecipeDetail;
 			sourceTree = "<group>";
