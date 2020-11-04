@@ -85,7 +85,7 @@
 			containerPortal = 53C104CB247C0BEE00001DEB /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 53C104D2247C0BEE00001DEB;
-			remoteInfo = NewsApp;
+			remoteInfo = FoodApp;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -575,7 +575,7 @@
 			dependencies = (
 			);
 			name = FoodApp;
-			productName = NewsApp;
+			productName = FoodApp;
 			productReference = 53C104D3247C0BEE00001DEB /* FoodApp.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -594,7 +594,7 @@
 				53C104EB247C0BF700001DEB /* PBXTargetDependency */,
 			);
 			name = FoodAppTests;
-			productName = NewsAppTests;
+			productName = FoodAppTests;
 			productReference = 53C104E9247C0BF700001DEB /* FoodAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -1006,14 +1006,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = NewsAppTests/Info.plist;
+				INFOPLIST_FILE = FoodAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = defoye.NewsAppTests;
+				PRODUCT_BUNDLE_IDENTIFIER = defoye.FoodAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1028,14 +1028,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = NewsAppTests/Info.plist;
+				INFOPLIST_FILE = FoodAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = defoye.NewsAppTests;
+				PRODUCT_BUNDLE_IDENTIFIER = defoye.FoodAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
