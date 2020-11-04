@@ -90,20 +90,18 @@ class RecipeDetailViewController: UIViewController {
     
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        
         addSubviewsAndConstraints()
-		
         viewModel.fetchData()
 	}
-    
-    private func addSubviewsAndConstraints() {
-        view.addSubview(tableView)
-        tableView.pin(to: view)
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavBar()
+    }
+    
+    private func addSubviewsAndConstraints() {
+        view.addSubview(tableView)
+        tableView.pin(to: view)
     }
     
     private func setupNavBar() {
