@@ -7,3 +7,4 @@ build/*
 *.perspective
 *.perspectivev3
 FoodApp.xcworkspace/xcuserdata/*
+FoodApp.xcodeproj/xcuserdata/*
