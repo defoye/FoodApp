@@ -25,7 +25,8 @@ class RecipeDetailViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-//        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.contentInset = .init(top: 0, left: 0, bottom: 150, right: 0)
         tableView.estimatedSectionHeaderHeight = 25
         return tableView
     }()
@@ -44,9 +45,6 @@ class RecipeDetailViewController: UIViewController {
 		viewModel.fetchData {
 			self.reloadTableView()
 		}
-
-		let insets = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
-		tableView.contentInset = insets
 	}
     
     private func addSubviewsAndConstraints() {
