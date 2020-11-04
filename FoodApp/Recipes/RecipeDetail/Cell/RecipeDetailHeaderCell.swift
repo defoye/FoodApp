@@ -9,6 +9,8 @@
 import UIKit
 
 class RecipeDetailHeaderCell: UITableViewCell {
+    
+    static let reuseIdentifier = "RecipeDetailHeaderCell"
 	
 	@IBOutlet weak var tileView: UIView!
 	@IBOutlet weak var recipeImageView: UIImageView!

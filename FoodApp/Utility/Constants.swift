@@ -18,6 +18,7 @@ class Constants {
         case cooking_book
         case home
         case info
+        case heart
         
         var image: UIImage? {
             return UIImage(named: self.rawValue)

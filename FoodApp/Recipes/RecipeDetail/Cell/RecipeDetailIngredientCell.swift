@@ -9,6 +9,8 @@
 import UIKit
 
 class RecipeDetailIngredientCell: UITableViewCell {
+    
+    static let reuseIdentifier = "RecipeDetailIngredientCell"
 	
 	@IBOutlet weak var tileView: UIView!
 	@IBOutlet weak var titleLabel: UILabel!
