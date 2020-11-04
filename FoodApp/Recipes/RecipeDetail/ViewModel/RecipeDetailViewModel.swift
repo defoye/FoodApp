@@ -126,9 +126,10 @@ class RecipeDetailViewModel {
         FirebaseDataManager.shared.addRecipeSearchData(model)
                 
         snapshot.appendItems([.labelItem(headerLabelModel("Similar Recipes"))], toSection: .similarRecipes)
-        let items = model.map { recipe -> Item in
+        var items = model.map { recipe -> Item in
             return .similarRecipe(SimilarRecipeItem(recipe, image: nil))
         }
+        items = addSeparatorItems(fromItems: items, .short)
         self.snapshot.appendItems(items, toSection: .similarRecipes)
         items.forEach { item in
             if case .similarRecipe(let model) = item {
@@ -146,20 +147,31 @@ class RecipeDetailViewModel {
         }
         self.dataSourceApplyBlock?(self.snapshot)
 	}
+    
+    private func addSeparatorItems(fromItems items: [Item], _ style: Item.Style) -> [Item] {
+        var items = items
+        for i in stride(from: items.count - 1, through: 1, by: -1) {
+            items.insert(.separatorItem(UUID(), style), at: i)
+        }
+        
+        return items
+    }
 	
 	func createItems(_ model: SpoonacularAPI.ExtractRecipeModel) {
 		if let instructions = model.analyzedInstructions, instructions.count > 0, let steps = instructions[0].steps {
-            let items = steps.map { step -> Item in
+            var items = steps.map { step -> Item in
                 return .instruction(InstructionItem(step))
             }
+            items = addSeparatorItems(fromItems: items, .long)
             snapshot.appendItems([.labelItem(headerLabelModel("Instructions"))], toSection: .instructions)
             snapshot.appendItems(items, toSection: .instructions)
 		}
         		
 		if let ingredients = model.extendedIngredients {
-			let items = ingredients.map { ingredient -> Item in
+			var items = ingredients.map { ingredient -> Item in
                 return .ingredient(IngredientItem(ingredient))
             }
+            items = addSeparatorItems(fromItems: items, .long)
             snapshot.appendItems([.labelItem(headerLabelModel("Ingredients"))], toSection: .ingredients)
             snapshot.appendItems(items, toSection: .ingredients)
 		}
