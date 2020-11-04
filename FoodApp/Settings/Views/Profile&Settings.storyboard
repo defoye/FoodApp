@@ -17,37 +17,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rdv-GJ-g9j">
-                                <rect key="frame" x="0.0" y="44" width="414" height="742"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dta-cP-8yX">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMV-eV-Cli">
+                                        <rect key="frame" x="20" y="768" width="374" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="signOutButtonTapped:" destination="cjS-2D-1Zw" eventType="touchUpInside" id="fvZ-Ml-CYw"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zn4-bM-Ngs">
+                                        <rect key="frame" x="20" y="20" width="374" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z8O-yo-zjL">
+                                        <rect key="frame" x="157" y="71" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="TWm-va-daM"/>
+                                            <constraint firstAttribute="width" constant="100" id="pZK-2U-KZA"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="cjS-2D-1Zw" id="qyd-cC-1Eu"/>
-                                    <outlet property="delegate" destination="cjS-2D-1Zw" id="tFl-qk-ncj"/>
-                                </connections>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMV-eV-Cli">
-                                <rect key="frame" x="20" y="813" width="374" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="signOutButtonTapped:" destination="cjS-2D-1Zw" eventType="touchUpInside" id="fvZ-Ml-CYw"/>
-                                </connections>
-                            </button>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="aMV-eV-Cli" secondAttribute="trailing" constant="20" id="6EG-4N-SXY"/>
+                                    <constraint firstItem="Z8O-yo-zjL" firstAttribute="centerX" secondItem="Dta-cP-8yX" secondAttribute="centerX" id="7L6-Go-NKd"/>
+                                    <constraint firstItem="aMV-eV-Cli" firstAttribute="leading" secondItem="Dta-cP-8yX" secondAttribute="leading" constant="20" id="YrT-FN-UyZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="aMV-eV-Cli" secondAttribute="bottom" constant="20" id="Zag-Zd-nD9"/>
+                                    <constraint firstItem="Zn4-bM-Ngs" firstAttribute="top" secondItem="Dta-cP-8yX" secondAttribute="top" constant="20" id="f5Q-DY-De5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zn4-bM-Ngs" secondAttribute="trailing" constant="20" id="h6H-zd-0tu"/>
+                                    <constraint firstItem="Zn4-bM-Ngs" firstAttribute="leading" secondItem="Dta-cP-8yX" secondAttribute="leading" constant="20" id="ke9-3P-V8k"/>
+                                    <constraint firstItem="Z8O-yo-zjL" firstAttribute="top" secondItem="Zn4-bM-Ngs" secondAttribute="bottom" constant="30" id="xTT-WB-mqN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YQV-dc-SEp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Rdv-GJ-g9j" firstAttribute="leading" secondItem="YQV-dc-SEp" secondAttribute="leading" id="0gN-A8-a0N"/>
-                            <constraint firstItem="Rdv-GJ-g9j" firstAttribute="trailing" secondItem="YQV-dc-SEp" secondAttribute="trailing" id="8kE-w4-v2z"/>
-                            <constraint firstItem="YQV-dc-SEp" firstAttribute="trailing" secondItem="aMV-eV-Cli" secondAttribute="trailing" constant="20" id="9qc-2S-bRy"/>
-                            <constraint firstItem="YQV-dc-SEp" firstAttribute="bottom" secondItem="aMV-eV-Cli" secondAttribute="bottom" constant="19" id="mR2-Hx-YYO"/>
-                            <constraint firstItem="aMV-eV-Cli" firstAttribute="top" secondItem="Rdv-GJ-g9j" secondAttribute="bottom" constant="27" id="tKs-cC-eXT"/>
-                            <constraint firstItem="aMV-eV-Cli" firstAttribute="leading" secondItem="YQV-dc-SEp" secondAttribute="leading" constant="20" id="zlr-CB-Vfk"/>
-                            <constraint firstItem="Rdv-GJ-g9j" firstAttribute="top" secondItem="YQV-dc-SEp" secondAttribute="top" id="zvO-tc-3Vc"/>
+                            <constraint firstItem="Dta-cP-8yX" firstAttribute="bottom" secondItem="YQV-dc-SEp" secondAttribute="bottom" id="AcM-8N-pWH"/>
+                            <constraint firstItem="YQV-dc-SEp" firstAttribute="trailing" secondItem="Dta-cP-8yX" secondAttribute="trailing" id="MTt-qk-byd"/>
+                            <constraint firstItem="Dta-cP-8yX" firstAttribute="leading" secondItem="YQV-dc-SEp" secondAttribute="leading" id="ZpZ-8G-iyy"/>
+                            <constraint firstItem="Dta-cP-8yX" firstAttribute="top" secondItem="YQV-dc-SEp" secondAttribute="top" id="bVV-dL-jeM"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="profileImageView" destination="Z8O-yo-zjL" id="V5r-VU-1Zh"/>
                         <outlet property="signOutButton" destination="aMV-eV-Cli" id="PA9-56-hp1"/>
-                        <outlet property="tableView" destination="Rdv-GJ-g9j" id="rSI-Qq-UNH"/>
+                        <outlet property="userName" destination="Zn4-bM-Ngs" id="K1h-V1-rgg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jf2-Qr-SbI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
