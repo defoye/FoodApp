@@ -146,7 +146,7 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
 				return
 			}
 
-			let vc = RecipeDetailViewController.instantiate("RecipeDetail")
+			let vc = RecipeDetailViewController()
 			let vm = RecipeDetailViewModel(sourceURL, item)
 			vc.initViewModel(vm)
 			

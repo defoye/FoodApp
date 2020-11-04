@@ -8,9 +8,27 @@
 
 import UIKit
 
-class RecipeDetailViewController: UIViewController, Storyboarded {
+class RecipeDetailViewController: UIViewController {
 	
-	@IBOutlet weak var tableView: UITableView!
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        let headerCellNib = UINib.init(nibName: "RecipeDetailHeaderCell", bundle: .current)
+        tableView.register(headerCellNib, forCellReuseIdentifier: "RecipeDetailHeaderCell")
+        let ingredientCellNib = UINib.init(nibName: "RecipeDetailIngredientCell", bundle: .current)
+        tableView.register(ingredientCellNib, forCellReuseIdentifier: "RecipeDetailIngredientCell")
+        let instructionCellNib = UINib.init(nibName: "RecipeDetailInstructionCell", bundle: .current)
+        tableView.register(instructionCellNib, forCellReuseIdentifier: "RecipeDetailInstructionCell")
+        let similarRecipeCellNib = UINib.init(nibName: "RecipeSimilarCell", bundle: .current)
+        tableView.register(similarRecipeCellNib, forCellReuseIdentifier: "RecipeSimilarCell")
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 40
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+//        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedSectionHeaderHeight = 25
+        return tableView
+    }()
 	
 	var viewModel: RecipeDetailViewModel!
 		
@@ -20,30 +38,21 @@ class RecipeDetailViewController: UIViewController, Storyboarded {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        addSubviewsAndConstraints()
 		
 		viewModel.fetchData {
 			self.reloadTableView()
 		}
-		
-		let headerCellNib = UINib.init(nibName: "RecipeDetailHeaderCell", bundle: .current)
-		tableView.register(headerCellNib, forCellReuseIdentifier: "RecipeDetailHeaderCell")
-		let ingredientCellNib = UINib.init(nibName: "RecipeDetailIngredientCell", bundle: .current)
-		tableView.register(ingredientCellNib, forCellReuseIdentifier: "RecipeDetailIngredientCell")
-		let instructionCellNib = UINib.init(nibName: "RecipeDetailInstructionCell", bundle: .current)
-		tableView.register(instructionCellNib, forCellReuseIdentifier: "RecipeDetailInstructionCell")
-		let similarRecipeCellNib = UINib.init(nibName: "RecipeSimilarCell", bundle: .current)
-		tableView.register(similarRecipeCellNib, forCellReuseIdentifier: "RecipeSimilarCell")
-		tableView.rowHeight = UITableView.automaticDimension
-		tableView.estimatedRowHeight = 40
-		tableView.delegate = self
-		tableView.dataSource = self
-		tableView.separatorStyle = .none
-//		tableView.sectionHeaderHeight = UITableView.automaticDimension
-		tableView.estimatedSectionHeaderHeight = 25
 
 		let insets = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
 		tableView.contentInset = insets
 	}
+    
+    private func addSubviewsAndConstraints() {
+        view.addSubview(tableView)
+        tableView.pin(to: view)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -52,15 +61,23 @@ class RecipeDetailViewController: UIViewController, Storyboarded {
     
     private func setupNavBar() {
         if #available(iOS 14.0, *) {
-            navigationItem.rightBarButtonItem = .init(systemItem: .play, primaryAction: .init(handler: { action in
+            navigationItem.rightBarButtonItem = .init(title: nil, image: Constants.Images.heart.image, primaryAction: .init(handler: { action in
                 guard let extractModel = self.viewModel.extractModel else {
                     return
                 }
                 FirebaseDataManager.shared.addFavoriteRecipe(self.viewModel.searchOriginalObject, similarModel: self.viewModel.similarOriginalObject, firebaseModel: self.viewModel.firebaseOriginalObject, extractModel)
             }), menu: nil)
         } else {
-            // Fallback on earlier versions
+            navigationItem.rightBarButtonItem = .init(image: Constants.Images.heart.image, style: .plain, target: self, action: #selector(favoritesTapped))
         }
+    }
+    
+    @objc
+    func favoritesTapped() {
+        guard let extractModel = self.viewModel.extractModel else {
+            return
+        }
+        FirebaseDataManager.shared.addFavoriteRecipe(self.viewModel.searchOriginalObject, similarModel: self.viewModel.similarOriginalObject, firebaseModel: self.viewModel.firebaseOriginalObject, extractModel)
     }
 	
 	func reloadTableView() {
@@ -131,7 +148,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
 				return
 			}
 
-			let vc = RecipeDetailViewController.instantiate("RecipeDetail")
+			let vc = RecipeDetailViewController()
 			let vm = RecipeDetailViewModel(sourceURL, item)
 			vc.initViewModel(vm)
 			
