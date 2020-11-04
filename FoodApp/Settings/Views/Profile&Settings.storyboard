@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile Settings View Controller-->
+        <scene sceneID="qPs-n7-iCc">
+            <objects>
+                <viewController storyboardIdentifier="ProfileSettingsViewController" id="cjS-2D-1Zw" customClass="ProfileSettingsViewController" customModule="FoodApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vk9-fI-Eok">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dta-cP-8yX">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMV-eV-Cli">
+                                        <rect key="frame" x="20" y="768" width="374" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="signOutButtonTapped:" destination="cjS-2D-1Zw" eventType="touchUpInside" id="fvZ-Ml-CYw"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zn4-bM-Ngs">
+                                        <rect key="frame" x="20" y="20" width="374" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Z8O-yo-zjL">
+                                        <rect key="frame" x="157" y="71" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="TWm-va-daM"/>
+                                            <constraint firstAttribute="width" constant="100" id="pZK-2U-KZA"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="aMV-eV-Cli" secondAttribute="trailing" constant="20" id="6EG-4N-SXY"/>
+                                    <constraint firstItem="Z8O-yo-zjL" firstAttribute="centerX" secondItem="Dta-cP-8yX" secondAttribute="centerX" id="7L6-Go-NKd"/>
+                                    <constraint firstItem="aMV-eV-Cli" firstAttribute="leading" secondItem="Dta-cP-8yX" secondAttribute="leading" constant="20" id="YrT-FN-UyZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="aMV-eV-Cli" secondAttribute="bottom" constant="20" id="Zag-Zd-nD9"/>
+                                    <constraint firstItem="Zn4-bM-Ngs" firstAttribute="top" secondItem="Dta-cP-8yX" secondAttribute="top" constant="20" id="f5Q-DY-De5"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zn4-bM-Ngs" secondAttribute="trailing" constant="20" id="h6H-zd-0tu"/>
+                                    <constraint firstItem="Zn4-bM-Ngs" firstAttribute="leading" secondItem="Dta-cP-8yX" secondAttribute="leading" constant="20" id="ke9-3P-V8k"/>
+                                    <constraint firstItem="Z8O-yo-zjL" firstAttribute="top" secondItem="Zn4-bM-Ngs" secondAttribute="bottom" constant="30" id="xTT-WB-mqN"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="YQV-dc-SEp"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Dta-cP-8yX" firstAttribute="bottom" secondItem="YQV-dc-SEp" secondAttribute="bottom" id="AcM-8N-pWH"/>
+                            <constraint firstItem="YQV-dc-SEp" firstAttribute="trailing" secondItem="Dta-cP-8yX" secondAttribute="trailing" id="MTt-qk-byd"/>
+                            <constraint firstItem="Dta-cP-8yX" firstAttribute="leading" secondItem="YQV-dc-SEp" secondAttribute="leading" id="ZpZ-8G-iyy"/>
+                            <constraint firstItem="Dta-cP-8yX" firstAttribute="top" secondItem="YQV-dc-SEp" secondAttribute="top" id="bVV-dL-jeM"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="profileImageView" destination="Z8O-yo-zjL" id="V5r-VU-1Zh"/>
+                        <outlet property="signOutButton" destination="aMV-eV-Cli" id="PA9-56-hp1"/>
+                        <outlet property="userName" destination="Zn4-bM-Ngs" id="K1h-V1-rgg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jf2-Qr-SbI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-413.04347826086962" y="-130.58035714285714"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

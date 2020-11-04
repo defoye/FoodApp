@@ -74,21 +74,14 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
         GIDSignIn.sharedInstance().delegate = self
         addSubviewsAndConstraints()
         setupDataSource()
+        
+
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //FB token verify
-        if let token = AccessToken.current,
-                !token.isExpired {
-                // User is logged in, do work such as go to next view controller.
-            print("FB Logged in")
-        }
-    }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        
     }
     
     private func setupDataSource() {
@@ -191,10 +184,6 @@ extension LogonViewController {
         loginButton.center = view.center
         loginButton.delegate = self
         view.addSubview(loginButton)
-        if let token = AccessToken.current,
-                !token.isExpired {
-                // User is logged in, do work such as go to next view controller.
-        }
         loginButton.permissions = ["public_profile", "email"]
     }
     
@@ -282,11 +271,20 @@ extension LogonViewController: LoginButtonDelegate {
             print("Facebook login with error: \(error?.localizedDescription)")
             return
         }
-        if let token = AccessToken.current, !token.isExpired {
-            coordinatorDelegate.logon()
-        }
-        print("Suucess login with Facebook")
-        self.coordinatorDelegate.logon()
+        guard let token = AccessToken.current?.tokenString else { return }
+        
+        let credential = FacebookAuthProvider.credential(withAccessToken: token)
+
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+          if let error = error {
+            let authError = error as NSError
+            if (authError.code == AuthErrorCode.secondFactorRequired.rawValue) {
+                print("// The user is a multi-factor user. Second factor challenge is required.")
+            }
+          }
+            print("Suucess login with Facebook")
+            self.coordinatorDelegate.logon()
+       }
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {

@@ -13,13 +13,17 @@ class MainCoordinator {
     let viewControllers: [UIViewController]
     private let recipeSearchCoordinator: RecipeSearchCoordinator
     private let homeCoordinator: HomeCoordinator
+    private let settingsCoordinator: ProfileSettingsCoordinator
     
     init() {
         self.recipeSearchCoordinator = RecipeSearchCoordinator()
         self.homeCoordinator = HomeCoordinator()
+        self.settingsCoordinator = ProfileSettingsCoordinator()
+        
         self.viewControllers = [
             homeCoordinator.presenter,
-            recipeSearchCoordinator.presenter
+            recipeSearchCoordinator.presenter,
+            settingsCoordinator.presenter
         ]
     }
     
@@ -27,5 +31,6 @@ class MainCoordinator {
 		recipeSearchCoordinator.start()
         
         homeCoordinator.start()
+        settingsCoordinator.start()
     }
 }
