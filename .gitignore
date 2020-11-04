@@ -8,4 +8,4 @@ build/*
 *.perspectivev3
 FoodApp.xcworkspace/xcuserdata/*
 FoodApp.xcodeproj/xcuserdata/*
-FoodApp/Pods/Pods.xcodeproj/xcuserdata
+Pods/Pods.xcodeproj/xcuserdata
