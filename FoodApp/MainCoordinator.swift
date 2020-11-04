@@ -8,8 +8,13 @@
 
 import UIKit
 
-class MainCoordinator {
+protocol MainCoordinatorDelegate: class {
+    func logOut()
+}
+
+class MainCoordinator: MainCoordinatorDelegate {
     
+    weak var sceneDelegate: SceneDelegate?
     let viewControllers: [UIViewController]
     private let recipeSearchCoordinator: RecipeSearchCoordinator
     private let homeCoordinator: HomeCoordinator
@@ -25,12 +30,23 @@ class MainCoordinator {
             recipeSearchCoordinator.presenter,
             settingsCoordinator.presenter
         ]
+        self.settingsCoordinator.coordinatorDelegate = self
     }
     
 	func start() {
 		recipeSearchCoordinator.start()
-        
         homeCoordinator.start()
         settingsCoordinator.start()
+    }
+    
+    func finish() {
+        recipeSearchCoordinator.finish()
+        homeCoordinator.finish()
+        settingsCoordinator.finish()
+    }
+
+    func logOut() {
+        finish()
+        sceneDelegate?.logOut()
     }
 }

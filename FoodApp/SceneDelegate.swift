@@ -49,12 +49,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.logonCoordinator.finish()
         let mainCoordinator = MainCoordinator()
         self.mainCoordinator = mainCoordinator
+        self.mainCoordinator.sceneDelegate = self
             
         tabBarController.viewControllers = mainCoordinator.viewControllers
         
         window?.rootViewController = tabBarController
         
         mainCoordinator.start()
+    }
+    
+    func logOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        authenticate()
     }
 
 	func sceneDidDisconnect(_ scene: UIScene) {
