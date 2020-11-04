@@ -26,6 +26,10 @@ class HomeCoordinator {
         
         presenter.viewControllers = [homeViewController]
     }
+    
+    func finish() {
+        
+    }
 }
 
 extension HomeCoordinator: HomeCoordinatorDelegate {

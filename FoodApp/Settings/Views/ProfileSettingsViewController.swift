@@ -22,6 +22,8 @@ class ProfileSettingsViewController: UIViewController, Storyboarded {
     var userId: String? = nil
     var profileImageUrl: URL? = nil
     var accountUserName: String? = nil
+    weak var coordinatorDelegate: ProfileSettingsCoordinatorDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -81,31 +83,9 @@ class ProfileSettingsViewController: UIViewController, Storyboarded {
         }
     }
     
-    func logout() {
-        
-            let firebaseAuth = Auth.auth()
-        do {
-          try firebaseAuth.signOut()
-        //            let vc = LogonViewController(coordinatorDelegate: nil)
-        //
-        //
-        //            let viewController = LogonViewController(coordinatorDelegate: self)
-        //
-        //            presenter.pushViewController(viewController, animated: false)
-        //
-        //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        //            let IntroVC = storyboard.instantiateViewController(withIdentifier: "IntroVC") as! introVC
-        //            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //            appDelegate.window?.rootViewController = IntroVC
-
-        } catch let signOutError as NSError {
-          print ("Error signing out: %@", signOutError)
-        }
-    }
-    
     @IBAction func signOutButtonTapped(_ sender: Any) {
         imageStorage()
-        //logout()
+        coordinatorDelegate?.logOut()
     }
         
 }
