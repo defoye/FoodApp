@@ -9,7 +9,7 @@
 import UIKit
 
 protocol HomeCoordinatorDelegate: class {
-    func coordinateToRecipeDetail(item: FirebaseAPI.TopRecipesSearchResults.ResponseModel)
+    func coordinateToRecipeDetail(item: FirebaseAPI.TopRecipesSearchResults.ResponseItem)
 }
 
 class HomeCoordinator {
@@ -30,7 +30,7 @@ class HomeCoordinator {
 
 extension HomeCoordinator: HomeCoordinatorDelegate {
     
-    func coordinateToRecipeDetail(item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
+    func coordinateToRecipeDetail(item: FirebaseAPI.TopRecipesSearchResults.ResponseItem) {
         let vc = RecipeDetailViewController.instantiate("RecipeDetail")
         let vm = RecipeDetailViewModel(item)
         vc.initViewModel(vm)

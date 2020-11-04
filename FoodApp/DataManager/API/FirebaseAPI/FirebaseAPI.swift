@@ -12,5 +12,6 @@ class FirebaseAPI {
     
     enum Collection: String {
         case topRecipesSearchResults
+        case users
     }
 }

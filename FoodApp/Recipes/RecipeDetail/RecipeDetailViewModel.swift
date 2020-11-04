@@ -25,25 +25,31 @@ class RecipeDetailViewModel {
 	let idParam: Int?
 	
 	var items: [RecipeDetailSection: Any]? = [:]
-    var searchOriginalObject: FirebaseAPI.TopRecipesSearchResults.ResponseModel?
-	
+    var searchOriginalObject: RecipesViewModel.Item?
+    var similarOriginalObject: SimilarRecipeItem?
+    var firebaseOriginalObject: FirebaseAPI.TopRecipesSearchResults.ResponseModel?
+    
+    var extractModel: SpoonacularAPI.ExtractRecipeModel?
+
     init(_ urlParam: String, _ item: RecipesViewModel.Item) {
 		self.urlParam = urlParam
 		self.idParam = item.id
 		self.items?[.header] = HeaderItem(title: item.title ?? "Error", image: item.image)
+        self.searchOriginalObject = item
 	}
 	
 	init(_ urlParam: String, _ item: SimilarRecipeItem) {
 		self.urlParam = urlParam
 		self.idParam = item.id
 		self.items?[.header] = HeaderItem(title: item.title, image: item.image)
+        self.similarOriginalObject = item
 	}
     
-    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
-        self.urlParam = item.sourceURL
-        self.idParam = item.id
-        self.items?[.header] = HeaderItem(title: item.title, image: item.image)
-        self.searchOriginalObject = item
+    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseItem) {
+        self.urlParam = item.responseModel.sourceURL
+        self.idParam = item.responseModel.id
+        self.items?[.header] = HeaderItem(title: item.responseModel.title, image: item.image)
+        self.firebaseOriginalObject = item.responseModel
     }
 	
 	func numberOfRows(in section: RecipeDetailSection) -> Int {
@@ -96,7 +102,7 @@ class RecipeDetailViewModel {
             switch status {
             case .success:
                 if let model = model {
-                    FirebaseDataManager.shared.addFavoriteRecipe(nil, self.searchOriginalObject, model)
+                    self.extractModel = model
                     self.createItems(model, completion)
                 }
             case .error:
@@ -285,6 +291,7 @@ extension RecipeDetailViewModel {
 		let sourceURL: String?
         
         let imageURL: String?
+        let readyInMinutes: Int?
 		
 		init(_ obj: SpoonacularAPI.RecipeSimilarModelElement, image: UIImage?) {
 			title = obj.title ?? "Error"
@@ -302,6 +309,7 @@ extension RecipeDetailViewModel {
             } else {
                 self.imageURL = ""
             }
+            self.readyInMinutes = obj.readyInMinutes
 		}
 	}
 }

@@ -44,6 +44,24 @@ class RecipeDetailViewController: UIViewController, Storyboarded {
 		let insets = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
 		tableView.contentInset = insets
 	}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavBar()
+    }
+    
+    private func setupNavBar() {
+        if #available(iOS 14.0, *) {
+            navigationItem.rightBarButtonItem = .init(systemItem: .play, primaryAction: .init(handler: { action in
+                guard let extractModel = self.viewModel.extractModel else {
+                    return
+                }
+                FirebaseDataManager.shared.addFavoriteRecipe(self.viewModel.searchOriginalObject, similarModel: self.viewModel.similarOriginalObject, firebaseModel: self.viewModel.firebaseOriginalObject, extractModel)
+            }), menu: nil)
+        } else {
+            // Fallback on earlier versions
+        }
+    }
 	
 	func reloadTableView() {
 		DispatchQueue.main.async {

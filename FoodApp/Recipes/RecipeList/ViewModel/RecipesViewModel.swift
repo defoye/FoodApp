@@ -112,8 +112,13 @@ extension RecipesViewModel {
 		let id: Int?
 		
 		let image: UIImage
+        
+        let imageURL: String?
+        let readyInMinutes: Int?
 		
 		init(_ obj: SpoonacularAPI.RecipeComplexSearchResult, image: UIImage) {
+            self.readyInMinutes = obj.readyInMinutes
+            self.imageURL = obj.image
 			self.id = obj.id
 			self.title = obj.title
 			if let minutes = obj.readyInMinutes {

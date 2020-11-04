@@ -17,47 +17,68 @@ extension FirebaseAPI {
         enum Param: String, CaseIterable {
             case hits
             case id
-            case image
+            case imageURL
             case sourceURL
             case readyInMinutes
             case title
         }
         
-        class ResponseModel: Decodable, Hashable {
-            
+        class ResponseItem: Hashable {
             let uuid = UUID()
-            let hits: Int
+            var image: UIImage?
+            let responseModel: ResponseModel
+            
+            init(_ responseModel: ResponseModel) {
+                self.responseModel = responseModel
+            }
+            
+            func hash(into hasher: inout Hasher) {
+                hasher.combine(uuid)
+            }
+            
+            static func == (lhs: ResponseItem, rhs: ResponseItem) -> Bool {
+                return lhs.uuid == rhs.uuid
+            }
+        }
+        
+        struct ResponseModel: Decodable {
+            
+            var hits: Int?
             let id: Int
             let imageURL: String
             let sourceURL: String
             let readyInMinutes: Int
             let title: String
-            let timeTitle: String
             
-            var image: UIImage?
+            var timeTitle: String {
+                "Ready in \(self.readyInMinutes.minutesIntToTimeString())"
+            }
             
             private enum CodingKeys: String, CodingKey {
-                case hits, id, image, sourceURL, timeTitle, title
+                case hits, id, imageURL, sourceURL, title, readyInMinutes
             }
             
-            required init(from decoder: Decoder) throws {
+            init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                self.hits = Int(try container.decode(String.self, forKey: .hits)) ?? 0
+                do {
+                    self.hits = Int(try container.decode(String.self, forKey: .hits)) ?? 0
+                } catch {
+                    self.hits = nil
+                }
                 self.id = Int(try container.decode(String.self, forKey: .id)) ?? 0
-                self.imageURL = try container.decode(String.self, forKey: .image)
+                self.imageURL = try container.decode(String.self, forKey: .imageURL)
                 self.sourceURL = try container.decode(String.self, forKey: .sourceURL)
-                self.readyInMinutes = Int(try container.decode(String.self, forKey: .timeTitle)) ?? 0
+                self.readyInMinutes = Int(try container.decode(String.self, forKey: .readyInMinutes)) ?? 0
                 self.title = try container.decode(String.self, forKey: .title)
-                self.timeTitle = "Ready in \(self.readyInMinutes.minutesIntToTimeString())"
             }
-            
+                        
             func toDict() -> ParamDict {
                 return Param.allCases.reduce([:]) { (dict, param) -> ParamDict in
                     var dict = dict
                     switch param {
-                    case .hits: dict[param] = String(self.hits)
+                    case .hits: dict[param] = String(self.hits ?? 0)
                     case .id: dict[param] = String(self.id)
-                    case .image: dict[param] = self.imageURL
+                    case .imageURL: dict[param] = self.imageURL
                     case .sourceURL: dict[param] = self.sourceURL
                     case .readyInMinutes: dict[param] = String(self.readyInMinutes)
                     case .title: dict[param] = self.title
@@ -65,14 +86,6 @@ extension FirebaseAPI {
                     
                     return dict
                 }
-            }
-            
-            func hash(into hasher: inout Hasher) {
-                hasher.combine(uuid)
-            }
-            
-            static func == (lhs: ResponseModel, rhs: ResponseModel) -> Bool {
-                return lhs.uuid == rhs.uuid
             }
         }
         
@@ -97,15 +110,13 @@ extension FirebaseAPI {
             if let id = model.id {
                 dict[.id] = String(id)
             }
-            dict[.image] = model.image
+            dict[.imageURL] = model.image
             
             return dict
         }
         
-        static func toDict(_ model: SpoonacularAPI.RecipeSimilarModelElement) -> ParamDict {
+        static func toDict(_ model: RecipesViewModel.Item) -> ParamDict {
             var dict: ParamDict = [:]
-            
-            let similarModel = RecipeDetailViewModel.SimilarRecipeItem(model, image: nil)
             
             dict[.title] = model.title
             if let readyInMinutes = model.readyInMinutes {
@@ -117,7 +128,31 @@ extension FirebaseAPI {
             if let id = model.id {
                 dict[.id] = String(id)
             }
-            dict[.image] = similarModel.imageURL
+            dict[.imageURL] = model.imageURL
+            
+            return dict
+        }
+        
+        static func toDict(_ model: SpoonacularAPI.RecipeSimilarModelElement) -> ParamDict {            
+            let similarModel = RecipeDetailViewModel.SimilarRecipeItem(model, image: nil)
+            
+            return toDict(similarModel)
+        }
+        
+        static func toDict(_ model: RecipeDetailViewModel.SimilarRecipeItem) -> ParamDict {
+            var dict: ParamDict = [:]
+                        
+            dict[.title] = model.title
+            if let readyInMinutes = model.readyInMinutes {
+                dict[.readyInMinutes] = String(readyInMinutes)
+            }
+            if let sourceURL = model.sourceURL {
+                dict[.sourceURL] = sourceURL
+            }
+            if let id = model.id {
+                dict[.id] = String(id)
+            }
+            dict[.imageURL] = model.imageURL
             
             return dict
         }
