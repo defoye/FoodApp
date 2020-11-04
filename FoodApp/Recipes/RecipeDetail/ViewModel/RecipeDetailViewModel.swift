@@ -16,15 +16,26 @@ enum RecipeDetailSection: Int, CaseIterable {
 }
 
 class RecipeDetailViewModel {
-	
+    
+    typealias Section = RecipeDetailViewController.Section
+    typealias Item = RecipeDetailViewController.Item
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
+
 	let dataManager = RecipeDataManager()
 	
 	var isLoading: Bool = false
 	
 	let urlParam: String
 	let idParam: Int?
-	
-	var items: [RecipeDetailSection: Any]? = [:]
+
+    lazy var snapshot: Snapshot = {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.header, .ingredients, .instructions, .similarRecipes])
+        return snapshot
+    }()
+    
+    var dataSourceApplyBlock: ((Snapshot) -> Void)?
+
     var searchOriginalObject: RecipesViewModel.Item?
     var similarOriginalObject: SimilarRecipeItem?
     var firebaseOriginalObject: FirebaseAPI.TopRecipesSearchResults.ResponseModel?
@@ -34,67 +45,32 @@ class RecipeDetailViewModel {
     init(_ urlParam: String, _ item: RecipesViewModel.Item) {
 		self.urlParam = urlParam
 		self.idParam = item.id
-		self.items?[.header] = HeaderItem(title: item.title ?? "Error", image: item.image)
+        self.snapshot.appendItems([.header(HeaderItem(title: item.title ?? "Error", image: item.image))], toSection: .header)
         self.searchOriginalObject = item
 	}
 	
 	init(_ urlParam: String, _ item: SimilarRecipeItem) {
 		self.urlParam = urlParam
 		self.idParam = item.id
-		self.items?[.header] = HeaderItem(title: item.title, image: item.image)
+        self.snapshot.appendItems([.header(HeaderItem(title: item.title, image: item.image))], toSection: .header)
+
         self.similarOriginalObject = item
 	}
     
     init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseItem) {
         self.urlParam = item.responseModel.sourceURL
         self.idParam = item.responseModel.id
-        self.items?[.header] = HeaderItem(title: item.responseModel.title, image: item.image)
+        self.snapshot.appendItems([.header(HeaderItem(title: item.responseModel.title, image: item.image))], toSection: .header)
+
         self.firebaseOriginalObject = item.responseModel
     }
 	
-	func numberOfRows(in section: RecipeDetailSection) -> Int {
-		switch section {
-		case .header:
-			return 1
-		case .ingredients:
-			if let items = items?[.ingredients] as? [IngredientItem] {
-				return items.count
-			}
-		case .instructions:
-			if let items = items?[.instructions] as? [InstructionItem] {
-				return items.count
-			}
-		case .similarRecipes:
-			if let items = items?[.similarRecipes] as? [SimilarRecipeItem] {
-				return items.count
-			}
-		}
-		
-		return 0
+	func fetchData() {
+		loadRecipeDetails()
+		loadSimilarRecipes()
 	}
 	
-	func headerItem() -> HeaderItem? {
-		return items?[.header] as? HeaderItem
-	}
-	
-	func ingredientItem(at index: Int) -> IngredientItem? {
-		(items?[.ingredients] as? [IngredientItem])?[index]
-	}
-	
-	func instructionItem(at index: Int) -> InstructionItem? {
-		(items?[.instructions] as? [InstructionItem])?[index]
-	}
-	
-	func similarRecipeItem(at index: Int) -> SimilarRecipeItem? {
-		(items?[.similarRecipes] as? [SimilarRecipeItem])?[index]
-	}
-	
-	func fetchData(_ completion: @escaping (() -> Void)) {		
-		loadRecipeDetails(completion)
-		loadSimilarRecipes(completion)
-	}
-	
-	private func loadRecipeDetails(_ completion: @escaping (() -> Void)) {
+	private func loadRecipeDetails() {
 		isLoading = true
 
         dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
@@ -103,7 +79,7 @@ class RecipeDetailViewModel {
             case .success:
                 if let model = model {
                     self.extractModel = model
-                    self.createItems(model, completion)
+                    self.createItems(model)
                 }
             case .error:
                 fatalError("API ran out")
@@ -111,7 +87,7 @@ class RecipeDetailViewModel {
         }
 	}
 	
-	private func loadSimilarRecipes(_ completion: @escaping (() -> Void)) {
+	private func loadSimilarRecipes() {
 		guard let id = idParam else {
 			return
 		}
@@ -122,88 +98,88 @@ class RecipeDetailViewModel {
 			switch status {
 			case .success:
 				if let model = model {
-					self.createSimilarRecipeItems(model, completion)
+					self.createSimilarRecipeItems(model)
 				}
 			case .error:
 				break
 			}
 		}
 	}
+    
+    private func headerLabelModel(_ title: String) -> LabelCell.Model {
+        let labelItemModel = LabelCell.Model()
+        labelItemModel.text = title
+        labelItemModel.font = UIFont(name: "Avenir-Heavy", size: 24)
+        labelItemModel.alignment = .left
+        labelItemModel.textInsets = .init(top: 0, left: 20, bottom: -10, right: -20)
+        return labelItemModel
+    }
 	
-	func createSimilarRecipeItems(_ model: SpoonacularAPI.RecipeSimilarModel, _ completion: @escaping (() -> Void)) {
+	func createSimilarRecipeItems(_ model: SpoonacularAPI.RecipeSimilarModel) {
         FirebaseDataManager.shared.addRecipeSearchData(model)
-
-		var similarItems: [SimilarRecipeItem] = []
-		
-		let dGroup = DispatchGroup()
-		
-		isLoading = true
-		
-		model.forEach { (element) in
-            var item = SimilarRecipeItem(element, image: nil)
-            guard let imageURL = item.imageURL else {
-                return
-            }
-            dGroup.enter()
-            dataManager.downloadImage(from: imageURL) { (image) in
-                if let image = image {
-                    item.image = image
-                    similarItems.append(item)
+                
+        snapshot.appendItems([.labelItem(headerLabelModel("Similar Recipes"))], toSection: .similarRecipes)
+        let items = model.map { recipe -> Item in
+            return .similarRecipe(SimilarRecipeItem(recipe, image: nil))
+        }
+        self.snapshot.appendItems(items, toSection: .similarRecipes)
+        items.forEach { item in
+            if case .similarRecipe(let model) = item {
+                guard let imageURL = model.imageURL else {
+                    return
                 }
-                dGroup.leave()
+                RecipeDataManager.shared.downloadImage(from: imageURL) { image in
+                    if let image = image {
+                        model.image = image
+                        self.snapshot.reloadItems([item])
+                        self.dataSourceApplyBlock?(self.snapshot)
+                    }
+                }
             }
-		}
-		
-		dGroup.notify(queue: .main) {
-			self.isLoading = false
-			self.items?[.similarRecipes] = similarItems
-			completion()
-		}
+        }
+        self.dataSourceApplyBlock?(self.snapshot)
 	}
 	
-	func createItems(_ model: SpoonacularAPI.ExtractRecipeModel, _ completion: @escaping (() -> Void)) {
-		
-		var instructionItems: [InstructionItem] = []
-		var ingredientItems: [IngredientItem] = []
-		
+	func createItems(_ model: SpoonacularAPI.ExtractRecipeModel) {
 		if let instructions = model.analyzedInstructions, instructions.count > 0, let steps = instructions[0].steps {
-			steps.forEach { (step) in
-				instructionItems.append(InstructionItem(step))
-			}
+            let items = steps.map { step -> Item in
+                return .instruction(InstructionItem(step))
+            }
+            snapshot.appendItems([.labelItem(headerLabelModel("Instructions"))], toSection: .instructions)
+            snapshot.appendItems(items, toSection: .instructions)
 		}
-		
+        		
 		if let ingredients = model.extendedIngredients {
-			ingredients.forEach { ingredient in
-				ingredientItems.append(IngredientItem(ingredient))
-			}
+			let items = ingredients.map { ingredient -> Item in
+                return .ingredient(IngredientItem(ingredient))
+            }
+            snapshot.appendItems([.labelItem(headerLabelModel("Ingredients"))], toSection: .ingredients)
+            snapshot.appendItems(items, toSection: .ingredients)
 		}
 		
-//		if let title = model.title, let imageURL = model.image {
-//			items?[.header] = HeaderItem(title: title, image: nil)
-//
-//			dataManager.downloadImage(from: imageURL) { (image) in
-//				if let image = image {
-//					self.items?[.header] = HeaderItem(title: title, image: image)
-//				}
-//				completion()
-//			}
-//		}
-		
-		items?[.instructions] = instructionItems
-		items?[.ingredients] = ingredientItems
-		
-		completion()
+		dataSourceApplyBlock?(snapshot)
 	}
 }
 
 extension RecipeDetailViewModel {
 	
-	struct HeaderItem {
+    struct HeaderItem: Hashable {
+        let uuid = UUID()
 		let title: String
 		let image: UIImage?
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(uuid)
+        }
+        
+        static func == (lhs: HeaderItem, rhs: HeaderItem) -> Bool {
+            return lhs.uuid == rhs.uuid
+        }
 	}
 	
-	struct InstructionItem {
+    struct InstructionItem: Hashable {
+        
+        let uuid = UUID()
 		
 		let number: String
 		let stepTitle: String
@@ -212,10 +188,20 @@ extension RecipeDetailViewModel {
 			self.number = String(obj.number ?? 0)
 			self.stepTitle = obj.step ?? "Error"
 		}
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(uuid)
+        }
+        
+        static func == (lhs: InstructionItem, rhs: InstructionItem) -> Bool {
+            return lhs.uuid == rhs.uuid
+        }
 	}
 	
-    struct IngredientItem: Codable {
+    struct IngredientItem: Codable, Hashable {
 		
+        let uuid = UUID()
+        
 		let originalName: String
 		let name: String
 		let amount: Double
@@ -278,10 +264,19 @@ extension RecipeDetailViewModel {
 
             return paramDict.convertedToRawValues()
         }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(uuid)
+        }
+        
+        static func == (lhs: IngredientItem, rhs: IngredientItem) -> Bool {
+            return lhs.uuid == rhs.uuid
+        }
 	}
 	
-	struct SimilarRecipeItem {
+    class SimilarRecipeItem: Hashable {
 		
+        let uuid = UUID()
 		let title: String
 		let timeTitle: String
 		
@@ -311,5 +306,13 @@ extension RecipeDetailViewModel {
             }
             self.readyInMinutes = obj.readyInMinutes
 		}
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(uuid)
+        }
+        
+        static func == (lhs: SimilarRecipeItem, rhs: SimilarRecipeItem) -> Bool {
+            return lhs.uuid == rhs.uuid
+        }
 	}
 }

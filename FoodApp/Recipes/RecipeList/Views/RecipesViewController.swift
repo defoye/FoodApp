@@ -142,17 +142,14 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if let item = viewModel.item(for: indexPath.row), let sourceURL = item.sourceURL {
-			guard let url = URL(string: sourceURL), let presenter = navigationController else {
+			guard let presenter = navigationController else {
 				return
 			}
 
-			let vc = RecipeDetailViewController()
-			let vm = RecipeDetailViewModel(sourceURL, item)
-			vc.initViewModel(vm)
+            let vm = RecipeDetailViewModel(sourceURL, item)
+			let vc = RecipeDetailViewController(vm)
 			
 			presenter.pushViewController(vc, animated: true)
-			
-//			UIApplication.shared.open(url)
-		}
+        }
 	}
 }

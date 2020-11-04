@@ -58,9 +58,8 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 	}
 	
 	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item) {
-		let vc = RecipeDetailViewController()
-		let vm = RecipeDetailViewModel(urlString, item)
-		vc.initViewModel(vm)
+        let vm = RecipeDetailViewModel(urlString, item)
+		let vc = RecipeDetailViewController(vm)
 		
 		presenter.pushViewController(vc, animated: true)
 	}

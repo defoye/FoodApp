@@ -31,9 +31,8 @@ class HomeCoordinator {
 extension HomeCoordinator: HomeCoordinatorDelegate {
     
     func coordinateToRecipeDetail(item: FirebaseAPI.TopRecipesSearchResults.ResponseItem) {
-        let vc = RecipeDetailViewController()
         let vm = RecipeDetailViewModel(item)
-        vc.initViewModel(vm)
+        let vc = RecipeDetailViewController(vm)
         
         presenter.pushViewController(vc, animated: true)
     }
