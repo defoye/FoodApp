@@ -55,11 +55,11 @@ class RecipePreviewTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    func configure(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
+    func configure(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseItem) {
         setup()
         recipeImageView.image = item.image
-        headerLabel.text = item.title
-        descriptionLabel.text = item.timeTitle
+        headerLabel.text = item.responseModel.title
+        descriptionLabel.text = item.responseModel.timeTitle
     }
     
     func configure(_ item: RecipeDetailViewModel.SimilarRecipeItem) {

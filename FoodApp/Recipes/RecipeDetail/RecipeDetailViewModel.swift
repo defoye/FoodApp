@@ -25,23 +25,31 @@ class RecipeDetailViewModel {
 	let idParam: Int?
 	
 	var items: [RecipeDetailSection: Any]? = [:]
-	
-	init(_ urlParam: String, _ item: RecipesViewModel.Item) {
+    var searchOriginalObject: RecipesViewModel.Item?
+    var similarOriginalObject: SimilarRecipeItem?
+    var firebaseOriginalObject: FirebaseAPI.TopRecipesSearchResults.ResponseModel?
+    
+    var extractModel: SpoonacularAPI.ExtractRecipeModel?
+
+    init(_ urlParam: String, _ item: RecipesViewModel.Item) {
 		self.urlParam = urlParam
 		self.idParam = item.id
 		self.items?[.header] = HeaderItem(title: item.title ?? "Error", image: item.image)
+        self.searchOriginalObject = item
 	}
 	
 	init(_ urlParam: String, _ item: SimilarRecipeItem) {
 		self.urlParam = urlParam
 		self.idParam = item.id
 		self.items?[.header] = HeaderItem(title: item.title, image: item.image)
+        self.similarOriginalObject = item
 	}
     
-    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseModel) {
-        self.urlParam = item.sourceURL
-        self.idParam = item.id
-        self.items?[.header] = HeaderItem(title: item.title, image: item.image)
+    init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseItem) {
+        self.urlParam = item.responseModel.sourceURL
+        self.idParam = item.responseModel.id
+        self.items?[.header] = HeaderItem(title: item.responseModel.title, image: item.image)
+        self.firebaseOriginalObject = item.responseModel
     }
 	
 	func numberOfRows(in section: RecipeDetailSection) -> Int {
@@ -88,17 +96,19 @@ class RecipeDetailViewModel {
 	
 	private func loadRecipeDetails(_ completion: @escaping (() -> Void)) {
 		isLoading = true
+
         dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
-			self.isLoading = false
-			switch status {
-			case .success:
-				if let model = model {
-					self.createItems(model, completion)
-				}
-			case .error:
-				fatalError()
-			}
-		}
+            self.isLoading = false
+            switch status {
+            case .success:
+                if let model = model {
+                    self.extractModel = model
+                    self.createItems(model, completion)
+                }
+            case .error:
+                fatalError("API ran out")
+            }
+        }
 	}
 	
 	private func loadSimilarRecipes(_ completion: @escaping (() -> Void)) {
@@ -121,7 +131,8 @@ class RecipeDetailViewModel {
 	}
 	
 	func createSimilarRecipeItems(_ model: SpoonacularAPI.RecipeSimilarModel, _ completion: @escaping (() -> Void)) {
-		
+        FirebaseDataManager.shared.addRecipeSearchData(model)
+
 		var similarItems: [SimilarRecipeItem] = []
 		
 		let dGroup = DispatchGroup()
@@ -129,17 +140,18 @@ class RecipeDetailViewModel {
 		isLoading = true
 		
 		model.forEach { (element) in
-			if let id = element.id, let imageType = element.imageType {
-				let size = "240x150"
-				let imageURL = "https://spoonacular.com/recipeImages/\(id)-\(size).\(imageType)"
-				dGroup.enter()
-				dataManager.downloadImage(from: imageURL) { (image) in
-					if let image = image {
-						similarItems.append(SimilarRecipeItem(element, image: image))
-					}
-					dGroup.leave()
-				}
-			}
+            var item = SimilarRecipeItem(element, image: nil)
+            guard let imageURL = item.imageURL else {
+                return
+            }
+            dGroup.enter()
+            dataManager.downloadImage(from: imageURL) { (image) in
+                if let image = image {
+                    item.image = image
+                    similarItems.append(item)
+                }
+                dGroup.leave()
+            }
 		}
 		
 		dGroup.notify(queue: .main) {
@@ -202,7 +214,7 @@ extension RecipeDetailViewModel {
 		}
 	}
 	
-	struct IngredientItem {
+    struct IngredientItem: Codable {
 		
 		let originalName: String
 		let name: String
@@ -212,11 +224,11 @@ extension RecipeDetailViewModel {
 		let primaryTitleLabelText: String
 		let secondaryTitleLabelText: String
 		
-		let usValue: Double?
-		let usUnit: String?
+		let usValue: Double
+		let usUnit: String
 		
-		let metricValue: Double?
-		let metricUnit: String?
+		let metricValue: Double
+		let metricUnit: String
 		
 		init(_ obj: SpoonacularAPI.ExtendedIngredient) {
 			originalName = obj.original ?? obj.originalString ?? "Error"
@@ -228,11 +240,44 @@ extension RecipeDetailViewModel {
 			primaryTitleLabelText = "\(name.capitalized), \(amount.roundedFractionString()) \(unit)"
 			secondaryTitleLabelText = originalName.capitalized
 			
-			metricValue = obj.measures?.metric?.value
-			metricUnit = obj.measures?.metric?.unit
-			usValue = obj.measures?.us?.value
-			usUnit = obj.measures?.us?.unit
+			metricValue = obj.measures?.metric?.value ?? 0
+			metricUnit = obj.measures?.metric?.unit ?? ""
+			usValue = obj.measures?.us?.value ?? 0
+			usUnit = obj.measures?.us?.unit ?? ""
 		}
+        
+        enum Param: String {
+            case originalName
+            case name
+            case amount
+            case unit
+            
+            case primaryTitleLabelText
+            case secondaryTitleLabelText
+            
+            case usValue
+            case usUnit
+            
+            case metricValue
+            case metricUnit
+        }
+        
+        func toDict() -> [String: String] {
+            var paramDict: [Param: String] = [:]
+            
+            paramDict[.originalName] = originalName
+            paramDict[.name] = name
+            paramDict[.amount] = String(amount)
+            paramDict[.unit] = unit
+            paramDict[.primaryTitleLabelText] = primaryTitleLabelText
+            paramDict[.secondaryTitleLabelText] = secondaryTitleLabelText
+            paramDict[.usValue] = String(usValue)
+            paramDict[.usUnit] = usUnit
+            paramDict[.metricValue] = String(metricValue)
+            paramDict[.metricUnit] = metricUnit
+
+            return paramDict.convertedToRawValues()
+        }
 	}
 	
 	struct SimilarRecipeItem {
@@ -240,12 +285,15 @@ extension RecipeDetailViewModel {
 		let title: String
 		let timeTitle: String
 		
-		let image: UIImage
+		var image: UIImage?
 		
 		let id: Int?
 		let sourceURL: String?
+        
+        let imageURL: String?
+        let readyInMinutes: Int?
 		
-		init(_ obj: SpoonacularAPI.RecipeSimilarModelElement, image: UIImage) {
+		init(_ obj: SpoonacularAPI.RecipeSimilarModelElement, image: UIImage?) {
 			title = obj.title ?? "Error"
 			if let minutes = obj.readyInMinutes {
 				timeTitle = minutes.minutesIntToTimeString()
@@ -255,6 +303,13 @@ extension RecipeDetailViewModel {
 			self.image = image
 			id = obj.id
 			sourceURL = obj.sourceURL
+            if let id = obj.id, let imageType = obj.imageType {
+                let size = "240x150"
+                self.imageURL = "https://spoonacular.com/recipeImages/\(id)-\(size).\(imageType)"
+            } else {
+                self.imageURL = ""
+            }
+            self.readyInMinutes = obj.readyInMinutes
 		}
 	}
 }

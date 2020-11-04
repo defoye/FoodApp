@@ -12,18 +12,20 @@ class HomeViewController: UIViewController, UITableViewDelegate {
     
     enum Section {
         case topRecipes
+        case favoriteRecipes
     }
     
     enum Item: Hashable {
         case labelItem(_ model: LabelCell.Model)
-        case topRecipesItem(_ model: FirebaseAPI.TopRecipesSearchResults.ResponseModel)
+        case topRecipesItem(_ model: FirebaseAPI.TopRecipesSearchResults.ResponseItem)
         case separatorItem(_ uuid: UUID)
+        case favoriteRecipesItem(_ model: FirebaseAPI.TopRecipesSearchResults.ResponseItem)
     }
     
     lazy var dataSource: UITableViewDiffableDataSource<Section, Item> = {
         UITableViewDiffableDataSource<Section, Item>(tableView: tableView) { [weak self] (tableView, indexPath, item) -> UITableViewCell? in
             switch item {
-            case .topRecipesItem(let model):
+            case .topRecipesItem(let model), .favoriteRecipesItem(let model):
                 return tableView.configuredCell(RecipePreviewTableViewCell.self, identifier: RecipePreviewTableViewCell.reuseIdentifier) { cell in
                     cell.configure(model)
                 }
@@ -69,7 +71,9 @@ class HomeViewController: UIViewController, UITableViewDelegate {
             guard let self = self else {
                 return
             }
-            self.dataSource.apply(snapshot)
+            DispatchQueue.main.async {
+                self.dataSource.apply(snapshot)
+            }
         }
     }
     
@@ -107,7 +111,7 @@ class HomeViewController: UIViewController, UITableViewDelegate {
         }
         
         switch item {
-        case .topRecipesItem(let model):
+        case .topRecipesItem(let model), .favoriteRecipesItem(let model):
             coordinatorDelegate?.coordinateToRecipeDetail(item: model)
         case .separatorItem(_), .labelItem(_):
             break
