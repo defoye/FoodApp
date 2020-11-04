@@ -23,6 +23,12 @@ class RecipeDetailViewModel {
 
 	let dataManager = RecipeDataManager()
 	
+    var isLoadingRecipeDetail: Bool = false {
+        didSet {
+            favoriteButtonEnableBlock?(isLoadingRecipeDetail)
+        }
+    }
+    
 	var isLoading: Bool = false
 	
 	let urlParam: String
@@ -35,6 +41,7 @@ class RecipeDetailViewModel {
     }()
     
     var dataSourceApplyBlock: ((Snapshot) -> Void)?
+    var favoriteButtonEnableBlock: ((_ isLoading: Bool) -> Void)?
 
     var searchOriginalObject: RecipesViewModel.Item?
     var similarOriginalObject: SimilarRecipeItem?
@@ -71,10 +78,10 @@ class RecipeDetailViewModel {
 	}
 	
 	private func loadRecipeDetails() {
-		isLoading = true
+		isLoadingRecipeDetail = true
 
         dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
-            self.isLoading = false
+            self.isLoadingRecipeDetail = false
             switch status {
             case .success:
                 if let model = model {

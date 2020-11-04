@@ -82,6 +82,14 @@ class RecipeDetailViewController: UIViewController {
             
             self.dataSource.apply(snapshot)
         }
+        self.viewModel.favoriteButtonEnableBlock = { [weak self] isLoadingRecipeDetail in
+            guard let self = self else {
+                return
+            }
+            DispatchQueue.main.async {
+                self.navigationItem.rightBarButtonItem?.isEnabled = !isLoadingRecipeDetail
+            }
+        }
 	}
     
     required init?(coder: NSCoder) {
@@ -115,6 +123,7 @@ class RecipeDetailViewController: UIViewController {
         } else {
             navigationItem.rightBarButtonItem = .init(image: Constants.Images.heart.image, style: .plain, target: self, action: #selector(favoritesTapped))
         }
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     @objc
