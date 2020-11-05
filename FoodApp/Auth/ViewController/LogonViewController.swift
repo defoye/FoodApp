@@ -23,7 +23,7 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
     enum Row: Hashable {
         case logo(_ image: Constants.Images)
         
-        case apple(_ model: SignUpOptionModel)
+        case apple( _ viewModel: BlankTableViewCell.ViewModel)
         case google(_ setupModel: BlankTableViewCell.SetupModel, _ viewModel: BlankTableViewCell.ViewModel)
         case facebook(_ model: SignUpOptionModel)
         case email(_ model: SignUpOptionModel)
@@ -91,9 +91,12 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
         let googleSignInModel = BlankTableViewCell.ViewModel()
         googleSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
         
+        let appleSignInModel = BlankTableViewCell.ViewModel()
+        appleSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
+        
         snapshot.appendItems([
             .logo(.apple_logo),
-            .apple(SignUpOptionModel(imageConstant: .apple_logo, description: "Sign in with Apple")),
+            .apple(appleSignInModel),
             .google(BlankTableViewCell.SetupModel(), googleSignInModel),
             .facebook(SignUpOptionModel(imageConstant: .facebook_logo, description: "Sign in with Facebook")),
             .email(SignUpOptionModel(imageConstant: .email_logo, description: "Sign in with Email")),
@@ -133,7 +136,13 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
                 cell.configure(image: viewModel.imageConstant?.image, description: viewModel.description)
             }
 
-        case .apple(let model), .email(let model):
+        case .apple(let viewModel):
+            return tableView.configuredCell(BlankTableViewCell.self) { cell in
+                let authorizationButton = ASAuthorizationAppleIDButton()
+                authorizationButton.addTarget(self, action: #selector(appleSignInTapped), for: .touchUpInside)
+                cell.configure(authorizationButton, viewModel: viewModel)
+            }
+        case .email(let model):
             return tableView.configuredCell(SignUpOptionCell.self) { cell in
                 cell.configure(image: model.imageConstant?.image, description: model.description)
             }
@@ -165,7 +174,7 @@ extension LogonViewController: UITableViewDelegate {
         case .logo(_):
             break
         case .apple(_):
-            appleSignInTapped()
+            break
         case .facebook(_):
             facebookSignInTapped()
         case .google(_):
