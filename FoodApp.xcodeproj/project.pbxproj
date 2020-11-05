@@ -19,6 +19,7 @@
 		5321A94E247F3A1A00F55FBB /* InstructionsRequiredCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5321A94D247F3A1A00F55FBB /* InstructionsRequiredCell.swift */; };
 		5321A950247F3A2800F55FBB /* InstructionsRequiredCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */; };
 		5324DA76254DBE3C00473BA1 /* BlankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */; };
+		53300AF52553CC2500D76777 /* ErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53300AF42553CC2500D76777 /* ErrorCell.swift */; };
 		5340046C247F44F900060A12 /* RecipeSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */; };
 		5340046E247F563400060A12 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046D247F563400060A12 /* MainCoordinator.swift */; };
 		535E1BAD2550951D009FEED2 /* FirebaseAPI+TopRecipesSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535E1BAC2550951D009FEED2 /* FirebaseAPI+TopRecipesSearchResults.swift */; };
@@ -104,6 +105,7 @@
 		5321A94D247F3A1A00F55FBB /* InstructionsRequiredCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsRequiredCell.swift; sourceTree = "<group>"; };
 		5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionsRequiredCell.xib; sourceTree = "<group>"; };
 		5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankTableViewCell.swift; sourceTree = "<group>"; };
+		53300AF42553CC2500D76777 /* ErrorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCell.swift; sourceTree = "<group>"; };
 		5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchCoordinator.swift; sourceTree = "<group>"; };
 		5340046D247F563400060A12 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		535E1BAC2550951D009FEED2 /* FirebaseAPI+TopRecipesSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseAPI+TopRecipesSearchResults.swift"; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				536636A6254C56A200646060 /* LabelCell.swift */,
 				5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */,
 				532001E02550AD43007ABC9C /* RecipePreviewTableViewCell.swift */,
+				53300AF42553CC2500D76777 /* ErrorCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -803,6 +806,7 @@
 				53659600254F207A005A5DF1 /* FirebaseDataManager.swift in Sources */,
 				5321A94C247F39DF00F55FBB /* CuisineCell.swift in Sources */,
 				53C38E98247E209000BD42D4 /* SpoonacularAPI.swift in Sources */,
+				53300AF52553CC2500D76777 /* ErrorCell.swift in Sources */,
 				53D1719624808F620099B8A4 /* SpoonacularAPI+RecipeIngredientsSearchModel.swift in Sources */,
 				53C104D9247C0BEE00001DEB /* SceneDelegate.swift in Sources */,
 				53EA553E254B5C1100A33807 /* SignUpOptionCell.swift in Sources */,
