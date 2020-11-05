@@ -15,7 +15,7 @@ protocol MainCoordinatorDelegate: class {
 class MainCoordinator: MainCoordinatorDelegate {
     
     weak var sceneDelegate: SceneDelegate?
-    let viewControllers: [UIViewController]
+    let tabBarController: UITabBarController
     private let recipeSearchCoordinator: RecipeSearchCoordinator
     private let homeCoordinator: HomeCoordinator
     private let settingsCoordinator: ProfileSettingsCoordinator
@@ -24,16 +24,19 @@ class MainCoordinator: MainCoordinatorDelegate {
         self.recipeSearchCoordinator = RecipeSearchCoordinator()
         self.homeCoordinator = HomeCoordinator()
         self.settingsCoordinator = ProfileSettingsCoordinator()
-        
-        self.viewControllers = [
+        self.tabBarController = UITabBarController()
+
+        self.tabBarController.viewControllers = [
             homeCoordinator.presenter,
             recipeSearchCoordinator.presenter,
             settingsCoordinator.presenter
         ]
+
         self.settingsCoordinator.coordinatorDelegate = self
     }
     
 	func start() {
+        tabBarController.selectedIndex = 0
 		recipeSearchCoordinator.start()
         homeCoordinator.start()
         settingsCoordinator.start()

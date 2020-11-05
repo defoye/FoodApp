@@ -13,16 +13,15 @@ import FBSDKCoreKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
-    var tabBarController: UITabBarController
     var logonCoordinator: LogonCoordinator
 	var mainCoordinator: MainCoordinator
     
     override init() {
-        self.tabBarController = UITabBarController()
         self.logonCoordinator = LogonCoordinator()
         self.mainCoordinator = MainCoordinator()
         super.init()
         self.logonCoordinator.sceneDelegate = self
+        self.mainCoordinator.sceneDelegate = self
     }
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -31,34 +30,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
         
-//        initVars()
-        if !authenticate() {
-            // Do something when logon fails
-        }
+        authenticate()
 	}
     
-    func authenticate() -> Bool {
+    func authenticate() {
         self.logonCoordinator.start()
-        
         window?.rootViewController = self.logonCoordinator.presenter
-        
-        return false
     }
     
     func logon() {
         self.logonCoordinator.finish()
-        let mainCoordinator = MainCoordinator()
-        self.mainCoordinator = mainCoordinator
-        self.mainCoordinator.sceneDelegate = self
-            
-        tabBarController.viewControllers = mainCoordinator.viewControllers
-        
-        window?.rootViewController = tabBarController
-        
         mainCoordinator.start()
+        window?.rootViewController = mainCoordinator.tabBarController
     }
     
     func logOut() {
+        self.logonCoordinator.finish()
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()

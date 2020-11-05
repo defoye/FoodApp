@@ -67,7 +67,6 @@
 		53EA5542254B5EB900A33807 /* SignUpLogoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */; };
 		53EA5546254B76DE00A33807 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5545254B76DE00A33807 /* Constants.swift */; };
 		53EA5556254B8DFB00A33807 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5555254B8DFB00A33807 /* SignInViewController.swift */; };
-		53EA555A254B8E0600A33807 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5559254B8E0600A33807 /* SignUpViewController.swift */; };
 		53EA555E254B8E3100A33807 /* LogonCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA555D254B8E3100A33807 /* LogonCoordinator.swift */; };
 		53F0D57A2551CEE0008D6EF4 /* FirebaseAPI+FavoriteRecipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0D5792551CEE0008D6EF4 /* FirebaseAPI+FavoriteRecipes.swift */; };
 		53F47A90247EA74200554A2C /* RecipeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F47A8F247EA74200554A2C /* RecipeCell.xib */; };
@@ -158,7 +157,6 @@
 		53EA5541254B5EB900A33807 /* SignUpLogoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpLogoCell.swift; sourceTree = "<group>"; };
 		53EA5545254B76DE00A33807 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		53EA5555254B8DFB00A33807 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		53EA5559254B8E0600A33807 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		53EA555D254B8E3100A33807 /* LogonCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogonCoordinator.swift; sourceTree = "<group>"; };
 		53F0D5792551CEE0008D6EF4 /* FirebaseAPI+FavoriteRecipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseAPI+FavoriteRecipes.swift"; sourceTree = "<group>"; };
 		53F47A8F247EA74200554A2C /* RecipeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeCell.xib; sourceTree = "<group>"; };
@@ -512,7 +510,6 @@
 			children = (
 				53EA5537254B560400A33807 /* LogonViewController.swift */,
 				53EA5555254B8DFB00A33807 /* SignInViewController.swift */,
-				53EA5559254B8E0600A33807 /* SignUpViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -796,7 +793,6 @@
 				53D171A52480A1F20099B8A4 /* RecipeDetailHeaderCell.swift in Sources */,
 				531AFB1225507E2500F18EAA /* HomeViewController.swift in Sources */,
 				5340046E247F563400060A12 /* MainCoordinator.swift in Sources */,
-				53EA555A254B8E0600A33807 /* SignUpViewController.swift in Sources */,
 				53D171AD2480A22C0099B8A4 /* RecipeDetailInstructionCell.swift in Sources */,
 				53C38E9D247EA27500BD42D4 /* RecipesViewController.swift in Sources */,
 				53D171A72480A2060099B8A4 /* RecipeDetailIngredientCell.swift in Sources */,
