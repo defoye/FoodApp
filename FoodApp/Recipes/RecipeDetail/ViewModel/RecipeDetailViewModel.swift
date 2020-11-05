@@ -89,7 +89,7 @@ class RecipeDetailViewModel {
                     self.createItems(model)
                 }
             case .error:
-                fatalError("API ran out")
+                self.snapshot.appendItems([.error("Error loading recipe details")], toSection: .ingredients)
             }
         }
 	}

@@ -23,6 +23,7 @@ class RecipeDetailViewController: UIViewController {
         case ingredient(_ model: RecipeDetailViewModel.IngredientItem)
         case instruction(_ model: RecipeDetailViewModel.InstructionItem)
         case similarRecipe(_ model: RecipeDetailViewModel.SimilarRecipeItem)
+        case error(_ text: String)
         
         enum Style {
             case short
@@ -65,6 +66,10 @@ class RecipeDetailViewController: UIViewController {
                     case .long: viewModel.viewInsets = .init(top: 0, left: 20, bottom: 0, right: 0)
                     }
                     cell.configure(view, viewModel: viewModel)
+                }
+            case .error(let text):
+                return tableView.configuredCell(ErrorCell.self) { cell in
+                    cell.configure(text, .init(top: 0, left: 0, bottom: -20, right: 0))
                 }
             }
         }
@@ -181,6 +186,8 @@ extension RecipeDetailViewController: UITableViewDelegate {
             let vc = RecipeDetailViewController(vm)
 
             presenter.pushViewController(vc, animated: true)
+        case .error(_):
+            viewModel.fetchData()
         }
     }
 }
