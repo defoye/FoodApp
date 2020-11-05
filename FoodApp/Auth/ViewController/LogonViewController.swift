@@ -28,7 +28,7 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
         case facebook(_ model: SignUpOptionModel)
         case email(_ model: SignUpOptionModel)
         
-        case signIn
+        case signUp
     }
     
     struct SignUpOptionModel: Hashable {
@@ -93,11 +93,11 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
         
         snapshot.appendItems([
             .logo(.apple_logo),
-            .apple(SignUpOptionModel(imageConstant: .apple_logo, description: "Sign up with Apple")),
+            .apple(SignUpOptionModel(imageConstant: .apple_logo, description: "Sign in with Apple")),
             .google(BlankTableViewCell.SetupModel(), googleSignInModel),
-            .facebook(SignUpOptionModel(imageConstant: .facebook_logo, description: "Sign up with Facebook")),
-            .email(SignUpOptionModel(imageConstant: .email_logo, description: "Sign up with Email")),
-            .signIn
+            .facebook(SignUpOptionModel(imageConstant: .facebook_logo, description: "Sign in with Facebook")),
+            .email(SignUpOptionModel(imageConstant: .email_logo, description: "Sign in with Email")),
+            .signUp
         ])
         dataSource.apply(snapshot)
     }
@@ -137,10 +137,10 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
             return tableView.configuredCell(SignUpOptionCell.self) { cell in
                 cell.configure(image: model.imageConstant?.image, description: model.description)
             }
-        case .signIn:
+        case .signUp:
             return tableView.configuredCell(LabelCell.self) { cell in
                 let model = LabelCell.Model()
-                model.text = "Already have an account? Tap here to sign in."
+                model.text = "Don't have an account? Tap here to sign up."
                 model.textInsets = .init(top: 20, left: 20, bottom: -20, right: -20)
                 cell.configure(model)
             }
@@ -168,10 +168,12 @@ extension LogonViewController: UITableViewDelegate {
             appleSignInTapped()
         case .facebook(_):
             facebookSignInTapped()
-        case .google(_), .email(_):
-            coordinatorDelegate.coordinateToSignUp()
-        case .signIn:
+        case .google(_):
+            break
+        case .email(_):
             coordinatorDelegate.coordinateToSignIn()
+        case .signUp:
+            coordinatorDelegate.coordinateToSignUp()
         }
     }
 }

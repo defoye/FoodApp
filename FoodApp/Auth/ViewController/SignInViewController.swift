@@ -7,6 +7,7 @@
 //
 
 import QuiteAdaptableKit
+import Firebase
 
 class SignInViewController: UIViewController, UITableViewDelegate {
     enum Section: Hashable {
@@ -18,6 +19,11 @@ class SignInViewController: UIViewController, UITableViewDelegate {
         case username(_ model: TextFieldTableViewCell.Model)
         case password(_ model: TextFieldTableViewCell.Model)
         case logonButton(_ model: ButtonTableViewCell.Model)
+    }
+    
+    enum AuthType {
+        case signIn
+        case signUp
     }
     
     private lazy var dataSource: UITableViewDiffableDataSource<Section, Row> = {
@@ -37,11 +43,13 @@ class SignInViewController: UIViewController, UITableViewDelegate {
     }()
     
     private let coordinatorDelegate: LogonCoordinatorDelegate
+    private let authType: AuthType
     private weak var usernameCellDelegate: TextFieldTableViewCellDelegate?
     private weak var passwordCellDelegate: TextFieldTableViewCellDelegate?
 
-    init(coordinatorDelegate: LogonCoordinatorDelegate) {
+    init(coordinatorDelegate: LogonCoordinatorDelegate, _ authType: AuthType) {
         self.coordinatorDelegate = coordinatorDelegate
+        self.authType = authType
         super.init(nibName: nil, bundle: nil)
         tableView.dataSource = dataSource
     }
@@ -67,11 +75,11 @@ class SignInViewController: UIViewController, UITableViewDelegate {
         snapshot.appendSections([.main])
         
         let logonLabelModel = LabelCell.Model()
-        logonLabelModel.text = "Logon"
+        logonLabelModel.text = "FoodApp"
         logonLabelModel.font = UIFont.systemFont(ofSize: 30)
         
         let usernameModel = TextFieldTableViewCell.Model()
-        usernameModel.labelText = "Username"
+        usernameModel.labelText = "Email"
         usernameModel.insets = .init(top: 20, left: 20, bottom: -20, right: -20)
         usernameModel.textContentType = .username
         usernameModel.keyboardType = .emailAddress
@@ -83,7 +91,7 @@ class SignInViewController: UIViewController, UITableViewDelegate {
         passwordModel.isSecureTextEntry = true
         
         let logonButtonModel = ButtonTableViewCell.Model()
-        logonButtonModel.title = "Log in"
+        logonButtonModel.title = authType == .signIn ? "Sign In" : " Sign up"
         logonButtonModel.backgroundColor = .blue
         logonButtonModel.titleColor = .white
         logonButtonModel.insets = .init(top: 20, left: 20, bottom: -20, right: -20)
@@ -137,7 +145,7 @@ class SignInViewController: UIViewController, UITableViewDelegate {
         case .logonButton:
             return tableView.configuredCell(ButtonTableViewCell.self) { cell in
                 let model = ButtonTableViewCell.Model()
-                model.title = "Log in"
+                model.title = authType == .signIn ? "Sign in" : "Sign up"
                 model.backgroundColor = .blue
                 model.titleColor = .white
                 model.insets = .init(top: 20, left: 20, bottom: -20, right: -20)
@@ -162,6 +170,30 @@ class SignInViewController: UIViewController, UITableViewDelegate {
 
 extension SignInViewController: ButtonTableViewCellDelegate {
     func buttonCellButtonTapped(_ id: String?) {
-        coordinatorDelegate.logon()
+        guard let email = usernameCellDelegate?.textFieldValue, let password = passwordCellDelegate?.textFieldValue else {
+            return
+        }
+        
+        let completion: ((AuthDataResult?, Error?) -> Void) = { [weak self] authResult, error in
+            guard let self = self else {
+                return
+            }
+            if let error = error {
+                print("SignInViewController::buttonCellButtonTapped - \(error)")
+            } else {
+                self.coordinatorDelegate.logon()
+            }
+        }
+        
+        switch authType {
+        case .signIn:
+            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+              completion(authResult, error)
+            }
+        case .signUp:
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                completion(authResult, error)
+            }
+        }
     }
 }
