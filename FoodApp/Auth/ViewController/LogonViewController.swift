@@ -89,7 +89,7 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
         snapshot.appendSections([.main])
         
         let googleSignInModel = BlankTableViewCell.ViewModel()
-        googleSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
+        googleSignInModel.viewInsets = .init(top: 0, left: 67, bottom: -20, right: -67)
         
         let appleSignInModel = BlankTableViewCell.ViewModel()
         appleSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
