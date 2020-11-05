@@ -54,9 +54,8 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 	}
 	
 	func coordinateToRecipesList(_ passThroughData: SpoonacularAPI.ComplexSearch.ParamDict) {
-		let recipesViewController = RecipesViewController()
-		let viewModel = RecipesViewModel(passThroughData)
-		recipesViewController.initViewModel(viewModel)
+        let viewModel = RecipesViewModel(passThroughData)
+		let recipesViewController = RecipesViewController(viewModel)
 		
 		presenter.pushViewController(recipesViewController, animated: true)
 	}

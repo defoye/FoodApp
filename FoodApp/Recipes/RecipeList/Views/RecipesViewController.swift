@@ -23,17 +23,22 @@ class RecipesViewController: BaseViewController {
 		return collectionView
 	}()
 	
-	private var viewModel: RecipesViewModel!
+	private let viewModel: RecipesViewModel
 	/// Height of the last cell configured. Will be the max of two cell heights.
 	private var lastHeight: CGFloat = 0
     override var fetchDistanceMultiplier: CGFloat {
 		return 2
 	}
-		
-	func initViewModel(_ viewModel: RecipesViewModel) {
-		self.viewModel = viewModel
-	}
-	
+    
+    init(_ viewModel: RecipesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 	// TODO
 	private lazy var loadingView: UIView = {
 		let loadingView = UIView()
