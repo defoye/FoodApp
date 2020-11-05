@@ -33,4 +33,15 @@ class Constants {
     enum CGFloats: CGFloat {
         case cornerRadius1 = 5
     }
+    
+    enum Eligibility {
+        case useOnlineData
+        
+        var flag: Bool {
+            switch self {
+            case .useOnlineData:
+                return false
+            }
+        }
+    }
 }
