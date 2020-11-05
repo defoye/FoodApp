@@ -23,14 +23,20 @@ class RecipeDetailViewModel {
 
 	let dataManager = RecipeDataManager()
 	
-    var isLoadingRecipeDetail: Bool = false {
+    var isLoadingRecipeDetail: Bool = true {
         didSet {
-            favoriteButtonEnableBlock?(isLoadingRecipeDetail)
+            callFavoriteButtonEnableBlock()
         }
     }
-    
-	var isLoading: Bool = false
-	
+    var isLoadingFavoriteRecipe: Bool = false {
+        didSet {
+            callFavoriteButtonEnableBlock()
+        }
+    }
+    var dataSourceApplyBlock: ((Snapshot) -> Void)?
+    var favoriteButtonEnableBlock: ((_ isLoading: Bool, _ isFavoriteRecipe: Bool) -> Void)?
+    var isFavoriteRecipe: Bool = false
+	var isLoadingSimilarRecipes: Bool = false
 	let urlParam: String
 	let idParam: Int?
 
@@ -39,14 +45,9 @@ class RecipeDetailViewModel {
         snapshot.appendSections([.header, .ingredients, .instructions, .similarRecipes])
         return snapshot
     }()
-    
-    var dataSourceApplyBlock: ((Snapshot) -> Void)?
-    var favoriteButtonEnableBlock: ((_ isLoading: Bool) -> Void)?
-
     var searchOriginalObject: RecipesViewModel.Item?
     var similarOriginalObject: SimilarRecipeItem?
     var firebaseOriginalObject: FirebaseAPI.TopRecipesSearchResults.ResponseModel?
-    
     var extractModel: SpoonacularAPI.ExtractRecipeModel?
 
     init(_ urlParam: String, _ item: RecipesViewModel.Item) {
@@ -73,14 +74,43 @@ class RecipeDetailViewModel {
     }
 	
 	func fetchData() {
+        fetchIsFavoriteRecipe()
 		loadRecipeDetails()
 		loadSimilarRecipes()
 	}
+    
+    private func callFavoriteButtonEnableBlock() {
+        if isLoadingFavoriteRecipe {
+            favoriteButtonEnableBlock?(isLoadingRecipeDetail, false)
+        } else {
+            favoriteButtonEnableBlock?(isLoadingRecipeDetail, isFavoriteRecipe)
+        }
+    }
+    
+    private func fetchIsFavoriteRecipe() {
+        self.isLoadingFavoriteRecipe = true
+        let fetch: (Int) -> Void = { id in
+            FirebaseDataManager.shared.fetchIsFavoriteRecipe(id) { isFavoriteRecipe in
+                self.isFavoriteRecipe = isFavoriteRecipe
+                self.isLoadingFavoriteRecipe = false
+            }
+        }
+        
+        if let id = searchOriginalObject?.id {
+            fetch(id)
+        }
+        if let id = similarOriginalObject?.id {
+            fetch(id)
+        }
+        if let id = firebaseOriginalObject?.id {
+            fetch(id)
+        }
+    }
 	
 	private func loadRecipeDetails() {
 		isLoadingRecipeDetail = true
-
-        dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
+        
+        let completion: (RequestStatus, SpoonacularAPI.ExtractRecipeModel?) -> Void = { status, model in
             self.isLoadingRecipeDetail = false
             switch status {
             case .success:
@@ -92,16 +122,24 @@ class RecipeDetailViewModel {
                 self.snapshot.appendItems([.error("Error loading recipe details")], toSection: .ingredients)
             }
         }
+
+        if let extractRecipeModel = self.extractModel {
+            completion(.success, extractRecipeModel)
+        } else {
+            dataManager.extractRecipeSearch([.url: urlParam]) { (status, model) in
+                completion(status, model)
+            }
+        }
 	}
 	
 	private func loadSimilarRecipes() {
 		guard let id = idParam else {
 			return
 		}
-		isLoading = true
+		isLoadingSimilarRecipes = true
         dataManager.recipeSimilarSearch([.id: String(id)]) { [weak self] (status, model) in
 			guard let self = self else { return }
-			self.isLoading = false
+			self.isLoadingSimilarRecipes = false
 			switch status {
 			case .success:
 				if let model = model {
