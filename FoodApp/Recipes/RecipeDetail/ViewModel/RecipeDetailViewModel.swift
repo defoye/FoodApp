@@ -79,6 +79,32 @@ class RecipeDetailViewModel {
 		loadSimilarRecipes()
 	}
     
+    func toggleFavoriteRecipe() {
+        guard let extractModel = self.extractModel, let id = extractModel.id else {
+            callFavoriteButtonEnableBlock()
+            return
+        }
+        if isFavoriteRecipe {
+            FirebaseDataManager.shared.removeFavoriteRecipe(id) { error in
+                if let error = error {
+                    print("RecipeDetailViewModel::toggleFavoriteRecipe - \(error.localizedDescription)")
+                } else {
+                    self.isFavoriteRecipe = false
+                }
+                self.callFavoriteButtonEnableBlock()
+            }
+        } else {
+            FirebaseDataManager.shared.addFavoriteRecipe(searchOriginalObject, similarModel: similarOriginalObject, firebaseModel: firebaseOriginalObject, extractModel) { error in
+                if let error = error {
+                    print("RecipeDetailViewModel::toggleFavoriteRecipe - \(error.localizedDescription)")
+                } else {
+                    self.isFavoriteRecipe = true
+                }
+                self.callFavoriteButtonEnableBlock()
+            }
+        }
+    }
+    
     private func callFavoriteButtonEnableBlock() {
         if isLoadingFavoriteRecipe {
             favoriteButtonEnableBlock?(isLoadingRecipeDetail, false)
