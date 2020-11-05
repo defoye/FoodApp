@@ -105,12 +105,12 @@ class RecipeDetailViewController: UIViewController {
             
             self.dataSource.apply(snapshot)
         }
-        self.viewModel.favoriteButtonEnableBlock = { [weak self] isLoadingRecipeDetail in
+        self.viewModel.favoriteButtonEnableBlock = { [weak self] isLoadingRecipeDetail, isFavoriteRecipe in
             guard let self = self else {
                 return
             }
             DispatchQueue.main.async {
-                self.navigationItem.rightBarButtonItem?.isEnabled = !isLoadingRecipeDetail
+                self.navigationItem.rightBarButtonItem?.isEnabled = !isLoadingRecipeDetail && !isFavoriteRecipe
             }
         }
 	}

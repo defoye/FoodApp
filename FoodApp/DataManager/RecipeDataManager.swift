@@ -31,7 +31,11 @@ extension RecipeDataManager {
         let combinedParams = ["apiKey": key].merged(with: params.convertedToRawValues())
 		let request = createRequest(urlString, combinedParams, nil)
 		
-		dataTask(request, completion)
+        if useOnlineData {
+            dataTask(request, completion)
+        } else {
+            offlineRequest("SpoonacularExtractRecipeResponse_RoastedVeggiePasta", forType: SpoonacularAPI.ExtractRecipeModel.self, completion)
+        }
 	}
 	
     func recipeInformationSearch(_ params: SpoonacularAPI.Information.ParamDict, _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeInformationModel?) -> Void)) {
