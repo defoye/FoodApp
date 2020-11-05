@@ -9,6 +9,8 @@
 import UIKit
 
 class RecipeDetailInstructionCell: UITableViewCell {
+    
+    static let reuseIdentifier = "RecipeDetailInstructionCell"
 	
 	@IBOutlet weak var tileView: UIView!
 	@IBOutlet weak var numberLabel: UILabel!

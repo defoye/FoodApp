@@ -16,6 +16,11 @@ class TextFieldTableViewCell: UITableViewCell, TextFieldTableViewCellDelegate {
     
     class Model: Hashable {
         
+        enum BorderStyle {
+            case bottomLine
+            case box
+        }
+        
         let uuid = UUID()
         var insets: UIEdgeInsets = .init(top: 20, left: 20, bottom: -20, right: -20)
         var placeholder: String?
@@ -28,6 +33,13 @@ class TextFieldTableViewCell: UITableViewCell, TextFieldTableViewCellDelegate {
         var textContentType: UITextContentType?
         var keyboardType: UIKeyboardType?
         var isSecureTextEntry: Bool = false
+        var clearButtonMode: UITextField.ViewMode?
+        
+        // Border
+        var borderStyle: BorderStyle = .bottomLine
+        var borderWidth: CGFloat = 1.0
+        var borderColor: UIColor = .darkGray
+        var cornerRadius: CGFloat = 5.0
         
         var labelText: String?
         var labelTextColor: UIColor?
@@ -100,16 +112,23 @@ class TextFieldTableViewCell: UITableViewCell, TextFieldTableViewCellDelegate {
         if let keyboardType = model.keyboardType {
             searchTextField.keyboardType = keyboardType
         }
+        if let clearButtonMode = model.clearButtonMode {
+            searchTextField.clearButtonMode = clearButtonMode
+        }
+        searchTextField.layoutIfNeeded()
+        switch model.borderStyle {
+        case .bottomLine:
+            searchTextField.addBottomBorder(model.borderWidth, color: model.borderColor)
+        case .box:
+            searchTextField.layer.borderWidth = model.borderWidth
+            searchTextField.layer.borderColor = model.borderColor.cgColor
+            searchTextField.layer.cornerRadius = model.cornerRadius
+        }
     }
     
     private func setup() {
-        super.awakeFromNib()
         selectionStyle = .none
         searchTextField.delegate = self
-        searchTextField.clearButtonMode = .whileEditing
-        searchTextField.layer.borderWidth = 1
-        searchTextField.layer.borderColor = UIColor.black.cgColor
-        searchTextField.layer.cornerRadius = 5.0
     }
     
     private func addSubviewAndConstraints(_ insets: UIEdgeInsets, _ labelBottomInset: CGFloat?) {
@@ -134,5 +153,15 @@ extension TextFieldTableViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
+    }
+}
+
+extension UITextField {
+    func addBottomBorder(_ height: CGFloat, color: UIColor) {
+        let bottomLine = CALayer()
+        bottomLine.frame = CGRect(x: 0, y: self.frame.size.height - height, width: self.frame.size.width, height: height)
+        bottomLine.backgroundColor = color.cgColor
+        borderStyle = .none
+        layer.addSublayer(bottomLine)
     }
 }

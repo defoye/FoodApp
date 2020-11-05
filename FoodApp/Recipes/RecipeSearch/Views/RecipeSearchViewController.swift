@@ -39,7 +39,6 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		searchButton.setTitleColor(.black, for: .normal)
 		searchButton.addTarget(self, action: #selector(searchButtonAction), for: .touchUpInside)
 				
-		tabBarItem = UITabBarItem(title: "Recipes", image: UIImage(named: "cooking_book"), selectedImage: nil)
 		navigationItem.title = "Recipe Search"
 //		title = "Recipes"
 		
@@ -54,20 +53,20 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	}
 	
 	@objc func searchButtonAction() {
-		var passThroughData: [String: String] = [
-			"instructionsRequired": String(instructionsRequired)
+        var passThroughData: SpoonacularAPI.ComplexSearch.ParamDict = [
+            .instructionsRequired: String(instructionsRequired)
 		]
 		if let cuisine = cuisineSelected, cuisine != .none {
-			passThroughData["cuisine"] = cuisine.param
+            passThroughData[.cuisine] = cuisine.param
 		}
 		if let type = dishTypeSelected {
-			passThroughData["type"] = type.rawValue
+            passThroughData[.type] = type.rawValue
 		}
 		if mostPopular {
-			passThroughData["sort"] = "popularity"
+            passThroughData[.sort] = "popularity"
 		}
 		if let searchText = recipeQueryCellDelegate?.textFieldValue {
-			passThroughData["query"] = searchText
+            passThroughData[.query] = searchText
 		}
 		coordinatorDelegate?.coordinateToRecipesList(passThroughData)
 	}

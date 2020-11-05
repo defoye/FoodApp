@@ -8,19 +8,45 @@
 
 import UIKit
 
-class MainCoordinator {
-	
-    weak var navigationController: UINavigationController?
-	var recipeSearchCoordinator: RecipeSearchCoordinator?
-		
-	init(_ navigationController: UINavigationController?) {
-		self.navigationController = navigationController
-						
-		let coordinator = RecipeSearchCoordinator(navigationController)
-		self.recipeSearchCoordinator = coordinator
-	}
-	
+protocol MainCoordinatorDelegate: class {
+    func logOut()
+}
+
+class MainCoordinator: MainCoordinatorDelegate {
+    
+    weak var sceneDelegate: SceneDelegate?
+    let viewControllers: [UIViewController]
+    private let recipeSearchCoordinator: RecipeSearchCoordinator
+    private let homeCoordinator: HomeCoordinator
+    private let settingsCoordinator: ProfileSettingsCoordinator
+    
+    init() {
+        self.recipeSearchCoordinator = RecipeSearchCoordinator()
+        self.homeCoordinator = HomeCoordinator()
+        self.settingsCoordinator = ProfileSettingsCoordinator()
+        
+        self.viewControllers = [
+            homeCoordinator.presenter,
+            recipeSearchCoordinator.presenter,
+            settingsCoordinator.presenter
+        ]
+        self.settingsCoordinator.coordinatorDelegate = self
+    }
+    
 	func start() {
-		recipeSearchCoordinator?.start()
-	}
+		recipeSearchCoordinator.start()
+        homeCoordinator.start()
+        settingsCoordinator.start()
+    }
+    
+    func finish() {
+        recipeSearchCoordinator.finish()
+        homeCoordinator.finish()
+        settingsCoordinator.finish()
+    }
+
+    func logOut() {
+        finish()
+        sceneDelegate?.logOut()
+    }
 }

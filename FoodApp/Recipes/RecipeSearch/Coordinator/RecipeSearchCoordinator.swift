@@ -12,26 +12,27 @@ protocol RecipeSearchCoordinatorDelegate: class {
 	func coordinateToCuisinePicker(_ type: RecipePickerType)
 	func cuisineSelected(_ cuisine: SpoonacularAPI.Cuisine)
 	func dishTypeSelected(_ dishType: SpoonacularAPI.DishType)
-	func coordinateToRecipesList(_ passThroughData: [String: String])
+	func coordinateToRecipesList(_ passThroughData: SpoonacularAPI.ComplexSearch.ParamDict)
 	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item)
 }
 
 class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 	
-	weak var presenter: UINavigationController?
 	var recipeSearchViewController: RecipeSearchViewController?
-	
-	init(_ presenter: UINavigationController?) {
-		self.presenter = presenter
-	}
+    let presenter = UINavigationController()
 	
 	func start() {
 		let viewController = RecipeSearchViewController.instantiate("RecipeSearch")
 		viewController.coordinatorDelegate = self
+        viewController.tabBarItem = UITabBarItem(title: "Recipes", image: Constants.Images.cooking_book.image, selectedImage: nil)
 		
 		recipeSearchViewController = viewController
-        presenter?.viewControllers = [viewController]
+        presenter.viewControllers = [viewController]
 	}
+    
+    func finish() {
+        
+    }
 		
 	func coordinateToCuisinePicker(_ type: RecipePickerType) {
 		let cuisineViewController = CuisineViewController()
@@ -39,7 +40,7 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		let navigationController = UINavigationController(rootViewController: cuisineViewController)
 
 		cuisineViewController.delegate = self
-		presenter?.present(navigationController, animated: true, completion: nil)
+		presenter.present(navigationController, animated: true, completion: nil)
 	}
 	
 	func cuisineSelected(_ cuisine: SpoonacularAPI.Cuisine) {
@@ -52,19 +53,18 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 		recipeSearchViewController?.reloadTableView()
 	}
 	
-	func coordinateToRecipesList(_ passThroughData: [String: String]) {
+	func coordinateToRecipesList(_ passThroughData: SpoonacularAPI.ComplexSearch.ParamDict) {
 		let recipesViewController = RecipesViewController()
 		let viewModel = RecipesViewModel(passThroughData)
 		recipesViewController.initViewModel(viewModel)
 		
-		presenter?.pushViewController(recipesViewController, animated: true)
+		presenter.pushViewController(recipesViewController, animated: true)
 	}
 	
 	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item) {
-		let vc = RecipeDetailViewController.instantiate("RecipeDetail")
-		let vm = RecipeDetailViewModel(urlString, item)
-		vc.initViewModel(vm)
+        let vm = RecipeDetailViewModel(urlString, item)
+		let vc = RecipeDetailViewController(vm)
 		
-		presenter?.pushViewController(vc, animated: true)
+		presenter.pushViewController(vc, animated: true)
 	}
 }
