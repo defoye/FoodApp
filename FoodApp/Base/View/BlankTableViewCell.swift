@@ -36,7 +36,7 @@ class BlankTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(_ view: UIView, setupModel: SetupModel, viewModel: ViewModel) {
+    func configure(_ view: UIView, setupModel: SetupModel = SetupModel(), viewModel: ViewModel = ViewModel()) {
         setup(setupModel)
         
         contentView.addSubview(view)

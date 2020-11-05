@@ -19,6 +19,7 @@ class Constants {
         case home
         case info
         case heart
+        case error
         
         var image: UIImage? {
             return UIImage(named: self.rawValue)

@@ -23,6 +23,13 @@ class RecipeDetailViewController: UIViewController {
         case ingredient(_ model: RecipeDetailViewModel.IngredientItem)
         case instruction(_ model: RecipeDetailViewModel.InstructionItem)
         case similarRecipe(_ model: RecipeDetailViewModel.SimilarRecipeItem)
+        case error(_ text: String)
+        
+        enum Style {
+            case short
+            case long
+        }
+        case separatorItem(_ uuid: UUID, _ style: Style)
     }
     
     private lazy var dataSource: UITableViewDiffableDataSource<Section, Item> = {
@@ -47,6 +54,22 @@ class RecipeDetailViewController: UIViewController {
             case .labelItem(let model):
                 return tableView.configuredCell(LabelCell.self) { cell in
                     cell.configure(model)
+                }
+            case .separatorItem(_, let style):
+                return tableView.configuredCell(BlankTableViewCell.self) { cell in
+                    let view = UIView()
+                    view.backgroundColor = .lightGray
+                    view.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+                    let viewModel = BlankTableViewCell.ViewModel()
+                    switch style {
+                    case .short: viewModel.viewInsets = .init(top: 0, left: 110, bottom: 0, right: 0)
+                    case .long: viewModel.viewInsets = .init(top: 0, left: 20, bottom: 0, right: 0)
+                    }
+                    cell.configure(view, viewModel: viewModel)
+                }
+            case .error(let text):
+                return tableView.configuredCell(ErrorCell.self) { cell in
+                    cell.configure(text, .init(top: 0, left: 0, bottom: -20, right: 0))
                 }
             }
         }
@@ -143,7 +166,7 @@ extension RecipeDetailViewController: UITableViewDelegate {
         }
         
         switch item {
-        case .labelItem(_), .header(_), .instruction(_):
+        case .labelItem(_), .header(_), .instruction(_), .separatorItem(_):
             break
         case .ingredient(_):
             if let ingredientCell = tableView.cellForRow(at: indexPath) as? RecipeDetailIngredientCell {
@@ -163,6 +186,8 @@ extension RecipeDetailViewController: UITableViewDelegate {
             let vc = RecipeDetailViewController(vm)
 
             presenter.pushViewController(vc, animated: true)
+        case .error(_):
+            viewModel.fetchData()
         }
     }
 }
