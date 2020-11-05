@@ -10,11 +10,17 @@ import UIKit
 
 class RecipesViewController: BaseViewController {
 		
-	var collectionView: UICollectionView = {
+	private lazy var collectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
 		layout.minimumInteritemSpacing = 0
 		layout.minimumLineSpacing = 0
-		return UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let recipeCellNib = UINib.init(nibName: "RecipeCell", bundle: .current)
+        collectionView.register(recipeCellNib, forCellWithReuseIdentifier: "RecipeCell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
+		return collectionView
 	}()
 	
 	private var viewModel: RecipesViewModel!
@@ -54,7 +60,6 @@ class RecipesViewController: BaseViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 				
-		setupCollectionView()
 		addLoadingView()
 		NSLayoutConstraint.activate([
 			loadingView.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 1),
@@ -63,10 +68,8 @@ class RecipesViewController: BaseViewController {
 			loadingView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor)
 		])
 		
-		title = "Tsatsa's Recipe Search Results"
-		
-		view.backgroundColor = .white
-		
+		title = "Recipe Search Results"
+				
 		view.addSubview(collectionView)
 		collectionView.pin(to: view)
 		
@@ -77,15 +80,6 @@ class RecipesViewController: BaseViewController {
 		}
 		
 		navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-	}
-	
-	func setupCollectionView() {
-		collectionView.translatesAutoresizingMaskIntoConstraints = false
-		collectionView.backgroundColor = .white
-		let recipeCellNib = UINib.init(nibName: "RecipeCell", bundle: .current)
-		collectionView.register(recipeCellNib, forCellWithReuseIdentifier: "RecipeCell")
-		collectionView.delegate = self
-		collectionView.dataSource = self
 	}
 		
 	// TODO
