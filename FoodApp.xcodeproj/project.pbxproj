@@ -20,6 +20,7 @@
 		5321A950247F3A2800F55FBB /* InstructionsRequiredCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */; };
 		5324DA76254DBE3C00473BA1 /* BlankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */; };
 		53300AF52553CC2500D76777 /* ErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53300AF42553CC2500D76777 /* ErrorCell.swift */; };
+		53300B03255450CC00D76777 /* SpoonacularExtractRecipeResponse_RoastedVeggiePasta.json in Resources */ = {isa = PBXBuildFile; fileRef = 53300B02255450CC00D76777 /* SpoonacularExtractRecipeResponse_RoastedVeggiePasta.json */; };
 		5340046C247F44F900060A12 /* RecipeSearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */; };
 		5340046E247F563400060A12 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5340046D247F563400060A12 /* MainCoordinator.swift */; };
 		535E1BAD2550951D009FEED2 /* FirebaseAPI+TopRecipesSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535E1BAC2550951D009FEED2 /* FirebaseAPI+TopRecipesSearchResults.swift */; };
@@ -106,6 +107,7 @@
 		5321A94F247F3A2800F55FBB /* InstructionsRequiredCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionsRequiredCell.xib; sourceTree = "<group>"; };
 		5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankTableViewCell.swift; sourceTree = "<group>"; };
 		53300AF42553CC2500D76777 /* ErrorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCell.swift; sourceTree = "<group>"; };
+		53300B02255450CC00D76777 /* SpoonacularExtractRecipeResponse_RoastedVeggiePasta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SpoonacularExtractRecipeResponse_RoastedVeggiePasta.json; sourceTree = "<group>"; };
 		5340046B247F44F900060A12 /* RecipeSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchCoordinator.swift; sourceTree = "<group>"; };
 		5340046D247F563400060A12 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		535E1BAC2550951D009FEED2 /* FirebaseAPI+TopRecipesSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseAPI+TopRecipesSearchResults.swift"; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				53659654254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json */,
+				53300B02255450CC00D76777 /* SpoonacularExtractRecipeResponse_RoastedVeggiePasta.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				53F47A90247EA74200554A2C /* RecipeCell.xib in Resources */,
 				53D171AB2480A21F0099B8A4 /* RecipeDetailInstructionCell.xib in Resources */,
 				53659655254F33C2005A5DF1 /* SpoonacularComplexSearchResponse1.json in Resources */,
+				53300B03255450CC00D76777 /* SpoonacularExtractRecipeResponse_RoastedVeggiePasta.json in Resources */,
 				5321A950247F3A2800F55FBB /* InstructionsRequiredCell.xib in Resources */,
 				7B12A5112551ECDF006D68EB /* Profile&Settings.storyboard in Resources */,
 				53C104E0247C0BF700001DEB /* Assets.xcassets in Resources */,
