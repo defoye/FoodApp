@@ -11,7 +11,7 @@ import QuiteAdaptableKit
 class RecipeDataManager: BaseDataManager {
     
     static let shared = RecipeDataManager()
-    let useOnlineData: Bool = false
+    let useOnlineData: Bool = Constants.Eligibility.useOnlineData.flag
     
     fileprivate func offlineRequest<T: Decodable>(_ fileName: String, forType type: T.Type, _ completion: @escaping ((RequestStatus, T?) -> Void)) {
         guard let decodedData = decodedJSONData(from: fileName, forType: T.self) else {

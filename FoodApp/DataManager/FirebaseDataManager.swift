@@ -69,7 +69,7 @@ extension FirebaseDataManager {
         }
     }
     
-    func addFavoriteRecipe(_ searchModel: RecipesViewModel.Item?, similarModel: RecipeDetailViewModel.SimilarRecipeItem?, firebaseModel: FirebaseAPI.TopRecipesSearchResults.ResponseModel?, _ extractModel: SpoonacularAPI.ExtractRecipeModel) {
+    func addFavoriteRecipe(_ searchModel: RecipesViewModel.Item?, similarModel: RecipeDetailViewModel.SimilarRecipeItem?, firebaseModel: FirebaseAPI.TopRecipesSearchResults.ResponseModel?, _ extractModel: SpoonacularAPI.ExtractRecipeModel, _ completion: @escaping ((Error?) -> Void)) {
         var data: [String: Any] = [:]
         var id: Int?
         if let recipeSearchModel = searchModel {
@@ -96,7 +96,14 @@ extension FirebaseDataManager {
         }
         let collection = FirebaseAPI.Collection.users.rawValue
         if let uid = FirebaseDataManager.currentUserUID, let id = id {
-            db.collection(collection).document(uid).collection("favoriteRecipes").document(String(id)).setData(data, merge: true)
+            db.collection(collection).document(uid).collection("favoriteRecipes").document(String(id)).setData(data, merge: true, completion: completion)
+        }
+    }
+    
+    func removeFavoriteRecipe(_ id: Int?, _ completion: @escaping ((Error?) -> Void)) {
+        let collection = FirebaseAPI.Collection.users.rawValue
+        if let uid = FirebaseDataManager.currentUserUID, let id = id {
+            db.collection(collection).document(uid).collection("favoriteRecipes").document(String(id)).delete(completion: completion)
         }
     }
 }

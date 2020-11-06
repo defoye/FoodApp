@@ -136,25 +136,14 @@ class RecipeDetailViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        if #available(iOS 14.0, *) {
-            navigationItem.rightBarButtonItem = .init(title: nil, image: Constants.Images.heart.image, primaryAction: .init(handler: { action in
-                guard let extractModel = self.viewModel.extractModel else {
-                    return
-                }
-                FirebaseDataManager.shared.addFavoriteRecipe(self.viewModel.searchOriginalObject, similarModel: self.viewModel.similarOriginalObject, firebaseModel: self.viewModel.firebaseOriginalObject, extractModel)
-            }), menu: nil)
-        } else {
-            navigationItem.rightBarButtonItem = .init(image: Constants.Images.heart.image, style: .plain, target: self, action: #selector(favoritesTapped))
-        }
+        navigationItem.rightBarButtonItem = .init(image: Constants.Images.heart.image, style: .plain, target: self, action: #selector(favoritesTapped))
         navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     @objc
     func favoritesTapped() {
-        guard let extractModel = self.viewModel.extractModel else {
-            return
-        }
-        FirebaseDataManager.shared.addFavoriteRecipe(self.viewModel.searchOriginalObject, similarModel: self.viewModel.similarOriginalObject, firebaseModel: self.viewModel.firebaseOriginalObject, extractModel)
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        viewModel.toggleFavoriteRecipe()
     }
 }
 
