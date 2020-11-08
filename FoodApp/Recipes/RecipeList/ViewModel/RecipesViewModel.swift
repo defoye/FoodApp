@@ -35,7 +35,7 @@ class RecipesViewModel {
 					self.createItems(model, completion)
 				}
 			case .error:
-				break
+				completion()
 			}
 		}
 	}

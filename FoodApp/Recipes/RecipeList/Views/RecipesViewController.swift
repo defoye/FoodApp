@@ -44,7 +44,7 @@ class RecipesViewController: BaseViewController {
 	private lazy var loadingView: UIView = {
 		let loadingView = UIView()
 		loadingView.translatesAutoresizingMaskIntoConstraints = false
-		loadingView.backgroundColor = .white
+		loadingView.backgroundColor = .systemBackground
 		let label = UILabel()
 		label.text = "Loading recipes..."
 		label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,24 +55,22 @@ class RecipesViewController: BaseViewController {
 	}()
 	
 	func addLoadingView() {
-		collectionView.addSubview(loadingView)
-		loadingView.pin(to: collectionView)
+        DispatchQueue.main.async {
+            self.collectionView.addSubview(self.loadingView)
+            self.loadingView.pin(to: self.collectionView)
+        }
 	}
 	
 	func removeLoadingView() {
-		loadingView.removeFromSuperview()
+        DispatchQueue.main.async {
+            self.loadingView.removeFromSuperview()
+        }
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 				
 		addLoadingView()
-		NSLayoutConstraint.activate([
-			loadingView.heightAnchor.constraint(equalTo: collectionView.heightAnchor, multiplier: 1),
-			loadingView.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 1),
-			loadingView.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
-			loadingView.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor)
-		])
 		
 		title = "Recipe Search Results"
 //        view.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1)

@@ -40,7 +40,7 @@ class Constants {
         var flag: Bool {
             switch self {
             case .useOnlineData:
-                return false
+                return true
             }
         }
     }
