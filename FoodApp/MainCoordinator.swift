@@ -36,7 +36,6 @@ class MainCoordinator: MainCoordinatorDelegate {
     }
     
 	func start() {
-        tabBarController.selectedIndex = 1
 		recipeSearchCoordinator.start()
         homeCoordinator.start()
         settingsCoordinator.start()
