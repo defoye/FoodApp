@@ -1,5 +1,5 @@
 //
-//  RecipesViewModel.swift
+//  RecipeListViewModel.swift
 //  NewsApp
 //
 //  Created by Ernest DeFoy on 5/27/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RecipesViewModel {
+class RecipeListViewModel {
 	
     let dataManager = RecipeDataManager.shared
 	var offset: Int = 0
@@ -35,7 +35,7 @@ class RecipesViewModel {
 					self.createItems(model, completion)
 				}
 			case .error:
-				break
+				completion()
 			}
 		}
 	}
@@ -102,7 +102,7 @@ class RecipesViewModel {
 
 import UIKit
 
-extension RecipesViewModel {
+extension RecipeListViewModel {
 	
 	struct Item {
 		let title: String?

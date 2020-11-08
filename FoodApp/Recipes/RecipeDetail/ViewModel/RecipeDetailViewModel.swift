@@ -45,12 +45,12 @@ class RecipeDetailViewModel {
         snapshot.appendSections([.header, .ingredients, .instructions, .similarRecipes])
         return snapshot
     }()
-    var searchOriginalObject: RecipesViewModel.Item?
+    var searchOriginalObject: RecipeListViewModel.Item?
     var similarOriginalObject: SimilarRecipeItem?
     var firebaseOriginalObject: FirebaseAPI.TopRecipesSearchResults.ResponseModel?
     var extractModel: SpoonacularAPI.ExtractRecipeModel?
 
-    init(_ urlParam: String, _ item: RecipesViewModel.Item) {
+    init(_ urlParam: String, _ item: RecipeListViewModel.Item) {
 		self.urlParam = urlParam
 		self.idParam = item.id
         self.snapshot.appendItems([.header(HeaderItem(title: item.title ?? "Error", image: item.image))], toSection: .header)

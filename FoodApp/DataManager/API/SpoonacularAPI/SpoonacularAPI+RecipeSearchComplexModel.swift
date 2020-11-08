@@ -21,7 +21,7 @@ extension SpoonacularAPI {
 		let vegetarian, vegan, glutenFree, dairyFree: Bool?
 		let veryHealthy, cheap, veryPopular, sustainable: Bool?
 		let weightWatcherSmartPoints: Int?
-		let gaps: Gaps?
+		let gaps: String?
 		let lowFodmap: Bool?
 		let preparationMinutes, cookingMinutes, aggregateLikes, spoonacularScore: Int?
 		let healthScore: Int?
@@ -132,11 +132,6 @@ extension SpoonacularAPI {
 		var title: String {
 			return self.rawValue.capitalized
 		}
-	}
-
-	enum Gaps: String, Codable {
-		case gaps5 = "GAPS_5"
-		case no = "no"
 	}
 
 	enum ImageType: String, Codable {

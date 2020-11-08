@@ -37,14 +37,14 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>FacebookAppID</key>
-	<string>848787729191587</string>
-	<key>FacebookDisplayName</key>
-	<string>FoodApp</string>
-	<key>FacebookAutoLogAppEventsEnabled</key>
-	<false/>
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<false/>
+	<key>FacebookAppID</key>
+	<string>848787729191587</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<false/>
+	<key>FacebookDisplayName</key>
+	<string>FoodApp</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
