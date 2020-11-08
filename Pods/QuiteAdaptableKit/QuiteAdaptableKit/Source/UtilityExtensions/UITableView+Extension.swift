@@ -32,7 +32,7 @@ public extension UITableView {
     }
     
     func configuredCell<T: UITableViewCell>(_ type: T.Type, configurator: ((T) -> Void)) -> T {
-        let cell = T()
+        let cell = T() 
         
         configurator(cell)
         
