@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuiteAdaptableKit
 
 enum RecipeSearchRow: Int, CaseIterable {
 	case query
@@ -20,9 +21,54 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	
 	@IBOutlet weak var searchButton: UIButton!
 	@IBOutlet weak var tableView: UITableView!
+    
+    enum Section {
+        case main
+    }
+    
+    enum Item {
+        case searchBar
+        case cuisinePicker
+        case dishPicker
+        case instructionsRequired
+    }
+    
+    private lazy var dataSource: UITableViewDiffableDataSource<Section, Item> = {
+        UITableViewDiffableDataSource<Section, Item>(tableView: self.tableView) { (tableView, indexPath, item) -> UITableViewCell? in
+            switch item {
+            case .searchBar:
+                return tableView.configuredCell(SearchBarTableViewCell.self, identifier: "SearchBarTableViewCell") { cell in
+                    let model = SearchBarTableViewCell.Model()
+                    model.insets = .init(top: 20, left: 20, bottom: 20, right: 20)
+                    model.placeholder = "Search"
+                    cell.configure(model)
+                    self.searchBarCellDelegate = cell
+                }
+            case .cuisinePicker:
+                return tableView.configuredCell(CuisineCell.self, identifier: "CuisineCell") { cell in
+                    cell.configure("Cuisine", self.cuisineSelected?.title ?? "None")
+                }
+            case .dishPicker:
+                return tableView.configuredCell(CuisineCell.self, identifier: "CuisineCell") { cell in
+                    cell.configure("Dish Type", self.dishTypeSelected?.title ?? "None")
+                }
+            case .instructionsRequired:
+                return tableView.configuredCell(InstructionsRequiredCell.self, identifier: "InstructionsRequiredCell") { cell in
+                    cell.configure(delegate: self, switchIsOn: self.instructionsRequired)
+                }
+            }
+        }
+    }()
+    
+    lazy var snapshot: NSDiffableDataSourceSnapshot<Section, Item> = {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems([.searchBar, .cuisinePicker, .dishPicker, .instructionsRequired])
+        return snapshot
+    }()
 	
 	weak var coordinatorDelegate: RecipeSearchCoordinatorDelegate?
-	weak var recipeQueryCellDelegate: RecipeQueryCellDelegate?
+    weak var searchBarCellDelegate: SearchBarTableViewCellDelegate?
 	
 	var cuisineSelected: SpoonacularAPI.Cuisine?
 	var dishTypeSelected: SpoonacularAPI.DishType?
@@ -40,16 +86,15 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		searchButton.addTarget(self, action: #selector(searchButtonAction), for: .touchUpInside)
 				
 		navigationItem.title = "Recipe Search"
-//		title = "Recipes"
 		
-		let queryCellNib = UINib.init(nibName: "RecipeQueryCell", bundle: .current)
-		tableView.register(queryCellNib, forCellReuseIdentifier: "RecipeQueryCell")
 		let cuisineCellNib = UINib.init(nibName: "CuisineCell", bundle: .current)
 		tableView.register(cuisineCellNib, forCellReuseIdentifier: "CuisineCell")
 		let instructionsRequiredCellNib = UINib.init(nibName: "InstructionsRequiredCell", bundle: .current)
 		tableView.register(instructionsRequiredCellNib, forCellReuseIdentifier: "InstructionsRequiredCell")
+        tableView.separatorStyle = .none
 		tableView.delegate = self
-		tableView.dataSource = self
+        tableView.dataSource = dataSource
+        reloadTableView()
 	}
 	
 	@objc func searchButtonAction() {
@@ -65,7 +110,7 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		if mostPopular {
             passThroughData[.sort] = "popularity"
 		}
-		if let searchText = recipeQueryCellDelegate?.textFieldValue {
+		if let searchText = searchBarCellDelegate?.textFieldValue {
             passThroughData[.query] = searchText
 		}
 		coordinatorDelegate?.coordinateToRecipesList(passThroughData)
@@ -73,47 +118,12 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	
 	func reloadTableView() {
 		DispatchQueue.main.async {
-			self.tableView.reloadData()
+            self.dataSource.apply(self.snapshot)
 		}
 	}
 }
 
-extension RecipeSearchViewController: UITableViewDelegate, UITableViewDataSource {
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return RecipeSearchRow.allCases.count
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		guard let row = RecipeSearchRow(rawValue: indexPath.row) else {
-			fatalError()
-		}
-		
-		switch row {
-		case .query:
-			if let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeQueryCell") as? RecipeQueryCell {
-				cell.configure()
-				recipeQueryCellDelegate = cell
-				return cell
-			}
-		case .cuisine:
-			if let cell = tableView.dequeueReusableCell(withIdentifier: "CuisineCell") as? CuisineCell {
-				cell.configure("Cuisine", cuisineSelected?.title ?? "None")
-				return cell
-			}
-		case .dishType:
-			if let cell = tableView.dequeueReusableCell(withIdentifier: "CuisineCell") as? CuisineCell {
-				cell.configure("Dish Type", dishTypeSelected?.title ?? "None")
-				return cell
-			}
-		case .instructionsRequired:
-			if let cell = tableView.dequeueReusableCell(withIdentifier: "InstructionsRequiredCell") as? InstructionsRequiredCell {
-				cell.configure(delegate: self, switchIsOn: instructionsRequired)
-				return cell
-			}
-		}
-		
-		fatalError()
-	}
+extension RecipeSearchViewController: UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		guard let row = RecipeSearchRow(rawValue: indexPath.row) else {
