@@ -14,8 +14,23 @@ class HomeViewModel {
     typealias Snapshot = NSDiffableDataSourceSnapshot<HomeViewController.Section, Item>
     
     var dataSourceApplyBlock: ((Snapshot) -> Void)?
+    var endRefreshBlock: ((_ isLoadingTopRecipes: Bool, _ isLoadingFavoriteRecipes: Bool) -> Void)?
     
-    var snapshot: Snapshot = {
+    var isLoadingTopRecipes: Bool = false {
+        didSet {
+            callEndRefreshBlock()
+        }
+    }
+    
+    var isLoadingFavoriteRecipes: Bool = false {
+        didSet {
+            callEndRefreshBlock()
+        }
+    }
+    
+    lazy var snapshot: Snapshot = initialSnapshot
+    
+    let initialSnapshot: Snapshot = {
         var snapshot = Snapshot()
         snapshot.appendSections([.topRecipes, .favoriteRecipes])
         return snapshot
@@ -26,8 +41,21 @@ class HomeViewModel {
         fetchFavoriteRecipes()
     }
     
+    func refresh() {
+        self.snapshot = initialSnapshot
+        fetchData()
+    }
+    
+    private func callEndRefreshBlock() {
+        endRefreshBlock?(isLoadingTopRecipes, isLoadingFavoriteRecipes)
+    }
+    
     private func fetchTopRecipes() {
+        isLoadingTopRecipes = true
+        let dispatchGroup = DispatchGroup()
+
         let fetchAmount = Constants.Ints.homeTopRecipesCount.rawValue
+        dispatchGroup.enter()
         FirebaseDataManager.shared.fetchTopRecipes(numberOfResults: fetchAmount) { models in
             let items = self.createTopRecipesItems(fromModels: models)
             if items.count > 0 {
@@ -36,21 +64,32 @@ class HomeViewModel {
             self.snapshot.appendItems(items, toSection: .topRecipes)
             items.forEach { item in
                 if case .topRecipesItem(let model) = item {
+                    dispatchGroup.enter()
                     RecipeDataManager.shared.downloadImage(from: model.responseModel.imageURL) { image in
                         if let image = image {
                             model.image = image
                             self.snapshot.reloadItems([item])
                             self.dataSourceApplyBlock?(self.snapshot)
                         }
+                        dispatchGroup.leave()
                     }
                 }
             }
             self.dataSourceApplyBlock?(self.snapshot)
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.isLoadingTopRecipes = false
+            self.callEndRefreshBlock()
         }
     }
     
     private func fetchFavoriteRecipes() {
-        FirebaseDataManager.shared.fetchFavoriteRecipes(numberOfResults: 3) { models in
+        isLoadingFavoriteRecipes = true
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        FirebaseDataManager.shared.fetchFavoriteRecipes() { models in
             let items = self.createFavoriteRecipesItems(fromModels: models)
             if items.count > 0 {
                 self.snapshot.appendItems([.labelItem(self.headerLabelModel("Favorite Recipes"))], toSection: .favoriteRecipes)
@@ -58,16 +97,24 @@ class HomeViewModel {
             self.snapshot.appendItems(items, toSection: .favoriteRecipes)
             items.forEach { item in
                 if case .favoriteRecipesItem(let model) = item {
+                    dispatchGroup.enter()
                     RecipeDataManager.shared.downloadImage(from: model.responseModel.imageURL) { image in
                         if let image = image {
                             model.image = image
                             self.snapshot.reloadItems([item])
                             self.dataSourceApplyBlock?(self.snapshot)
                         }
+                        dispatchGroup.leave()
                     }
                 }
             }
             self.dataSourceApplyBlock?(self.snapshot)
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.isLoadingFavoriteRecipes = false
+            self.callEndRefreshBlock()
         }
     }
     
