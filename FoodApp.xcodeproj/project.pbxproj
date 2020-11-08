@@ -61,6 +61,8 @@
 		53D171A92480A2120099B8A4 /* RecipeDetailIngredientCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D171A82480A2120099B8A4 /* RecipeDetailIngredientCell.xib */; };
 		53D171AB2480A21F0099B8A4 /* RecipeDetailInstructionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D171AA2480A21F0099B8A4 /* RecipeDetailInstructionCell.xib */; };
 		53D171AD2480A22C0099B8A4 /* RecipeDetailInstructionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D171AC2480A22C0099B8A4 /* RecipeDetailInstructionCell.swift */; };
+		53D184822558796000CFC772 /* SearchBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D184812558796000CFC772 /* SearchBarTableViewCell.swift */; };
+		53D1848625587CE200CFC772 /* SeparatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D1848525587CE200CFC772 /* SeparatorTableViewCell.swift */; };
 		53DF1F2C248230270034E4AC /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DF1F2B248230270034E4AC /* BaseViewController.swift */; };
 		53EA5538254B560400A33807 /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA5537254B560400A33807 /* LogonViewController.swift */; };
 		53EA553E254B5C1100A33807 /* SignUpOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */; };
@@ -151,6 +153,8 @@
 		53D171A82480A2120099B8A4 /* RecipeDetailIngredientCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeDetailIngredientCell.xib; sourceTree = "<group>"; };
 		53D171AA2480A21F0099B8A4 /* RecipeDetailInstructionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeDetailInstructionCell.xib; sourceTree = "<group>"; };
 		53D171AC2480A22C0099B8A4 /* RecipeDetailInstructionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailInstructionCell.swift; sourceTree = "<group>"; };
+		53D184812558796000CFC772 /* SearchBarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarTableViewCell.swift; sourceTree = "<group>"; };
+		53D1848525587CE200CFC772 /* SeparatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorTableViewCell.swift; sourceTree = "<group>"; };
 		53DF1F2B248230270034E4AC /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		53EA5537254B560400A33807 /* LogonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogonViewController.swift; sourceTree = "<group>"; };
 		53EA553D254B5C1100A33807 /* SignUpOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpOptionCell.swift; sourceTree = "<group>"; };
@@ -279,6 +283,8 @@
 				5324DA75254DBE3C00473BA1 /* BlankTableViewCell.swift */,
 				532001E02550AD43007ABC9C /* RecipePreviewTableViewCell.swift */,
 				53300AF42553CC2500D76777 /* ErrorCell.swift */,
+				53D184812558796000CFC772 /* SearchBarTableViewCell.swift */,
+				53D1848525587CE200CFC772 /* SeparatorTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -783,6 +789,7 @@
 				537A913F2481C40400141F20 /* SpoonacularAPI+RecipeInformationModel.swift in Sources */,
 				532001E12550AD43007ABC9C /* RecipePreviewTableViewCell.swift in Sources */,
 				539EE9AB247CBDB2002BED74 /* Protocols.swift in Sources */,
+				53D1848625587CE200CFC772 /* SeparatorTableViewCell.swift in Sources */,
 				536F7C53247DFFCA0064A1AB /* BaseDataManager.swift in Sources */,
 				537A9144248213FB00141F20 /* RecipeSimilarCell.swift in Sources */,
 				539EE9A9247CBD87002BED74 /* Extensions.swift in Sources */,
@@ -790,6 +797,7 @@
 				53F47A96247F388000554A2C /* RecipeSearchViewController.swift in Sources */,
 				536636A9254C56A300646060 /* ButtonTableViewCell.swift in Sources */,
 				53D1719F24809FF60099B8A4 /* RecipeDetailViewController.swift in Sources */,
+				53D184822558796000CFC772 /* SearchBarTableViewCell.swift in Sources */,
 				53D171A52480A1F20099B8A4 /* RecipeDetailHeaderCell.swift in Sources */,
 				531AFB1225507E2500F18EAA /* HomeViewController.swift in Sources */,
 				5340046E247F563400060A12 /* MainCoordinator.swift in Sources */,

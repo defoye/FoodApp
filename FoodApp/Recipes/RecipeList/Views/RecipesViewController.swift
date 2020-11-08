@@ -20,6 +20,7 @@ class RecipesViewController: BaseViewController {
         collectionView.register(recipeCellNib, forCellWithReuseIdentifier: "RecipeCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = .systemBackground
 		return collectionView
 	}()
 	
@@ -74,7 +75,7 @@ class RecipesViewController: BaseViewController {
 		])
 		
 		title = "Recipe Search Results"
-				
+//        view.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1)
 		view.addSubview(collectionView)
 		collectionView.pin(to: view)
 		

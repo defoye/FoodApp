@@ -44,4 +44,15 @@ class Constants {
             }
         }
     }
+    
+    enum Colors {
+        case separator
+        
+        var color: UIColor {
+            switch self {
+            case .separator:
+                return .lightGray
+            }
+        }
+    }
 }

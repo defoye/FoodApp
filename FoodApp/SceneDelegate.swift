@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
         
-        authenticate()
+        logon()
 	}
     
     func authenticate() {

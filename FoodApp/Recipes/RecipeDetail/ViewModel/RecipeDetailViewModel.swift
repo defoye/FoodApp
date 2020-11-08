@@ -124,11 +124,9 @@ class RecipeDetailViewModel {
         
         if let id = searchOriginalObject?.id {
             fetch(id)
-        }
-        if let id = similarOriginalObject?.id {
+        } else if let id = similarOriginalObject?.id {
             fetch(id)
-        }
-        if let id = firebaseOriginalObject?.id {
+        } else if let id = firebaseOriginalObject?.id {
             fetch(id)
         }
     }

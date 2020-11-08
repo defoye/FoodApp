@@ -40,6 +40,7 @@ class BlankTableViewCell: UITableViewCell {
         setup(setupModel)
         
         contentView.addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.pin(to: contentView, insets: viewModel.viewInsets)
     }
     
