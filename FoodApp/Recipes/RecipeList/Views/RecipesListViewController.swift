@@ -57,7 +57,10 @@ class RecipesListViewController: BaseViewController {
 	func addLoadingView() {
         DispatchQueue.main.async {
             self.collectionView.addSubview(self.loadingView)
-            self.loadingView.pin(to: self.collectionView)
+            NSLayoutConstraint.activate([
+                self.loadingView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.loadingView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+            ])
         }
 	}
 	
@@ -72,8 +75,7 @@ class RecipesListViewController: BaseViewController {
 				
 		addLoadingView()
 		
-		title = "Recipe Search Results"
-//        view.backgroundColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1)
+		title = "Recipe Search"
 		view.addSubview(collectionView)
 		collectionView.pin(to: view)
 		
