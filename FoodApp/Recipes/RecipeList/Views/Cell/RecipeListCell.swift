@@ -1,5 +1,5 @@
 //
-//  RecipeCell.swift
+//  RecipeListCell.swift
 //  NewsApp
 //
 //  Created by Ernest DeFoy on 5/27/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeCell: UICollectionViewCell {
+class RecipeListCell: UICollectionViewCell {
 	
 	@IBOutlet weak var tileView: UIView!
 	@IBOutlet weak var mainStackView: UIStackView!
@@ -27,11 +27,11 @@ class RecipeCell: UICollectionViewCell {
 		contentView.pin(to: self)
 	}
 		
-	func configure(_ item: RecipesViewModel.Item) {
+	func configure(_ item: RecipeListViewModel.Item) {
 		setup()
 		titleLabel.text = item.title
-		titleLabel.font = RecipeCell.titleFont
-		timeLabel.font = RecipeCell.timeFont
+		titleLabel.font = RecipeListCell.titleFont
+		timeLabel.font = RecipeListCell.timeFont
 		timeLabel.text = item.timeTitle
 		setImage(item.image)
 		

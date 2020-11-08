@@ -115,7 +115,7 @@ extension FirebaseAPI {
             return dict
         }
         
-        static func toDict(_ model: RecipesViewModel.Item) -> ParamDict {
+        static func toDict(_ model: RecipeListViewModel.Item) -> ParamDict {
             var dict: ParamDict = [:]
             
             dict[.title] = model.title
