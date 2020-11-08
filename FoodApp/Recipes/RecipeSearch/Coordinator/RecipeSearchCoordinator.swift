@@ -45,12 +45,12 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 	
 	func cuisineSelected(_ cuisine: SpoonacularAPI.Cuisine) {
 		recipeSearchViewController?.cuisineSelected = cuisine
-		recipeSearchViewController?.reloadTableView()
+        recipeSearchViewController?.reloadItems([.cuisinePicker])
 	}
 	
 	func dishTypeSelected(_ dishType: SpoonacularAPI.DishType) {
 		recipeSearchViewController?.dishTypeSelected = dishType
-		recipeSearchViewController?.reloadTableView()
+        recipeSearchViewController?.reloadItems([.dishPicker])
 	}
 	
 	func coordinateToRecipesList(_ passThroughData: SpoonacularAPI.ComplexSearch.ParamDict) {

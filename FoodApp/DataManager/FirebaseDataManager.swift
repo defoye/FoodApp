@@ -123,14 +123,17 @@ extension FirebaseDataManager {
         }
     }
     
-    func fetchFavoriteRecipes(numberOfResults count: Int, _ completion: @escaping (([FirebaseAPI.FavoriteRecipes.ResponseModel]) -> Void)) {
+    func fetchFavoriteRecipes(numberOfResults count: Int? = nil, _ completion: @escaping (([FirebaseAPI.FavoriteRecipes.ResponseModel]) -> Void)) {
         guard let uid = FirebaseDataManager.currentUserUID else {
             completion([])
             return
         }
         let ResponseModelType = FirebaseAPI.FavoriteRecipes.ResponseModel.self
         let collection = FirebaseAPI.Collection.users.rawValue
-        let query = db.collection(collection).document(uid).collection("favoriteRecipes").limit(to: count)
+        let query = db.collection(collection).document(uid).collection("favoriteRecipes")
+        if let count = count {
+            query.limit(to: count)
+        }
         
         query.getDecodedDocuments(ResponseModelType) { models in
             completion(models)
