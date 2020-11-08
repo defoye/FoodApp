@@ -1,5 +1,5 @@
 //
-//  RecipesViewController.swift
+//  RecipesListViewController.swift
 //  NewsApp
 //
 //  Created by Ernest DeFoy on 5/27/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipesViewController: BaseViewController {
+class RecipesListViewController: BaseViewController {
 		
 	private lazy var collectionView: UICollectionView = {
 		let layout = UICollectionViewFlowLayout()
@@ -16,7 +16,7 @@ class RecipesViewController: BaseViewController {
 		layout.minimumLineSpacing = 0
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        let recipeCellNib = UINib.init(nibName: "RecipeCell", bundle: .current)
+        let recipeCellNib = UINib.init(nibName: "RecipeListCell", bundle: .current)
         collectionView.register(recipeCellNib, forCellWithReuseIdentifier: "RecipeCell")
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -24,14 +24,14 @@ class RecipesViewController: BaseViewController {
 		return collectionView
 	}()
 	
-	private let viewModel: RecipesViewModel
+	private let viewModel: RecipeListViewModel
 	/// Height of the last cell configured. Will be the max of two cell heights.
 	private var lastHeight: CGFloat = 0
     override var fetchDistanceMultiplier: CGFloat {
 		return 2
 	}
     
-    init(_ viewModel: RecipesViewModel) {
+    init(_ viewModel: RecipeListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -101,14 +101,14 @@ class RecipesViewController: BaseViewController {
 	}
 }
 
-extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension RecipesListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		let squareSideLength = (collectionView.frame.width) / 2
 		if indexPath.row % 2 == 0 {
 			if let item = viewModel.item(for: indexPath.row), let nextItem = viewModel.item(for: indexPath.row + 1) {
-				let height1 = RecipeCell.height(collectionView.frame.width, item.title, item.timeTitle)
-				let height2 = RecipeCell.height(collectionView.frame.width, nextItem.title, nextItem.timeTitle)
+				let height1 = RecipeListCell.height(collectionView.frame.width, item.title, item.timeTitle)
+				let height2 = RecipeListCell.height(collectionView.frame.width, nextItem.title, nextItem.timeTitle)
 				
 				lastHeight = max(height1, height2)
 
@@ -118,7 +118,7 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
 			return CGSize(width: squareSideLength, height: lastHeight)
 		}
 		if let item = viewModel.item(for: indexPath.row) {
-			let height = RecipeCell.height(collectionView.frame.width, item.title, item.timeTitle)
+			let height = RecipeListCell.height(collectionView.frame.width, item.title, item.timeTitle)
 			return CGSize(width: squareSideLength, height: height)
 		}
 		
@@ -129,7 +129,7 @@ extension RecipesViewController: UICollectionViewDelegate, UICollectionViewDataS
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCell", for: indexPath) as? RecipeCell, let item = viewModel.item(for: indexPath.row) {
+		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipeCell", for: indexPath) as? RecipeListCell, let item = viewModel.item(for: indexPath.row) {
 			cell.configure(item)
 			
 			return cell

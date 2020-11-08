@@ -13,7 +13,7 @@ protocol RecipeSearchCoordinatorDelegate: class {
 	func cuisineSelected(_ cuisine: SpoonacularAPI.Cuisine)
 	func dishTypeSelected(_ dishType: SpoonacularAPI.DishType)
 	func coordinateToRecipesList(_ passThroughData: SpoonacularAPI.ComplexSearch.ParamDict)
-	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item)
+	func coordinateToRecipeDetail(urlString: String, item: RecipeListViewModel.Item)
 }
 
 class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
@@ -54,13 +54,13 @@ class RecipeSearchCoordinator: RecipeSearchCoordinatorDelegate {
 	}
 	
 	func coordinateToRecipesList(_ passThroughData: SpoonacularAPI.ComplexSearch.ParamDict) {
-        let viewModel = RecipesViewModel(passThroughData)
-		let recipesViewController = RecipesViewController(viewModel)
+        let viewModel = RecipeListViewModel(passThroughData)
+		let recipesViewController = RecipesListViewController(viewModel)
 		
 		presenter.pushViewController(recipesViewController, animated: true)
 	}
 	
-	func coordinateToRecipeDetail(urlString: String, item: RecipesViewModel.Item) {
+	func coordinateToRecipeDetail(urlString: String, item: RecipeListViewModel.Item) {
         let vm = RecipeDetailViewModel(urlString, item)
 		let vc = RecipeDetailViewController(vm)
 		

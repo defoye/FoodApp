@@ -69,7 +69,7 @@ extension FirebaseDataManager {
         }
     }
     
-    func addFavoriteRecipe(_ searchModel: RecipesViewModel.Item?, similarModel: RecipeDetailViewModel.SimilarRecipeItem?, firebaseModel: FirebaseAPI.TopRecipesSearchResults.ResponseModel?, _ extractModel: SpoonacularAPI.ExtractRecipeModel, _ completion: @escaping ((Error?) -> Void)) {
+    func addFavoriteRecipe(_ searchModel: RecipeListViewModel.Item?, similarModel: RecipeDetailViewModel.SimilarRecipeItem?, firebaseModel: FirebaseAPI.TopRecipesSearchResults.ResponseModel?, _ extractModel: SpoonacularAPI.ExtractRecipeModel, _ completion: @escaping ((Error?) -> Void)) {
         var data: [String: Any] = [:]
         var id: Int?
         if let recipeSearchModel = searchModel {
