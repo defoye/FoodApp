@@ -46,6 +46,7 @@ class SignUpOptionCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
+        label.font = UIFont(name: "Avenir-Book", size: 13)
         return label
     }()
     
@@ -60,8 +61,8 @@ class SignUpOptionCell: UITableViewCell {
         borderView.pin(to: contentView, insets: .init(top: 0, left: 70, bottom: -10, right: -70))
         verticalContainerStackView.pin(to: borderView, insets: .init(top: 10, left: 10, bottom: -10, right: -10))
         NSLayoutConstraint.activate([
-            logoImageView.heightAnchor.constraint(equalToConstant: 40),
-            logoImageView.widthAnchor.constraint(equalToConstant: 40)
+            logoImageView.heightAnchor.constraint(equalToConstant: 20),
+            logoImageView.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
     

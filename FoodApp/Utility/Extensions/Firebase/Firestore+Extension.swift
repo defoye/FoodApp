@@ -9,6 +9,23 @@
 import Foundation
 import FirebaseFirestore
 
+extension DocumentReference {
+    
+    func getDecodedDocument<T: Decodable>(_ type: T.Type, _ completion: @escaping (T?) -> Void) {
+        getDocument { (snapshot, error) in
+            if let error = error {
+                print("[DocumentReference] - \(error.localizedDescription)")
+                completion(nil)
+            } else if let snapshot = snapshot {
+                completion(snapshot.data()?.decodedJSON(type))
+            } else {
+                print("[DocumentReference] - Nil snapshot")
+                completion(nil)
+            }
+        }
+    }
+}
+
 extension CollectionReference {
     
     func getDocuments<T: Decodable>(_ type: T.Type, _ completion: @escaping (QuerySnapshot?) -> Void) {

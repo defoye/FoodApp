@@ -29,8 +29,10 @@ class HomeViewModel {
     private func fetchTopRecipes() {
         let fetchAmount = Constants.Ints.homeTopRecipesCount.rawValue
         FirebaseDataManager.shared.fetchTopRecipes(numberOfResults: fetchAmount) { models in
-            self.snapshot.appendItems([.labelItem(self.headerLabelModel("Top Searched Recipes"))], toSection: .topRecipes)
             let items = self.createTopRecipesItems(fromModels: models)
+            if items.count > 0 {
+                self.snapshot.appendItems([.labelItem(self.headerLabelModel("Top Searched Recipes"))], toSection: .topRecipes)
+            }
             self.snapshot.appendItems(items, toSection: .topRecipes)
             items.forEach { item in
                 if case .topRecipesItem(let model) = item {
@@ -49,8 +51,10 @@ class HomeViewModel {
     
     private func fetchFavoriteRecipes() {
         FirebaseDataManager.shared.fetchFavoriteRecipes(numberOfResults: 3) { models in
-            self.snapshot.appendItems([.labelItem(self.headerLabelModel("Favorite Recipes"))], toSection: .favoriteRecipes)
             let items = self.createFavoriteRecipesItems(fromModels: models)
+            if items.count > 0 {
+                self.snapshot.appendItems([.labelItem(self.headerLabelModel("Favorite Recipes"))], toSection: .favoriteRecipes)
+            }
             self.snapshot.appendItems(items, toSection: .favoriteRecipes)
             items.forEach { item in
                 if case .favoriteRecipesItem(let model) = item {
@@ -77,25 +81,26 @@ class HomeViewModel {
     }
     
     private func createTopRecipesItems(fromModels models: [FirebaseAPI.TopRecipesSearchResults.ResponseModel]) -> [Item] {
-        var items = models.map { model -> Item in
+        let items = models.map { model -> Item in
             return .topRecipesItem(FirebaseAPI.TopRecipesSearchResults.ResponseItem(model))
         }
-
-        for i in stride(from: items.count - 1, through: 1, by: -1) {
-            items.insert(.separatorItem(UUID()), at: i)
-        }
         
-        return items
+        return addSeparatorItems(fromItems: items)
     }
     
     private func createFavoriteRecipesItems(fromModels models: [FirebaseAPI.FavoriteRecipes.ResponseModel]) -> [Item] {
-        var items = models.compactMap { model -> Item? in
+        let items = models.compactMap { model -> Item? in
             guard let responseModel = model.responseModel else {
                 return nil
             }
             return .favoriteRecipesItem(FirebaseAPI.TopRecipesSearchResults.ResponseItem(responseModel))
         }
-
+        
+        return addSeparatorItems(fromItems: items)
+    }
+    
+    private func addSeparatorItems(fromItems items: [Item]) -> [Item] {
+        var items = items
         for i in stride(from: items.count - 1, through: 1, by: -1) {
             items.insert(.separatorItem(UUID()), at: i)
         }

@@ -11,7 +11,7 @@ import QuiteAdaptableKit
 class RecipeDataManager: BaseDataManager {
     
     static let shared = RecipeDataManager()
-    let useOnlineData: Bool = false
+    let useOnlineData: Bool = Constants.Eligibility.useOnlineData.flag
     
     fileprivate func offlineRequest<T: Decodable>(_ fileName: String, forType type: T.Type, _ completion: @escaping ((RequestStatus, T?) -> Void)) {
         guard let decodedData = decodedJSONData(from: fileName, forType: T.self) else {
@@ -31,7 +31,11 @@ extension RecipeDataManager {
         let combinedParams = ["apiKey": key].merged(with: params.convertedToRawValues())
 		let request = createRequest(urlString, combinedParams, nil)
 		
-		dataTask(request, completion)
+        if useOnlineData {
+            dataTask(request, completion)
+        } else {
+            offlineRequest("SpoonacularExtractRecipeResponse_RoastedVeggiePasta", forType: SpoonacularAPI.ExtractRecipeModel.self, completion)
+        }
 	}
 	
     func recipeInformationSearch(_ params: SpoonacularAPI.Information.ParamDict, _ completion: @escaping ((RequestStatus, SpoonacularAPI.RecipeInformationModel?) -> Void)) {

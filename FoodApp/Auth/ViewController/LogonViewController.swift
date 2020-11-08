@@ -23,12 +23,12 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
     enum Row: Hashable {
         case logo(_ image: Constants.Images)
         
-        case apple(_ model: SignUpOptionModel)
+        case apple(_ viewModel: BlankTableViewCell.ViewModel)
         case google(_ setupModel: BlankTableViewCell.SetupModel, _ viewModel: BlankTableViewCell.ViewModel)
-        case facebook(_ model: SignUpOptionModel)
+        case facebook( _ viewModel: BlankTableViewCell.ViewModel)
         case email(_ model: SignUpOptionModel)
         
-        case signIn
+        case signUp
     }
     
     struct SignUpOptionModel: Hashable {
@@ -89,15 +89,21 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
         snapshot.appendSections([.main])
         
         let googleSignInModel = BlankTableViewCell.ViewModel()
-        googleSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
+        googleSignInModel.viewInsets = .init(top: 0, left: 67, bottom: -20, right: -67)
+        
+        let appleSignInModel = BlankTableViewCell.ViewModel()
+        appleSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
+        
+        let facebookSignInModel = BlankTableViewCell.ViewModel()
+        facebookSignInModel.viewInsets = .init(top: 0, left: 70, bottom: -20, right: -70)
         
         snapshot.appendItems([
             .logo(.apple_logo),
-            .apple(SignUpOptionModel(imageConstant: .apple_logo, description: "Sign up with Apple")),
+            .apple(appleSignInModel),
             .google(BlankTableViewCell.SetupModel(), googleSignInModel),
-            .facebook(SignUpOptionModel(imageConstant: .facebook_logo, description: "Sign up with Facebook")),
-            .email(SignUpOptionModel(imageConstant: .email_logo, description: "Sign up with Email")),
-            .signIn
+            .facebook(facebookSignInModel),
+            .email(SignUpOptionModel(imageConstant: .email_logo, description: "Sign in with Email")),
+            .signUp
         ])
         dataSource.apply(snapshot)
     }
@@ -129,18 +135,28 @@ class LogonViewController: UIViewController, FUIAuthDelegate {
                 return nil
             }
         case .facebook(let viewModel):
-            return tableView.configuredCell(SignUpOptionCell.self) { cell in
-                cell.configure(image: viewModel.imageConstant?.image, description: viewModel.description)
+            return tableView.configuredCell(BlankTableViewCell.self) { cell in
+                let loginButton = FBLoginButton()
+                loginButton.center = view.center
+                loginButton.delegate = self
+                loginButton.permissions = ["public_profile", "email"]
+                cell.configure(loginButton, viewModel: viewModel)
             }
 
-        case .apple(let model), .email(let model):
+        case .apple(let viewModel):
+            return tableView.configuredCell(BlankTableViewCell.self) { cell in
+                let authorizationButton = ASAuthorizationAppleIDButton()
+                authorizationButton.addTarget(self, action: #selector(appleSignInTapped), for: .touchUpInside)
+                cell.configure(authorizationButton, viewModel: viewModel)
+            }
+        case .email(let model):
             return tableView.configuredCell(SignUpOptionCell.self) { cell in
                 cell.configure(image: model.imageConstant?.image, description: model.description)
             }
-        case .signIn:
+        case .signUp:
             return tableView.configuredCell(LabelCell.self) { cell in
                 let model = LabelCell.Model()
-                model.text = "Already have an account? Tap here to sign in."
+                model.text = "Don't have an account? Tap here to sign up."
                 model.textInsets = .init(top: 20, left: 20, bottom: -20, right: -20)
                 cell.configure(model)
             }
@@ -165,27 +181,20 @@ extension LogonViewController: UITableViewDelegate {
         case .logo(_):
             break
         case .apple(_):
-            appleSignInTapped()
+            break
         case .facebook(_):
-            facebookSignInTapped()
-        case .google(_), .email(_):
-            coordinatorDelegate.coordinateToSignUp()
-        case .signIn:
+            break
+        case .google(_):
+            break
+        case .email(_):
             coordinatorDelegate.coordinateToSignIn()
+        case .signUp:
+            coordinatorDelegate.coordinateToSignUp()
         }
     }
 }
 
 extension LogonViewController {
-    
-    @objc
-    func facebookSignInTapped() {
-        let loginButton = FBLoginButton()
-        loginButton.center = view.center
-        loginButton.delegate = self
-        view.addSubview(loginButton)
-        loginButton.permissions = ["public_profile", "email"]
-    }
     
     func performSignin() {
         let request = createAppleIDRequest()
