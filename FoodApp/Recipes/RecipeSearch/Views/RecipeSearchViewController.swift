@@ -41,6 +41,8 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
                     let model = SearchBarTableViewCell.Model()
                     model.insets = .init(top: 20, left: 20, bottom: 20, right: 20)
                     model.placeholder = "Search"
+                    model.enablesReturnKeyAutomatically = false
+                    model.returnKeyType = .done
                     cell.configure(model)
                     self.searchBarCellDelegate = cell
                 }
