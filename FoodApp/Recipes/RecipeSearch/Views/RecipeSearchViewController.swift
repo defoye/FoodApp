@@ -26,7 +26,7 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
         case main
     }
     
-    enum Item {
+    enum Item: CaseIterable {
         case searchBar
         case cuisinePicker
         case dishPicker
@@ -116,11 +116,16 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 		coordinatorDelegate?.coordinateToRecipesList(passThroughData)
 	}
 	
-	func reloadTableView() {
+    func reloadTableView() {
 		DispatchQueue.main.async {
             self.dataSource.apply(self.snapshot)
 		}
 	}
+    
+    func reloadItems(_ items: [Item]) {
+        snapshot.reloadItems(items)
+        reloadTableView()
+    }
 }
 
 extension RecipeSearchViewController: UITableViewDelegate {

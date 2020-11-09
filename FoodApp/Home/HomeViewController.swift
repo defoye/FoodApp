@@ -59,6 +59,8 @@ class HomeViewController: UIViewController, UITableViewDelegate {
         return tableView
     }()
     
+    var refreshControl = UIRefreshControl()
+    
     let viewModel: HomeViewModel
     weak var coordinatorDelegate: HomeCoordinatorDelegate?
     
@@ -72,7 +74,12 @@ class HomeViewController: UIViewController, UITableViewDelegate {
                 return
             }
             DispatchQueue.main.async {
-                self.dataSource.apply(snapshot)
+                self.dataSource.apply(snapshot, animatingDifferences: false)
+            }
+        }
+        self.viewModel.endRefreshBlock = { [weak self] isLoadingTopRecipes, isLoadingFavoriteRecipes in
+            if !isLoadingTopRecipes && !isLoadingFavoriteRecipes {
+                self?.refreshControl.endRefreshing()
             }
         }
     }
@@ -80,16 +87,24 @@ class HomeViewController: UIViewController, UITableViewDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviewsAndConstraints()
         viewModel.fetchData()
+        
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl) // not required when using UITableViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavBar()
+    }
+    
+    @objc func refresh(_ sender: AnyObject) {
+        viewModel.refresh()
     }
     
     private func setupNavBar() {

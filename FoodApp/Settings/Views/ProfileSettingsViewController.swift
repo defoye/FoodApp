@@ -36,7 +36,7 @@ class ProfileSettingsViewController: UIViewController, Storyboarded {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentPicker))
         profileImageView.addGestureRecognizer(tapGesture)
         profileImageView.backgroundColor = .lightGray
-        signOutButton.setTitle("SignOutButton", for: .normal)
+        signOutButton.setTitle("Sign out", for: .normal)
         userName.text = Auth.auth().currentUser?.displayName
         userName.textColor = .blue
     }

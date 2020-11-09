@@ -33,6 +33,7 @@ class SearchBarTableViewCell: UITableViewCell, SearchBarTableViewCellDelegate {
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.delegate = self
         return searchBar
     }()
     
@@ -57,5 +58,12 @@ class SearchBarTableViewCell: UITableViewCell, SearchBarTableViewCellDelegate {
             searchBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: abs(model.insets.left) - 8),
             searchBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -abs(model.insets.right) + 8)
         ])
+    }
+}
+
+extension SearchBarTableViewCell: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

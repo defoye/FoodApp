@@ -110,7 +110,12 @@ class RecipeDetailViewController: UIViewController {
                 return
             }
             DispatchQueue.main.async {
-                self.navigationItem.rightBarButtonItem?.isEnabled = !isLoadingRecipeDetail && !isFavoriteRecipe
+                if isFavoriteRecipe {
+                    self.navigationItem.rightBarButtonItem?.image = Constants.Images.broken_heart.image
+                } else {
+                    self.navigationItem.rightBarButtonItem?.image = Constants.Images.heart.image
+                }
+                self.navigationItem.rightBarButtonItem?.isEnabled = !isLoadingRecipeDetail
             }
         }
 	}
@@ -136,8 +141,14 @@ class RecipeDetailViewController: UIViewController {
     }
     
     private func setupNavBar() {
-        navigationItem.rightBarButtonItem = .init(image: Constants.Images.heart.image, style: .plain, target: self, action: #selector(favoritesTapped))
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        if navigationItem.rightBarButtonItem == nil {
+            navigationItem.rightBarButtonItem = .init(image: nil, style: .plain, target: self, action: #selector(favoritesTapped))
+        }
+        if viewModel.isFavoriteRecipe {
+            self.navigationItem.rightBarButtonItem?.image = Constants.Images.broken_heart.image
+        } else {
+            self.navigationItem.rightBarButtonItem?.image = Constants.Images.heart.image
+        }
     }
     
     @objc
