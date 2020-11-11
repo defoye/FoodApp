@@ -75,7 +75,7 @@ class SignInViewController: UIViewController, UITableViewDelegate {
         snapshot.appendSections([.main])
         
         let logonLabelModel = LabelCell.Model()
-        logonLabelModel.text = "FoodApp"
+        logonLabelModel.text = "Recipe Find"
         logonLabelModel.font = UIFont.systemFont(ofSize: 30)
         
         let usernameModel = TextFieldTableViewCell.Model()

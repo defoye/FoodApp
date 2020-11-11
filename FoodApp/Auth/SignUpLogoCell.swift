@@ -18,7 +18,7 @@ class SignUpLogoCell: UITableViewCell {
     private lazy var logoLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "FoodApp"
+        label.text = "Recipe Find"
         label.textAlignment = .center
         label.font = UIFont.italicSystemFont(ofSize: 50)
         return label
