@@ -231,7 +231,7 @@ extension LogonViewController {
 
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
         if let user = authDataResult?.user {
-            print("Nice! you logged in \(user.uid)")
+            coordinatorDelegate.logon()
         }
     }
 
@@ -285,14 +285,15 @@ extension LogonViewController: LoginButtonDelegate {
         let credential = FacebookAuthProvider.credential(withAccessToken: token)
 
         Auth.auth().signIn(with: credential) { (authResult, error) in
-          if let error = error {
-            let authError = error as NSError
-            if (authError.code == AuthErrorCode.secondFactorRequired.rawValue) {
-                print("// The user is a multi-factor user. Second factor challenge is required.")
+            if let error = error {
+                let authError = error as NSError
+                if (authError.code == AuthErrorCode.secondFactorRequired.rawValue) {
+                    print("// The user is a multi-factor user. Second factor challenge is required.")
+                }
+            } else {
+                print("Suucess login with Facebook")
+                self.coordinatorDelegate.logon()
             }
-          }
-            print("Suucess login with Facebook")
-            self.coordinatorDelegate.logon()
        }
     }
     

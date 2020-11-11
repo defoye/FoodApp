@@ -20,6 +20,8 @@ class SearchBarTableViewCell: UITableViewCell, SearchBarTableViewCellDelegate {
         var insets: UIEdgeInsets = UIEdgeInsets()
         var backgroundImage: UIImage = UIImage()
         var searchBarStyle: UISearchBar.Style = .minimal
+        var returnKeyType: UIReturnKeyType = .search
+        var enablesReturnKeyAutomatically: Bool = true
         
         static func == (lhs: SearchBarTableViewCell.Model, rhs: SearchBarTableViewCell.Model) -> Bool {
             lhs.uuid == rhs.uuid
@@ -46,6 +48,8 @@ class SearchBarTableViewCell: UITableViewCell, SearchBarTableViewCellDelegate {
         searchBar.placeholder = model.placeholder
         searchBar.backgroundImage = model.backgroundImage
         searchBar.searchBarStyle = model.searchBarStyle
+        searchBar.enablesReturnKeyAutomatically = model.enablesReturnKeyAutomatically
+        searchBar.returnKeyType = model.returnKeyType
     }
     
     private func setup(_ model: Model) {
