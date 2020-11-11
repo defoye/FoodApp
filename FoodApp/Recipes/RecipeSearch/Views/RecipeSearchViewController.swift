@@ -65,7 +65,11 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
     lazy var snapshot: NSDiffableDataSourceSnapshot<Section, Item> = {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections([.main])
-        snapshot.appendItems([.searchBar, .cuisinePicker, .dishPicker, .instructionsRequired])
+        /**
+            Removing instructions required from Recipe Search
+         */
+//        snapshot.appendItems([.searchBar, .cuisinePicker, .dishPicker, .instructionsRequired])
+        snapshot.appendItems([.searchBar, .cuisinePicker, .dishPicker])
         return snapshot
     }()
 	
@@ -80,6 +84,8 @@ class RecipeSearchViewController: UIViewController, Storyboarded {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        hideKeyboardWhenTappedAround()
 		
 		searchButton.layer.cornerRadius = 5
 		searchButton.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
