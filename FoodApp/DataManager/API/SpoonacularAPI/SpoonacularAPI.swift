@@ -106,6 +106,23 @@ class SpoonacularAPI {
             return "https://api.spoonacular.com/recipes/findByIngredients"
         }
     }
+    
+    class ShowImages {
+        
+        class Recipes {
+            enum Size: String {
+                case one = "90x90", two = "240x150", three = "312x150", four = "312x231", five = "480x360", size = "556x370", seven = "636x393"
+            }
+            
+            enum ImageType: String {
+                case jpg, png
+            }
+            
+            static func createURL(_ size: Size, _ id: String, _ type: ImageType) -> String {
+                return "https://spoonacular.com/recipeImages/\(id)-\(size.rawValue).\(type.rawValue)"
+            }
+        }
+    }
 	
 	static var key: String {
 		return "95c9f7da7d9e4d0f896eea3aa81e4a63"
