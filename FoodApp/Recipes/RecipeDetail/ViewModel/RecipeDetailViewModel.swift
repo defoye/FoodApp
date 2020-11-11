@@ -37,9 +37,13 @@ class RecipeDetailViewModel {
     var favoriteButtonEnableBlock: ((_ isLoading: Bool, _ isFavoriteRecipe: Bool) -> Void)?
     var isFavoriteRecipe: Bool = false
 	var isLoadingSimilarRecipes: Bool = false
+    
+    /// Passthrough data
 	let urlParam: String
 	let idParam: Int?
-
+    let title: String
+    let previousImage: UIImage?
+    
     lazy var snapshot: Snapshot = {
         var snapshot = Snapshot()
         snapshot.appendSections([.header, .ingredients, .instructions, .similarRecipes])
@@ -53,27 +57,29 @@ class RecipeDetailViewModel {
     init(_ urlParam: String, _ item: RecipeListViewModel.Item) {
 		self.urlParam = urlParam
 		self.idParam = item.id
-        self.snapshot.appendItems([.header(HeaderItem(title: item.title ?? "Error", image: item.image))], toSection: .header)
+        self.title = item.title ?? "Error"
+        self.previousImage = item.image
         self.searchOriginalObject = item
 	}
 	
 	init(_ urlParam: String, _ item: SimilarRecipeItem) {
 		self.urlParam = urlParam
 		self.idParam = item.id
-        self.snapshot.appendItems([.header(HeaderItem(title: item.title, image: item.image))], toSection: .header)
-
+        self.title = item.title
+        self.previousImage = item.image
         self.similarOriginalObject = item
 	}
     
     init(_ item: FirebaseAPI.TopRecipesSearchResults.ResponseItem) {
         self.urlParam = item.responseModel.sourceURL
         self.idParam = item.responseModel.id
-        self.snapshot.appendItems([.header(HeaderItem(title: item.responseModel.title, image: item.image))], toSection: .header)
-
+        self.title = item.responseModel.title
+        self.previousImage = item.image
         self.firebaseOriginalObject = item.responseModel
     }
 	
 	func fetchData() {
+        loadRecipeHeaderImage()
         fetchIsFavoriteRecipe()
 		loadRecipeDetails()
 		loadSimilarRecipes()
@@ -114,20 +120,32 @@ class RecipeDetailViewModel {
     }
     
     private func fetchIsFavoriteRecipe() {
-        self.isLoadingFavoriteRecipe = true
-        let fetch: (Int) -> Void = { id in
-            FirebaseDataManager.shared.fetchIsFavoriteRecipe(id) { isFavoriteRecipe in
-                self.isFavoriteRecipe = isFavoriteRecipe
-                self.isLoadingFavoriteRecipe = false
-            }
+        guard let id = idParam else {
+            fatalError("Id was not provided for recipe detail")
         }
-        
-        if let id = searchOriginalObject?.id {
-            fetch(id)
-        } else if let id = similarOriginalObject?.id {
-            fetch(id)
-        } else if let id = firebaseOriginalObject?.id {
-            fetch(id)
+        self.isLoadingFavoriteRecipe = true
+        FirebaseDataManager.shared.fetchIsFavoriteRecipe(id) { isFavoriteRecipe in
+            self.isFavoriteRecipe = isFavoriteRecipe
+            self.isLoadingFavoriteRecipe = false
+        }
+    }
+    
+    private func loadRecipeHeaderImage() {
+        guard let idParam = idParam else {
+            return
+        }
+        let url = SpoonacularAPI.ShowImages.Recipes.createURL(.seven, String(idParam), .jpg)
+        let headerModel = HeaderItem(self.title)
+        let headerItem: Item = .header(headerModel)
+        snapshot.appendItems([headerItem], toSection: .header)
+
+        RecipeDataManager.shared.downloadImage(from: url, contentMode: .scaleAspectFit) { image in
+            guard let image = image else {
+                headerModel.image = self.previousImage
+                return
+            }
+            headerModel.image = image
+            self.snapshot.reloadItems([headerItem])
         }
     }
 	
@@ -244,10 +262,14 @@ class RecipeDetailViewModel {
 
 extension RecipeDetailViewModel {
 	
-    struct HeaderItem: Hashable {
+    class HeaderItem: Hashable {
         let uuid = UUID()
 		let title: String
-		let image: UIImage?
+		var image: UIImage?
+        
+        init(_ title: String) {
+            self.title = title
+        }
         
         func hash(into hasher: inout Hasher) {
             hasher.combine(uuid)
