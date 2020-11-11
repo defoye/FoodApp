@@ -973,6 +973,7 @@
 				CODE_SIGN_ENTITLEMENTS = FoodApp/FoodApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = ZT4SXDMUPV;
 				INFOPLIST_FILE = FoodApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -980,6 +981,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.000;
 				PRODUCT_BUNDLE_IDENTIFIER = com.quiteadaptable.development.foodapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -996,6 +998,7 @@
 				CODE_SIGN_ENTITLEMENTS = FoodApp/FoodApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = ZT4SXDMUPV;
 				INFOPLIST_FILE = FoodApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1003,6 +1006,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.000;
 				PRODUCT_BUNDLE_IDENTIFIER = com.quiteadaptable.development.foodapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
